@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,17 +12,22 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
 
     public Vector3 moveDir { get; private set; }
+    public float jumpForce = 10f;
+    public bool isJumping;
+
     void Start()
     {
         player = GetComponent<Player>();
         playerInput = GetComponent<PlayerInput>();
         rigidBody = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
         animator.SetBool("isMove", moveDir != Vector3.zero);
+        CheckIsJumping();
     }
 
     private void FixedUpdate()
@@ -49,20 +55,21 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        float currentMoveSpeed = player.MoveSpeed;
-
-        // 마우스로 시야 회전할거 생각하면 일단 키보드 입력에 따라서 회전 바뀌는건 안해도 될 듯 하여 막아둠
-        // LookAt();
-        
+        float currentMoveSpeed = player.MoveSpeed;        
         transform.position += moveDir * currentMoveSpeed * Time.deltaTime;
     }
 
-    void LookAt()
+    public void OnJump (InputAction.CallbackContext context)
     {
-        if(moveDir != Vector3.zero)
+        if (context.phase == InputActionPhase.Performed && isJumping == false)
         {
-            Quaternion targetAngle = Quaternion.LookRotation(moveDir);
-            transform.rotation = targetAngle;
+            isJumping = true;
+            rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+    }
+
+    private void CheckIsJumping()
+    {                                                                      // LayerMask 3 : Ground 
+        isJumping = Physics.Raycast(transform.position, Vector3.down, 0.01f, 3);
     }
 }
