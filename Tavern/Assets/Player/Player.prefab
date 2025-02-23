@@ -439,7 +439,6 @@ GameObject:
   - component: {fileID: 241731430650582069}
   - component: {fileID: 6926206121798162689}
   - component: {fileID: 4579606965231840189}
-  - component: {fileID: 8293972666088448257}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -568,7 +567,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8293972666088448257}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: OnMove
         m_Mode: 0
@@ -592,7 +591,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Attack[/Mouse/leftButton,/Keyboard/enter]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8293972666088448257}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: OnInteract
         m_Mode: 0
@@ -686,21 +685,6 @@ MonoBehaviour:
   maxHP: 0
   currentHP: 0
   moveSpeed: 10
---- !u!114 &8293972666088448257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 996853540725516794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3eabcb7658db3194795d114cf1ec845a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigidBody: {fileID: 4789187788882808879}
-  playerInput: {fileID: 6926206121798162689}
-  animator: {fileID: 1480623829964838869}
 --- !u!1 &999734432400192511
 GameObject:
   m_ObjectHideFlags: 0

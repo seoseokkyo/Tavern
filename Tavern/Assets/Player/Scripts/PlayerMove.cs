@@ -38,11 +38,6 @@ public class PlayerMove : MonoBehaviour
         {
             Jump();
         }  
-
-        if (canInteract == true && UnityEngine.Input.GetButtonDown("Interact"))
-        {
-            Interact();
-        }
     }
 
     private void Move()
@@ -67,10 +62,4 @@ public class PlayerMove : MonoBehaviour
             grounded = true;
         }
     }
-
-    private void Interact()
-    {
-
-    }
-
 }
