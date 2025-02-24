@@ -6,9 +6,12 @@ public class PlayerInteraction : MonoBehaviour
     public Camera cam;
     public float interactionDistance = 2f;
 
-    public GameObject interactionUI;
+    public GameObject interactionCanvas;
+    public GameObject progressBarUI;
     public TextMeshProUGUI interactionText;
-    public UnityEngine.UI.Image interactionProgress;
+    public UnityEngine.UI.Slider interactionProgress;
+
+    private float maxHoldTime = 2f;
 
     void Update()
     {
@@ -30,11 +33,10 @@ public class PlayerInteraction : MonoBehaviour
                 HandleInteraction(interactable);
                 interactionText.text = interactable.GetInteractingDescription();
                 foundInteractable = true;
-                interactionUI.SetActive(interactable.interactionType == Interactable.InteractionType.Hold);
+                progressBarUI.SetActive(interactable.interactionType == Interactable.InteractionType.Hold);
             }
         }
-
-        interactionUI.SetActive(foundInteractable);
+        interactionCanvas.SetActive(foundInteractable);
     }
 
     void HandleInteraction(Interactable interactable)
@@ -42,16 +44,17 @@ public class PlayerInteraction : MonoBehaviour
         switch (interactable.interactionType)
         {
             case Interactable.InteractionType.Press:
-                if(UnityEngine.Input.GetButton("Interact"))
+                if(UnityEngine.Input.GetButtonDown("Interact"))
                 {
                     interactable.Interact();
                 }
                 break;
             case Interactable.InteractionType.Hold:
-                if(UnityEngine.Input.GetButton("Interact"))
+                KeyCode key = KeyCode.E;
+                if (UnityEngine.Input.GetKey(key))
                 {
                     interactable.IncreaseHoldtime();
-                    if(interactable.GetHoldTime() > 2f)
+                    if (interactable.GetHoldTime() > maxHoldTime)
                     {
                         interactable.Interact();
                         interactable.ResetHoldTime();
@@ -61,17 +64,17 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     interactable.ResetHoldTime();
                 }
-
-                interactionProgress.fillAmount = interactable.GetHoldTime();
+                // slider (progressbar) 게이지 상태 업데이트
+                interactionProgress.value = interactable.GetHoldTime() / maxHoldTime;
                 break;
             case Interactable.InteractionType.UIClick:
-                if (UnityEngine.Input.GetButton("Interact"))
+                if (UnityEngine.Input.GetButtonDown("Interact"))
                 {
                     interactable.Interact();
                 }
                 break;
             case Interactable.InteractionType.UIDrag:
-                if (UnityEngine.Input.GetButton("Interact"))
+                if (UnityEngine.Input.GetButtonDown("Interact"))
                 {
                     interactable.Interact();
                 }

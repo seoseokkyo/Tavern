@@ -917,9 +917,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1798614315}
   interactionDistance: 5
-  interactionUI: {fileID: 1469323936}
+  interactionCanvas: {fileID: 1469323936}
+  progressBarUI: {fileID: 1552601224}
   interactionText: {fileID: 1444231313}
-  interactionProgress: {fileID: 1866162043}
+  interactionProgress: {fileID: 1552601226}
 --- !u!1 &1188551642
 GameObject:
   m_ObjectHideFlags: 0
