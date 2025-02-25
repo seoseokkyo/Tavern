@@ -1,9 +1,22 @@
 using UnityEngine;
 
+[System.Serializable]
+public struct ItemData
+{
+    public string itemName;
+    public Texture2D itemIcon;
+    public MeshFilter itemMeshFilter;
+    public MeshRenderer itemMesh;
+    public int itemID;
+    public string itemDescription;
+    public MonoBehaviour test;
+}
 
 [System.Serializable]
 public class ItemBase : MonoBehaviour
 {
+    // 실제 아이템의 형태
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public enum EItemType
     {
@@ -15,10 +28,7 @@ public class ItemBase : MonoBehaviour
 
     public EItemType ItemType = EItemType.NoUseAble;
 
-    // 인벤토리 등에서 아이템 관련 설명을 적을 경우 사용예정인 변수 공백으로 파싱하고, main으로 스플릿이 되면 전체적인 설명칸에 들어가며 이후는 스탯등의 변경사항 설명에 사용..?
-    public string ItemDescription = "main:ex hp:Description1 Item:Description2 Item:Description3...";
-
-    //public MonoBehaviour UsingPlayer { get; set; } = null;
+    public ItemData CurrentItemData;
 
     void Start()
     {
@@ -29,5 +39,19 @@ public class ItemBase : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void RandDataSet()
+    {
+        int Size = ItemManager.Instance.items.Count;
+
+        int RandNum = Random.Range(0, Size);
+
+        CurrentItemData = ItemManager.Instance.items[RandNum];
+    }
+
+    public void SetItemData(ItemData Data)
+    {
+        CurrentItemData = Data;
     }
 }
