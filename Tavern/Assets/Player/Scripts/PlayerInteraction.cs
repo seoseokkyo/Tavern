@@ -7,15 +7,33 @@ public class PlayerInteraction : MonoBehaviour
     public float interactionDistance = 2f;
 
     public GameObject interactionCanvas;
+    public GameObject popUICanvas;
     public GameObject progressBarUI;
     public TextMeshProUGUI interactionText;
     public UnityEngine.UI.Slider interactionProgress;
 
     private float maxHoldTime = 2f;
 
+    private bool deactive = false;
+    public void SetActive(bool state)
+    {
+        deactive = state;
+    }
+
     void Update()
     {
-        CheckInteractable();
+        // ModeController 에서 enable, disable 하는거에 따라 Update 함수 호출 제어
+        if (!enabled) return;
+
+        if (!deactive)
+        {
+            CheckInteractable();
+        }
+        else
+        {
+            interactionCanvas.SetActive(false);
+        }
+
     }
 
     private void CheckInteractable()
@@ -67,19 +85,13 @@ public class PlayerInteraction : MonoBehaviour
                 // slider (progressbar) 게이지 상태 업데이트
                 interactionProgress.value = interactable.GetHoldTime() / maxHoldTime;
                 break;
-            case Interactable.InteractionType.UIClick:
+            case Interactable.InteractionType.UIPop:
                 if (UnityEngine.Input.GetButtonDown("Interact"))
                 {
+                    SetActive(true);
                     interactable.Interact();
                 }
                 break;
-            case Interactable.InteractionType.UIDrag:
-                if (UnityEngine.Input.GetButtonDown("Interact"))
-                {
-                    interactable.Interact();
-                }
-                break;
-
         }
     }
 }
