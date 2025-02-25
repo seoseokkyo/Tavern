@@ -19,8 +19,6 @@ public class WorldItem : Interactable
 
     void Start()
     {
-        item = new ItemBase();
-
         item.RandDataSet();
 
         WorldItemMeshFilter = GetComponent<MeshFilter>();
@@ -49,6 +47,14 @@ public class WorldItem : Interactable
         Debug.Log($"Interact Item : {item.CurrentItemData.itemName}");
 
         item.RandDataSet();
+
+        WorldItemMeshFilter.sharedMesh = item.CurrentItemData.itemMeshFilter.sharedMesh;
+        WorldItemMesh.sharedMaterials = item.CurrentItemData.itemMesh.sharedMaterials;
+    }
+
+    public void SetItem(ItemBase inputItem)
+    {
+        item = inputItem;
 
         WorldItemMeshFilter.sharedMesh = item.CurrentItemData.itemMeshFilter.sharedMesh;
         WorldItemMesh.sharedMaterials = item.CurrentItemData.itemMesh.sharedMaterials;
