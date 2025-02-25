@@ -9,11 +9,10 @@ public struct ItemData
     public MeshRenderer itemMesh;
     public int itemID;
     public string itemDescription;
-    public MonoBehaviour test;
 }
 
 [System.Serializable]
-public class ItemBase : MonoBehaviour
+public class ItemBase
 {
     // 실제 아이템의 형태
 
@@ -29,17 +28,6 @@ public class ItemBase : MonoBehaviour
     public EItemType ItemType = EItemType.NoUseAble;
 
     public ItemData CurrentItemData;
-
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public void RandDataSet()
     {

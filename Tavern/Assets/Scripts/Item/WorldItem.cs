@@ -13,6 +13,8 @@ public class WorldItem : Interactable
     public MeshFilter WorldItemMeshFilter;
     public MeshRenderer WorldItemMesh;
 
+    // 나중에 메쉬 콜리더 사이즈 어떻게 할 지 생각해볼것
+
     bool bTestInit = false;
 
     void Start()
