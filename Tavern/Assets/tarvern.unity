@@ -1017,6 +1017,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1972434506290253589, guid: 425cb006f2a67644aa19e6025a98f86f, type: 3}
+      propertyPath: InventoryUI
+      value: 
+      objectReference: {fileID: 5248130043337331258, guid: 1ada21c56a300d244bc84bb92dc8c3be, type: 3}
+    - target: {fileID: 1972434506290253589, guid: 425cb006f2a67644aa19e6025a98f86f, type: 3}
+      propertyPath: InventoryUI_prefab
+      value: 
+      objectReference: {fileID: 5248130043337331258, guid: 1ada21c56a300d244bc84bb92dc8c3be, type: 3}
     - target: {fileID: 4579606965231840189, guid: 425cb006f2a67644aa19e6025a98f86f, type: 3}
       propertyPath: moveSpeed
       value: 3

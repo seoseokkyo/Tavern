@@ -8,10 +8,26 @@ public class InventoryComp : MonoBehaviour
 {
     private List<ItemBase> inventory = new List<ItemBase>();
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public delegate void OnInventoryChanged();
+    public OnInventoryChanged OnChanged;
+
+    public InventoryUI InventoryUI_prefab;
+    public InventoryUI InventoryUI;
+
     void Start()
     {
+        InventoryUI = Instantiate(InventoryUI_prefab);
 
+        InventoryUI.SetOwnerInventory(this);
+
+        Canvas canvas = FindFirstObjectByType<Canvas>(); // 씬에 Canvas가 하나만 있을 경우
+
+        InventoryUI.transform.SetParent(canvas.transform, false); // Canvas의 자식으로 설정 (worldPositionStays = false)
+
+        // RectTransform을 사용하여 UI 위치 및 크기 설정 (선택 사항)
+        RectTransform rectTransform = InventoryUI.GetComponent<RectTransform>();
+
+        OnChanged();
     }
 
     // Update is called once per frame
@@ -19,8 +35,6 @@ public class InventoryComp : MonoBehaviour
     {
 
     }
-
-
 
     public void InventoryInitialize(int inventorySize)
     {
@@ -67,6 +81,8 @@ public class InventoryComp : MonoBehaviour
 
         CheckInventory();
 
+        OnChanged();
+
         return bCheck;
     }
 
@@ -89,6 +105,8 @@ public class InventoryComp : MonoBehaviour
         ItemBase itemCheck = inventory[index];
 
         inventory[index] = null;
+
+        OnChanged();
 
         return itemCheck;
     }

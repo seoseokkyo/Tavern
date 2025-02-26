@@ -30,8 +30,8 @@ public class PlayerInteraction : MonoBehaviour
             
             if(interactable != null)
             { 
-                HandleInteraction(interactable);
                 interactionText.text = interactable.GetInteractingDescription();
+                HandleInteraction(interactable);
                 foundInteractable = true;
                 progressBarUI.SetActive(interactable.interactionType == Interactable.InteractionType.Hold);
             }
