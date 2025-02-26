@@ -24,7 +24,7 @@ public class ItemUI : MonoBehaviour
         {
             if (itemIcon != null && ItemViewImage != null)
             {
-                Rect rect = new Rect(0, 0, Mathf.Min(itemIcon.width, 100), Mathf.Min(itemIcon.height, 100));
+                Rect rect = new Rect(0, 0, Mathf.Min(itemIcon.width, 500), Mathf.Min(itemIcon.height, 500));
 
                 var temp = Sprite.Create(itemIcon, rect, new Vector2(0.5f, 0.5f));
 
