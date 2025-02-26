@@ -11,6 +11,8 @@ public abstract class Interactable : MonoBehaviour
         UIDrag,
     }
 
+    public PlayerController interactPlayer;
+
     float holdTime;
     public float GetHoldTime() => holdTime;
     public void IncreaseHoldtime() => holdTime += Time.deltaTime;

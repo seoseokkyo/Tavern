@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using WebSocketSharp;
+using static UnityEditor.Progress;
 
 public class WorldItem : Interactable
 {
@@ -15,11 +16,17 @@ public class WorldItem : Interactable
 
     // 나중에 메쉬 콜리더 사이즈 어떻게 할 지 생각해볼것
 
-    bool bTestInit = false;
+    public bool bRandSet = true;
 
     void Start()
     {
-        item.RandDataSet();
+        if (bRandSet)
+        {
+            item.RandDataSet();
+
+            WorldItemMeshFilter.sharedMesh = item.CurrentItemData.itemMeshFilter.sharedMesh;
+            WorldItemMesh.sharedMaterials = item.CurrentItemData.itemMesh.sharedMaterials;
+        }
 
         WorldItemMeshFilter = GetComponent<MeshFilter>();
         WorldItemMesh = GetComponent<MeshRenderer>();
@@ -28,28 +35,21 @@ public class WorldItem : Interactable
     // Update is called once per frame
     void Update()
     {
-        if(!bTestInit)
-        {
-            // Test
-            if(ItemManager.Instance.bReady)
-            {
-                WorldItemMeshFilter.sharedMesh = item.CurrentItemData.itemMeshFilter.sharedMesh;
-                WorldItemMesh.sharedMaterials = item.CurrentItemData.itemMesh.sharedMaterials;
-                
-                bTestInit = true;
-            }
-        }
+
     }
     public override string GetInteractingDescription() { return item.CurrentItemData.itemDescription; }
 
     public override void Interact()
     {
-        Debug.Log($"Interact Item : {item.CurrentItemData.itemName}");
+        if (interactPlayer)
+        {
+            if (interactPlayer.PlayerInventory.AddItem(ref item))
+            {
+                item = null;
 
-        item.RandDataSet();
-
-        WorldItemMeshFilter.sharedMesh = item.CurrentItemData.itemMeshFilter.sharedMesh;
-        WorldItemMesh.sharedMaterials = item.CurrentItemData.itemMesh.sharedMaterials;
+                Destroy(gameObject);
+            }
+        }
     }
 
     public void SetItem(ItemBase inputItem)

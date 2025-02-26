@@ -46,6 +46,12 @@ public class PlayerInteraction : MonoBehaviour
             case Interactable.InteractionType.Press:
                 if(UnityEngine.Input.GetButtonDown("Interact"))
                 {
+                    PlayerController player = GetComponentInParent<PlayerController>();
+                    if (player != null)
+                    {
+                        interactable.interactPlayer = player;
+                    }
+                    
                     interactable.Interact();
                 }
                 break;

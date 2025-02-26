@@ -48,5 +48,6 @@ public class ItemManager : MonoBehaviour
 
         SpawnItem.ItemType = ItemBase.EItemType.NoUseAble;
         SpawnWorldItem.SetItem(SpawnItem);
+        SpawnWorldItem.bRandSet = false;
     }
 }
