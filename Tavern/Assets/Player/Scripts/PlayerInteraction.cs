@@ -38,23 +38,26 @@ public class PlayerInteraction : MonoBehaviour
 
     private void CheckInteractable()
     {
-        Ray ray = cam.ViewportPointToRay(Vector3.one/2f);
-        RaycastHit hit;
-
-        bool foundInteractable = false;
-        if(Physics.Raycast(ray, out hit, interactionDistance))
+        if(cam)
         {
-            Interactable interactable = hit.collider.GetComponent<Interactable>();
-            
-            if(interactable != null)
-            { 
-                interactionText.text = interactable.GetInteractingDescription();
-                HandleInteraction(interactable);
-                foundInteractable = true;
-                progressBarUI.SetActive(interactable.interactionType == Interactable.InteractionType.Hold);
+            Ray ray = cam.ViewportPointToRay(Vector3.one / 2f);
+            RaycastHit hit;
+
+            bool foundInteractable = false;
+            if (Physics.Raycast(ray, out hit, interactionDistance))
+            {
+                Interactable interactable = hit.collider.GetComponent<Interactable>();
+
+                if (interactable != null)
+                {
+                    interactionText.text = interactable.GetInteractingDescription();
+                    HandleInteraction(interactable);
+                    foundInteractable = true;
+                    progressBarUI.SetActive(interactable.interactionType == Interactable.InteractionType.Hold);
+                }
             }
+            interactionCanvas.SetActive(foundInteractable);
         }
-        interactionCanvas.SetActive(foundInteractable);
     }
 
     void HandleInteraction(Interactable interactable)
