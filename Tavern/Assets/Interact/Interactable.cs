@@ -7,8 +7,7 @@ public abstract class Interactable : MonoBehaviour
     {
         Press,
         Hold,
-        UIClick,
-        UIDrag,
+        UIPop,
     }
 
     public PlayerController interactPlayer;

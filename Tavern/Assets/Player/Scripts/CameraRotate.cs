@@ -19,6 +19,9 @@ public class CameraRotate : MonoBehaviour
 
     private void Update()
     {
+        // ModeController 에서 enable, disable 하는거에 따라 Update 함수 호출 제어
+        if (!enabled) return;
+
         float mouseX = Input.GetAxis("Mouse X") * sensX * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * sensY * Time.deltaTime;
 
