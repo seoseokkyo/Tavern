@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static UnityEditor.Timeline.Actions.MenuPriority;
+using System;
 
 public class InventoryComp : MonoBehaviour
 {
@@ -48,9 +49,9 @@ public class InventoryComp : MonoBehaviour
         for (int i = 0; i < inventory.Count; i++)
         {
             string strTemp = "";
-            if (inventory[i] != null)
+            if (CheckItem(i) != null)
             {
-                strTemp = $"{i} : {inventory[i].CurrentItemData.itemName}, ";
+                strTemp = $"{i} : {CheckItem(i).CurrentItemData.itemName}, ";
             }
             else
             {
@@ -71,6 +72,27 @@ public class InventoryComp : MonoBehaviour
 
         for (int i = 0; i < inventory.Count; i++)
         {
+            if (inventory[i] == null)
+                continue;
+
+            if (inventory[i].CurrentItemData.itemName == addItem.CurrentItemData.itemName &&
+                inventory[i].CurrentItemData.itemCount < inventory[i].CurrentItemData.itemCountLimit)
+            {
+                int val = Math.Min(addItem.CurrentItemData.itemCount, inventory[i].CurrentItemData.itemCountLimit - inventory[i].CurrentItemData.itemCount);
+                inventory[i].CurrentItemData.itemCount = inventory[i].CurrentItemData.itemCount + val;
+                addItem.CurrentItemData.itemCount = addItem.CurrentItemData.itemCount - val;
+                bCheck = true;
+
+                if (addItem.CurrentItemData.itemCount == 0)
+                    break;
+            }
+        }
+
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            if (addItem.CurrentItemData.itemCount == 0)
+                break;
+
             if (inventory[i] == null)
             {
                 inventory[i] = addItem;

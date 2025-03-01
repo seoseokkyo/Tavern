@@ -4,11 +4,13 @@ using UnityEngine;
 public struct ItemData
 {
     public string itemName;
+    public string itemDescription;
     public Texture2D itemIcon;
     public MeshFilter itemMeshFilter;
     public MeshRenderer itemMesh;
     public int itemID;
-    public string itemDescription;
+    public int itemCount;
+    public int itemCountLimit;
 }
 
 [System.Serializable]

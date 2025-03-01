@@ -14,51 +14,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - itemName: WaterMelon
+    itemDescription: This is Watermelon
     itemIcon: {fileID: 2800000, guid: 96842c5c616631244a6856c6059c3df8, type: 3}
     itemMeshFilter: {fileID: 3300000, guid: 7977e423937da9b48aac1866c67bb5be, type: 3}
     itemMesh: {fileID: 2300000, guid: 7977e423937da9b48aac1866c67bb5be, type: 3}
     itemID: 1
-    itemDescription: This is Watermelon
-    test: {fileID: 0}
+    itemCount: 1
+    itemCountLimit: 5
   - itemName: Cherry
+    itemDescription: This is Cherry
     itemIcon: {fileID: 2800000, guid: 5ab63791388d7a247b7003efc6e00047, type: 3}
     itemMeshFilter: {fileID: 3300000, guid: da4eeef492c0d1842963d6576330682d, type: 3}
     itemMesh: {fileID: 2300000, guid: da4eeef492c0d1842963d6576330682d, type: 3}
     itemID: 2
-    itemDescription: This is Cherry
-    test: {fileID: 0}
+    itemCount: 1
+    itemCountLimit: 5
   - itemName: Banana
+    itemDescription: This is Banana
     itemIcon: {fileID: 2800000, guid: e7897366f81aa944faf55a0d665b86c8, type: 3}
     itemMeshFilter: {fileID: 3300000, guid: 461f0170c82b53340a9812199b63bbd4, type: 3}
     itemMesh: {fileID: 2300000, guid: 461f0170c82b53340a9812199b63bbd4, type: 3}
     itemID: 3
-    itemDescription: This is Banana
-    test: {fileID: 0}
+    itemCount: 1
+    itemCountLimit: 5
   - itemName: Cheese
+    itemDescription: This is Cheese
     itemIcon: {fileID: 2800000, guid: 6a8b39bf05eff3e4194764cbaf554d4d, type: 3}
     itemMeshFilter: {fileID: 3300000, guid: 47365cc78e5cfad41badc534e3d2b7e1, type: 3}
     itemMesh: {fileID: 2300000, guid: 47365cc78e5cfad41badc534e3d2b7e1, type: 3}
     itemID: 4
-    itemDescription: This is Cheese
-    test: {fileID: 0}
+    itemCount: 1
+    itemCountLimit: 5
   - itemName: Hamburger
+    itemDescription: This is Hamburger
     itemIcon: {fileID: 2800000, guid: 016780dacb8385946a8db5555128d728, type: 3}
     itemMeshFilter: {fileID: 3300000, guid: 54b107e50acd7e24b96d7de887c68833, type: 3}
     itemMesh: {fileID: 2300000, guid: 54b107e50acd7e24b96d7de887c68833, type: 3}
     itemID: 5
-    itemDescription: This is Hamburger
-    test: {fileID: 0}
+    itemCount: 1
+    itemCountLimit: 5
   - itemName: Hotdog
+    itemDescription: This is Hotdog
     itemIcon: {fileID: 2800000, guid: d560e86ea0764404c958031a0d392db0, type: 3}
     itemMeshFilter: {fileID: 3300000, guid: fdc7d8dffa381b54cb7740b8761d54c0, type: 3}
     itemMesh: {fileID: 2300000, guid: fdc7d8dffa381b54cb7740b8761d54c0, type: 3}
     itemID: 6
-    itemDescription: This is Hotdog
-    test: {fileID: 0}
+    itemCount: 1
+    itemCountLimit: 5
   - itemName: Olive
+    itemDescription: This is Olive
     itemIcon: {fileID: 2800000, guid: 2b9bf257f73dcf74b8048b2af1cb2bee, type: 3}
     itemMeshFilter: {fileID: 3300000, guid: bd232805ec57aa245a81c2df3f69f66a, type: 3}
     itemMesh: {fileID: 2300000, guid: bd232805ec57aa245a81c2df3f69f66a, type: 3}
     itemID: 7
-    itemDescription: This is Olive
-    test: {fileID: 0}
+    itemCount: 1
+    itemCountLimit: 5

@@ -76,11 +76,11 @@ public class InventoryUI : MonoBehaviour
             {
                 if (PlayerInventory.CheckItem(i) != null)
                 {
-                    TempItemView.InitData(PlayerInventory.CheckItem(i).CurrentItemData.itemIcon, ContentTransform);
+                    TempItemView.InitData(PlayerInventory.CheckItem(i).CurrentItemData.itemIcon, ContentTransform, PlayerInventory.CheckItem(i).CurrentItemData.itemCount);
                 }
                 else
                 {
-                    TempItemView.InitData(EmptyIcon, ContentTransform);
+                    TempItemView.InitData(EmptyIcon, ContentTransform, 0);
                 }
             }
 

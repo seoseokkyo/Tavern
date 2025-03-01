@@ -1,13 +1,16 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemUI : MonoBehaviour
 {
     public Image ItemViewImage;
+    public Image ItemCountbackground;
+    public TextMeshProUGUI ItemCount;
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -16,9 +19,20 @@ public class ItemUI : MonoBehaviour
 
     }
 
-    public void InitData(Texture2D itemIcon, Transform parentTransform)
+    public void InitData(Texture2D itemIcon, Transform parentTransform, int itemCount)
     {
-        ItemViewImage = GetComponent<Image>();
+        if (itemCount > 1)
+        {
+            ItemCountbackground.enabled = true;
+
+            ItemCount.text = itemCount.ToString();
+            ItemCount.enabled = true;
+        }
+        else
+        {
+            ItemCountbackground.enabled = false;
+            ItemCount.enabled = false;
+        }
 
         if (ItemViewImage != null)
         {
