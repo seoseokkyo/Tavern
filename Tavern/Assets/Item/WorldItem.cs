@@ -20,6 +20,9 @@ public class WorldItem : Interactable
 
     void Start()
     {
+        WorldItemMeshFilter = GetComponent<MeshFilter>();
+        WorldItemMesh = GetComponent<MeshRenderer>();
+
         if (bRandSet)
         {
             item.RandDataSet();
@@ -27,9 +30,6 @@ public class WorldItem : Interactable
             WorldItemMeshFilter.sharedMesh = item.CurrentItemData.itemMeshFilter.sharedMesh;
             WorldItemMesh.sharedMaterials = item.CurrentItemData.itemMesh.sharedMaterials;
         }
-
-        WorldItemMeshFilter = GetComponent<MeshFilter>();
-        WorldItemMesh = GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame

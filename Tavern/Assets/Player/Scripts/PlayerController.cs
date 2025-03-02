@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     {
         PlayerInventory = GetComponent<InventoryComp>();
 
+        // 인벤토리(퀵슬롯) 사이즈
         PlayerInventory.InventoryInitialize(10);
     }
 
@@ -19,17 +20,19 @@ public class PlayerController : MonoBehaviour
     {
         if (UnityEngine.Input.GetButtonDown("DropItem"))
         {
+            // 인벤토리에서 아이템을 빼오는 코드
             ItemBase item = null;
             for (int i = 0; i < PlayerInventory.GetInventorySize(); i++)
             {
-                if(PlayerInventory.CheckItem(i) != null)
+                if (PlayerInventory.CheckItem(i) != null)
                 {
                     item = PlayerInventory.PopItem(i);
                     break;
                 }
-            }    
-            
-            if(item != null)
+            }
+
+            // 빼온 아이템을 월드에 스폰하는 코드
+            if (item != null)
             {
                 Vector3 Position = gameObject.transform.position;
                 Quaternion Rotation = new Quaternion();
@@ -38,6 +41,13 @@ public class PlayerController : MonoBehaviour
 
                 ItemManager.Instance.ItemSpawn(item, Position, Rotation);
             }
+        }
+
+        if (UnityEngine.Input.GetButtonDown("InventoryOpen"))
+        {
+            var modeCon = gameObject.GetComponent<ModeController>();
+
+            gameObject.GetComponent<ModeController>().SetMode(!modeCon.GetMode());
         }
     }
 }

@@ -43,4 +43,9 @@ public class ModeController : MonoBehaviour
             Cursor.visible = false;
         }
     }
+
+    public bool GetMode()
+    {
+        return isUIMode;
+    }
 }

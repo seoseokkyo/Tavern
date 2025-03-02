@@ -223,6 +223,8 @@ GameObject:
   - component: {fileID: 4260455881058660544}
   - component: {fileID: 1631312731395527304}
   - component: {fileID: 6194750302899437499}
+  - component: {fileID: 5620281841338839304}
+  - component: {fileID: -4055894498186084030}
   m_Layer: 5
   m_Name: ItemUI
   m_TagString: Untagged
@@ -248,7 +250,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 815.7803, y: 446.56573}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4260455881058660544
@@ -304,6 +306,32 @@ MonoBehaviour:
   ItemViewImage: {fileID: 1631312731395527304}
   ItemCountbackground: {fileID: 5770196241880600285}
   ItemCount: {fileID: 3495477778223837033}
+--- !u!114 &5620281841338839304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5784237410668640409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d12417be6278eb4aae0cf41fe43a6f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDragParent: {fileID: 8483912811154599477, guid: 1ada21c56a300d244bc84bb92dc8c3be, type: 3}
+  startParent: {fileID: 0}
+--- !u!225 &-4055894498186084030
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5784237410668640409}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8493949972224330078
 GameObject:
   m_ObjectHideFlags: 0

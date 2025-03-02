@@ -4,7 +4,8 @@ using UnityEngine;
 public class InventoryUI : MonoBehaviour
 {
     public Transform ContentTransform;
-    public GameObject ItemView;
+    public GameObject ItemSlotUI;
+    public GameObject ItemUI;
 
     public Texture2D EmptyIcon;
 
@@ -33,16 +34,6 @@ public class InventoryUI : MonoBehaviour
 
     void ClearList()
     {
-        Debug.Log($"ItemViewList Size : {ItemViewList.Count - 1}");
-
-        for (int i = ItemViewList.Count - 1; i >= 0; i--)
-        {
-            GameObject temp = ItemViewList[i];
-
-            ItemViewList.RemoveAt(i);
-            Destroy(temp);
-        }
-
         int iCount = ContentTransform.childCount;
         for (int i = iCount - 1; i >= 0; i--)
         {
@@ -50,12 +41,18 @@ public class InventoryUI : MonoBehaviour
 
             if (temp != null)
             {
-                var ItemUITemp = temp.GetComponent<ItemUI>();
-
-                if (ItemUITemp != null)
+                var ItemSlotUITemp = temp.GetComponent<ItemSlotUI>();
+                if (ItemSlotUITemp != null)
                 {
                     Destroy(temp.gameObject);
                 }
+
+                //var ItemUITemp = temp.GetComponent<ItemUI>();
+
+                //if (ItemUITemp != null)
+                //{
+                //    Destroy(temp.gameObject);
+                //}
             }
         }
     }
@@ -64,27 +61,35 @@ public class InventoryUI : MonoBehaviour
     {
         ClearList();
 
-        Debug.Log($"Inventory Size : {PlayerInventory.GetInventorySize()}");
-
         for (int i = 0; i < PlayerInventory.GetInventorySize(); i++)
         {
-            GameObject prefab = Instantiate(ItemView);
+            GameObject instItemSlotUI = Instantiate(ItemSlotUI);
+            instItemSlotUI.transform.SetParent(ContentTransform);
+            ItemSlotUI TempItemSlotUI = instItemSlotUI.GetComponent<ItemSlotUI>();
+            TempItemSlotUI.SlotIndex = i;
 
-            ItemUI TempItemView = prefab.GetComponent<ItemUI>();
+            GameObject instItemUI = Instantiate(ItemUI);
+            ItemUI TempItemView = instItemUI.GetComponent<ItemUI>();
+            
 
             if (TempItemView != null)
             {
                 if (PlayerInventory.CheckItem(i) != null)
                 {
-                    TempItemView.InitData(PlayerInventory.CheckItem(i).CurrentItemData.itemIcon, ContentTransform, PlayerInventory.CheckItem(i).CurrentItemData.itemCount);
+                    TempItemView.InitData(PlayerInventory.CheckItem(i).CurrentItemData.itemIcon, instItemSlotUI.transform, PlayerInventory.CheckItem(i).CurrentItemData.itemCount, i);
                 }
-                else
-                {
-                    TempItemView.InitData(EmptyIcon, ContentTransform, 0);
-                }
+                //else
+                //{
+                //    TempItemView.InitData(EmptyIcon, instItemSlotUI.transform, 0);
+                //}
             }
 
-            ItemViewList.Add(prefab);
+            ItemViewList.Add(instItemUI);
         }
+    }
+    public void SwapItemFromUI(int SwapTargetIndexX, int SwapTargetIndexY)
+    {
+        // 나중에 슬롯이랑 아이템UI 완성 되면 실제 아이템이 있는 슬롯인지 확인하는거 추가
+        PlayerInventory.SwapItemByIndex(SwapTargetIndexX, SwapTargetIndexY);
     }
 }

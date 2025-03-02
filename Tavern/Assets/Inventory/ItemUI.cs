@@ -8,6 +8,8 @@ public class ItemUI : MonoBehaviour
     public Image ItemCountbackground;
     public TextMeshProUGUI ItemCount;
 
+    public int ItemIndex;
+
     void Start()
     {
 
@@ -19,8 +21,10 @@ public class ItemUI : MonoBehaviour
 
     }
 
-    public void InitData(Texture2D itemIcon, Transform parentTransform, int itemCount)
+    public void InitData(Texture2D itemIcon, Transform parentTransform, int itemCount, int itemIndex)
     {
+        ItemIndex = itemIndex;
+
         if (itemCount > 1)
         {
             ItemCountbackground.enabled = true;

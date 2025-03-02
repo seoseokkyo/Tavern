@@ -13,7 +13,7 @@ public class InventoryComp : MonoBehaviour
     public OnInventoryChanged OnChanged;
 
     public InventoryUI InventoryUI_prefab;
-    public InventoryUI InventoryUI;
+    private InventoryUI InventoryUI;
 
     void Start()
     {
@@ -115,6 +115,16 @@ public class InventoryComp : MonoBehaviour
         inventory[index] = currentItem;
 
         return itemCheck;
+    }
+
+    public void SwapItemByIndex(int SwapTargetIndexX, int SwapTargetIndexY)
+    {
+        ItemBase SwapItem = inventory[SwapTargetIndexX];
+
+        inventory[SwapTargetIndexX] = inventory[SwapTargetIndexY];
+        inventory[SwapTargetIndexY] = SwapItem;
+
+        OnChanged();
     }
 
     public ItemBase CheckItem(int index)
