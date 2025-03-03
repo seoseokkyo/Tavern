@@ -9,6 +9,8 @@ public struct ItemData
     public MeshRenderer itemMesh;
     public int itemID;
     public string itemDescription;
+
+    public CookingRecipe recipe;
 }
 
 [System.Serializable]
