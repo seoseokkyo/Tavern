@@ -11,6 +11,9 @@ public struct ItemData
     public int itemID;
     public int itemCount;
     public int itemCountLimit;
+    public string itemDescription;
+
+    public CookingRecipe recipe;
 }
 
 [System.Serializable]

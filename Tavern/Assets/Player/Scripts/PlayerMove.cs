@@ -16,7 +16,7 @@ public class PlayerMove : MonoBehaviour
     public Rigidbody rb;
 
     public float jumpForce = 3;
-    bool grounded;
+    bool grounded = true;
 
     bool canInteract;
 
@@ -26,6 +26,7 @@ public class PlayerMove : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        rb.isKinematic = true;
         animator = GetComponent<Animator>();
     }
 
@@ -40,7 +41,7 @@ public class PlayerMove : MonoBehaviour
         if (grounded == true && UnityEngine.Input.GetButtonDown("Jump"))
         {
             Jump();
-        }  
+        }
     }
 
     private void Move()
@@ -55,6 +56,7 @@ public class PlayerMove : MonoBehaviour
     private void Jump()
     {
         grounded = false;
+        rb.isKinematic = false;
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
@@ -63,6 +65,7 @@ public class PlayerMove : MonoBehaviour
         if (collision.gameObject.CompareTag("Floor"))
         {
             grounded = true;
+            rb.isKinematic = true;
         }
     }
 }

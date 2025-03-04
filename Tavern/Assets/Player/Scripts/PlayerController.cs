@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
     private InventoryUI PopupInventoryUI;
 
     public Canvas PlayerCanvas;
+    public GameObject selectedRecipe;
+    public GameObject recipe;
+    private SelectedRecipeUI selectedRecipeUI;
+    private RecipeUI recipeUI;
 
     void Start()
     {
@@ -30,6 +34,11 @@ public class PlayerController : MonoBehaviour
 
         PopupInventoryUI.gameObject.SetActive(false);
         PopupInventoryUI.enabled = false;
+
+        selectedRecipeUI = selectedRecipe.GetComponent<SelectedRecipeUI>();
+        selectedRecipeUI.GetInventoryFromController(this);
+        recipeUI = recipe.GetComponent<RecipeUI>();
+        recipeUI.playerController = this;
     }
 
     void Update()
