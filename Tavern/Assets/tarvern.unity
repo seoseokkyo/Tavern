@@ -2157,6 +2157,18 @@ PrefabInstance:
       propertyPath: CookUI
       value: 
       objectReference: {fileID: 400792689}
+    - target: {fileID: 6226858931125996059, guid: 425cb006f2a67644aa19e6025a98f86f, type: 3}
+      propertyPath: recipe
+      value: 
+      objectReference: {fileID: 1346495968770374396, guid: 98689606a9c1dd043b69ac9bdcf6735b, type: 3}
+    - target: {fileID: 6226858931125996059, guid: 425cb006f2a67644aa19e6025a98f86f, type: 3}
+      propertyPath: selectedRecipe
+      value: 
+      objectReference: {fileID: 400792689}
+    - target: {fileID: 6226858931125996059, guid: 425cb006f2a67644aa19e6025a98f86f, type: 3}
+      propertyPath: PopupInventoryUI_Prefab
+      value: 
+      objectReference: {fileID: 3434213305987472323, guid: d43a0a1bfaa83be46aa579d5c98f6163, type: 3}
     - target: {fileID: 6797159655851215098, guid: 425cb006f2a67644aa19e6025a98f86f, type: 3}
       propertyPath: cam
       value: 

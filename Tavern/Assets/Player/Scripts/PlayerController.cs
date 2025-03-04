@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
         // 인벤토리(퀵슬롯) 사이즈
         PlayerInventory.InventoryInitialize(50);
 
+
         PopupInventoryUI = Instantiate(PopupInventoryUI_Prefab);
         PlayerCanvas = FindFirstObjectByType<Canvas>();
         PopupInventoryUI.transform.SetParent(PlayerCanvas.transform, false);
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
 
         PopupInventoryUI.gameObject.SetActive(false);
         PopupInventoryUI.enabled = false;
+
 
         selectedRecipeUI = selectedRecipe.GetComponent<SelectedRecipeUI>();
         selectedRecipeUI.GetInventoryFromController(this);

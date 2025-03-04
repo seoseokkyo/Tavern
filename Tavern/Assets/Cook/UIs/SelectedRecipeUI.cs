@@ -105,11 +105,11 @@ public class SelectedRecipeUI : MonoBehaviour
                         if (tempIngredientView != null)
                         {
 //                            Debug.Log($"Setting Recipe UI for {currentItem.itemName}");
-                            tempIngredientView.InitData(currentItem.itemIcon, contentTransform);
+                            tempIngredientView.InitData(itemDatas.items[j], contentTransform);
                         }
                         else
                         {
-                            tempIngredientView.InitData(emptyIcon, contentTransform);
+                            tempIngredientView.InitData(itemDatas.items[j], contentTransform);
                         }
 
                         prefab.SetActive(true);

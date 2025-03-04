@@ -23,7 +23,7 @@ public class ItemUI : MonoBehaviour
 
     }
 
-    public void InitData(ItemBase itemData, Transform parentTransform, int itemIndex)
+    public void InitData(ItemBase itemData, Transform parentTransform, int itemIndex = 0)
     {
         CurrentItemBase = itemData;
         ItemIndex = itemIndex;
@@ -48,6 +48,41 @@ public class ItemUI : MonoBehaviour
                 Rect rect = new Rect(0, 0, Mathf.Min(CurrentItemBase.CurrentItemData.itemIcon.width, 500), Mathf.Min(CurrentItemBase.CurrentItemData.itemIcon.height, 500));
 
                 var temp = Sprite.Create(CurrentItemBase.CurrentItemData.itemIcon, rect, new Vector2(0.5f, 0.5f));
+
+                if (temp != null)
+                {
+                    ItemViewImage.sprite = temp;
+
+                    transform.SetParent(parentTransform);
+                }
+            }
+        }
+    }
+
+    public void InitData(ItemData itemData, Transform parentTransform, int itemIndex = 0)
+    {
+        ItemIndex = itemIndex;
+
+        if (itemData.itemCount > 1)
+        {
+            ItemCountbackground.enabled = true;
+
+            ItemCount.text = itemData.itemCount.ToString();
+            ItemCount.enabled = true;
+        }
+        else
+        {
+            ItemCountbackground.enabled = false;
+            ItemCount.enabled = false;
+        }
+
+        if (ItemViewImage != null)
+        {
+            if (itemData.itemIcon != null && ItemViewImage != null)
+            {
+                Rect rect = new Rect(0, 0, Mathf.Min(itemData.itemIcon.width, 500), Mathf.Min(itemData.itemIcon.height, 500));
+
+                var temp = Sprite.Create(itemData.itemIcon, rect, new Vector2(0.5f, 0.5f));
 
                 if (temp != null)
                 {
