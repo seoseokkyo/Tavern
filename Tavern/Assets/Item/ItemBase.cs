@@ -31,6 +31,8 @@ public class ItemBase
 
     public ItemData CurrentItemData;
 
+    public InventoryComp OwnerInventory;
+
     public void RandDataSet()
     {
         int Size = ItemManager.Instance.items.Count;

@@ -20,6 +20,7 @@ public class InventoryComp : MonoBehaviour
         InventoryUI = Instantiate(InventoryUI_prefab);
 
         InventoryUI.SetOwnerInventory(this);
+        InventoryUI.SlotNum = 10;
 
         Canvas canvas = FindFirstObjectByType<Canvas>(); // 씬에 Canvas가 하나만 있을 경우
 
@@ -96,6 +97,7 @@ public class InventoryComp : MonoBehaviour
             if (inventory[i] == null)
             {
                 inventory[i] = addItem;
+                inventory[i].OwnerInventory = this;
                 bCheck = true;
                 break;
             }
@@ -117,14 +119,17 @@ public class InventoryComp : MonoBehaviour
         return itemCheck;
     }
 
-    public void SwapItemByIndex(int SwapTargetIndexX, int SwapTargetIndexY)
+    public void SwapItemByIndex(InventoryComp InventoryX, InventoryComp InventoryY, int SwapTargetIndexX, int SwapTargetIndexY)
     {
-        ItemBase SwapItem = inventory[SwapTargetIndexX];
+        if (null != InventoryX && null != InventoryY)
+        {
+            var SwapItem = InventoryX.inventory[SwapTargetIndexX];
 
-        inventory[SwapTargetIndexX] = inventory[SwapTargetIndexY];
-        inventory[SwapTargetIndexY] = SwapItem;
+            InventoryX.inventory[SwapTargetIndexX] = InventoryY.inventory[SwapTargetIndexY];
+            InventoryY.inventory[SwapTargetIndexY] = SwapItem;
 
-        OnChanged();
+            OnChanged();
+        }
     }
 
     public ItemBase CheckItem(int index)

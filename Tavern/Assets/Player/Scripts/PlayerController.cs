@@ -8,12 +8,28 @@ public class PlayerController : MonoBehaviour
 {
     public InventoryComp PlayerInventory;
 
+    public InventoryUI PopupInventoryUI_Prefab;
+    private InventoryUI PopupInventoryUI;
+
+    public Canvas PlayerCanvas;
+
     void Start()
     {
         PlayerInventory = GetComponent<InventoryComp>();
 
         // ¿Œ∫•≈‰∏Æ(ƒ¸ΩΩ∑‘) ªÁ¿Ã¡Ó
-        PlayerInventory.InventoryInitialize(10);
+        PlayerInventory.InventoryInitialize(50);
+
+        PopupInventoryUI = Instantiate(PopupInventoryUI_Prefab);
+        PlayerCanvas = FindFirstObjectByType<Canvas>();
+        PopupInventoryUI.transform.SetParent(PlayerCanvas.transform, false);
+
+
+        PopupInventoryUI.SetOwnerInventory(PlayerInventory);
+        PopupInventoryUI.SlotNum = 50;
+
+        PopupInventoryUI.gameObject.SetActive(false);
+        PopupInventoryUI.enabled = false;
     }
 
     void Update()
@@ -45,9 +61,14 @@ public class PlayerController : MonoBehaviour
 
         if (UnityEngine.Input.GetButtonDown("InventoryOpen"))
         {
+            PopupInventoryUI.enabled = PopupInventoryUI.enabled ? false : true;
+
+            PopupInventoryUI.gameObject.SetActive(PopupInventoryUI.enabled);
+
             var modeCon = gameObject.GetComponent<ModeController>();
 
             gameObject.GetComponent<ModeController>().SetMode(!modeCon.GetMode());
+
         }
     }
 }

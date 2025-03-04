@@ -6,6 +6,8 @@ public class ItemSlotUI : MonoBehaviour, IDropHandler
 {
     public int SlotIndex;
 
+    public InventoryComp OwnerInventory;
+
     GameObject Icon()
     {
         // 슬롯에 아이템(자식 트랜스폼)이 있으면 아이템의 gameobject를 리턴
@@ -23,30 +25,8 @@ public class ItemSlotUI : MonoBehaviour, IDropHandler
     {
         ItemUI DragItemUI = ItemDrag.beingDraggedIcon.GetComponent<ItemUI>();
 
-        // 슬롯이 비어있다면 Icon을 자식으로 추가 위치변경 함.
-        if (Icon() == null)
-        {
-            ItemDrag.beingDraggedIcon.transform.SetParent(transform);
-            ItemDrag.beingDraggedIcon.transform.position = transform.position;
+        GetComponentInParent<InventoryUI>().SwapItemFromUI(OwnerInventory, DragItemUI.CurrentItemBase.OwnerInventory, SlotIndex, DragItemUI.ItemIndex);
 
-            if (null != GetComponentInParent<InventoryUI>())
-            {
-                GetComponentInParent<InventoryUI>().SwapItemFromUI(SlotIndex, DragItemUI.ItemIndex);
-                Debug.Log("InventoryUI");
-            }
-        }
-        else
-        {
-            ItemUI CurrentItemUI =  Icon().gameObject.GetComponent<ItemUI>();
-
-            if(null != CurrentItemUI && null != DragItemUI)
-            {
-                if (null != GetComponentInParent<InventoryUI>())
-                {
-                    GetComponentInParent<InventoryUI>().SwapItemFromUI(CurrentItemUI.ItemIndex, DragItemUI.ItemIndex);
-                    Debug.Log("InventoryUI");
-                }
-            }
-        }
+        Destroy(DragItemUI.gameObject);
     }
 }

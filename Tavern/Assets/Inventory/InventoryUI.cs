@@ -13,6 +13,8 @@ public class InventoryUI : MonoBehaviour
 
     private InventoryComp PlayerInventory;
 
+    public int ViewStartNum = 0;
+    public int SlotNum;
 
     void Start()
     {
@@ -47,12 +49,12 @@ public class InventoryUI : MonoBehaviour
                     Destroy(temp.gameObject);
                 }
 
-                //var ItemUITemp = temp.GetComponent<ItemUI>();
+                var ItemUITemp = temp.GetComponent<ItemUI>();
 
-                //if (ItemUITemp != null)
-                //{
-                //    Destroy(temp.gameObject);
-                //}
+                if (ItemUITemp != null)
+                {
+                    Destroy(temp.gameObject);
+                }
             }
         }
     }
@@ -61,12 +63,13 @@ public class InventoryUI : MonoBehaviour
     {
         ClearList();
 
-        for (int i = 0; i < PlayerInventory.GetInventorySize(); i++)
+        for (int i = ViewStartNum; i < SlotNum; i++)
         {
             GameObject instItemSlotUI = Instantiate(ItemSlotUI);
             instItemSlotUI.transform.SetParent(ContentTransform);
             ItemSlotUI TempItemSlotUI = instItemSlotUI.GetComponent<ItemSlotUI>();
             TempItemSlotUI.SlotIndex = i;
+            TempItemSlotUI.OwnerInventory = PlayerInventory;
 
             GameObject instItemUI = Instantiate(ItemUI);
             ItemUI TempItemView = instItemUI.GetComponent<ItemUI>();
@@ -76,7 +79,7 @@ public class InventoryUI : MonoBehaviour
             {
                 if (PlayerInventory.CheckItem(i) != null)
                 {
-                    TempItemView.InitData(PlayerInventory.CheckItem(i).CurrentItemData.itemIcon, instItemSlotUI.transform, PlayerInventory.CheckItem(i).CurrentItemData.itemCount, i);
+                    TempItemView.InitData(PlayerInventory.CheckItem(i), instItemSlotUI.transform, i);
                 }
                 //else
                 //{
@@ -87,9 +90,9 @@ public class InventoryUI : MonoBehaviour
             ItemViewList.Add(instItemUI);
         }
     }
-    public void SwapItemFromUI(int SwapTargetIndexX, int SwapTargetIndexY)
+    public void SwapItemFromUI(InventoryComp InventoryX, InventoryComp InventoryY, int SwapTargetIndexX, int SwapTargetIndexY)
     {
         // 나중에 슬롯이랑 아이템UI 완성 되면 실제 아이템이 있는 슬롯인지 확인하는거 추가
-        PlayerInventory.SwapItemByIndex(SwapTargetIndexX, SwapTargetIndexY);
+        PlayerInventory.SwapItemByIndex(InventoryX, InventoryY, SwapTargetIndexX, SwapTargetIndexY);
     }
 }

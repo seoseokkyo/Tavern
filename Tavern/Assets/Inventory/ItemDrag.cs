@@ -30,6 +30,10 @@ public class ItemDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         // Drop이벤트를 정상적으로 감지하기 위해 Icon RectTransform을 무시 
         GetComponent<CanvasGroup>().blocksRaycasts = false;
 
+        var Player = FindFirstObjectByType<PlayerController>();
+
+        onDragParent = Player.PlayerCanvas.transform;
+
         // 드래그 시작할때 부모transform을 변경
         transform.SetParent(onDragParent);
     }
@@ -51,7 +55,7 @@ public class ItemDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         // 혹 드랍이벤트에 따라 부모가 변경되지 않고 
         // 이동중에 할당 되었던 부모 transform과 같다면
         // Icon의 부모와 위치를 원복한다.
-        if (transform.parent == startParent)
+        if (transform.parent == onDragParent)
         {
             transform.position = startPosition;
             transform.SetParent(startParent);

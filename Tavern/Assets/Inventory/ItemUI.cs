@@ -10,6 +10,8 @@ public class ItemUI : MonoBehaviour
 
     public int ItemIndex;
 
+    public ItemBase CurrentItemBase;
+
     void Start()
     {
 
@@ -21,15 +23,16 @@ public class ItemUI : MonoBehaviour
 
     }
 
-    public void InitData(Texture2D itemIcon, Transform parentTransform, int itemCount, int itemIndex)
+    public void InitData(ItemBase itemData, Transform parentTransform, int itemIndex)
     {
+        CurrentItemBase = itemData;
         ItemIndex = itemIndex;
 
-        if (itemCount > 1)
+        if (CurrentItemBase.CurrentItemData.itemCount > 1)
         {
             ItemCountbackground.enabled = true;
 
-            ItemCount.text = itemCount.ToString();
+            ItemCount.text = CurrentItemBase.CurrentItemData.itemCount.ToString();
             ItemCount.enabled = true;
         }
         else
@@ -40,11 +43,11 @@ public class ItemUI : MonoBehaviour
 
         if (ItemViewImage != null)
         {
-            if (itemIcon != null && ItemViewImage != null)
+            if (CurrentItemBase.CurrentItemData.itemIcon != null && ItemViewImage != null)
             {
-                Rect rect = new Rect(0, 0, Mathf.Min(itemIcon.width, 500), Mathf.Min(itemIcon.height, 500));
+                Rect rect = new Rect(0, 0, Mathf.Min(CurrentItemBase.CurrentItemData.itemIcon.width, 500), Mathf.Min(CurrentItemBase.CurrentItemData.itemIcon.height, 500));
 
-                var temp = Sprite.Create(itemIcon, rect, new Vector2(0.5f, 0.5f));
+                var temp = Sprite.Create(CurrentItemBase.CurrentItemData.itemIcon, rect, new Vector2(0.5f, 0.5f));
 
                 if (temp != null)
                 {
