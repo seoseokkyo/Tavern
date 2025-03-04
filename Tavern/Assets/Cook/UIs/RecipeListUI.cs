@@ -72,7 +72,7 @@ public class CookingUI : MonoBehaviour
                     Debug.Log("RECIPE ADDING ERROR");
                 }
 
-                prefab.SetActive(true);
+                //prefab.SetActive(true);
                 recipeViewList.Add(prefab);
             }
         }

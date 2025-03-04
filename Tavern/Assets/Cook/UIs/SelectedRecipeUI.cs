@@ -96,7 +96,7 @@ public class SelectedRecipeUI : MonoBehaviour
                 // check itemdatas
                 for (int j = 0; j < itemDatas.items.Count; j++)
                 {
-                    ItemData currentItem = itemDatas.items[i];
+                    ItemData currentItem = itemDatas.items[j];
                     if (current.itemName == currentItem.itemName)
                     {
                         GameObject prefab = Instantiate(ingredientView);
