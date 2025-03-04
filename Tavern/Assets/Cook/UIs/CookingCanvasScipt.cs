@@ -10,9 +10,7 @@ public class CookingCanvasScipt : MonoBehaviour
     
     void Start()
     {
-        pc = player.GetComponent<PlayerController>();
-        selectedRecipeUI = GetComponentInChildren<SelectedRecipeUI>();
-        recipeListUI = GetComponentInChildren<CookingUI>();
+
     }
 
     void Update()
@@ -22,6 +20,10 @@ public class CookingCanvasScipt : MonoBehaviour
 
     public void SetUIs()
     {
+        pc = player.GetComponent<PlayerController>();
+        selectedRecipeUI = GetComponentInChildren<SelectedRecipeUI>();
+        recipeListUI = GetComponentInChildren<CookingUI>();
+
         recipeListUI.SetRecipeList();
         selectedRecipeUI.OnSelect("WaterMelon", pc.PlayerInventory);
     }
