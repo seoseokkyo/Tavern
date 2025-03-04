@@ -2674,6 +2674,10 @@ PrefabInstance:
       propertyPath: InventoryUI_prefab
       value: 
       objectReference: {fileID: 5248130043337331258, guid: 1ada21c56a300d244bc84bb92dc8c3be, type: 3}
+    - target: {fileID: 6226858931125996059, guid: 425cb006f2a67644aa19e6025a98f86f, type: 3}
+      propertyPath: PopupInventoryUI_Prefab
+      value: 
+      objectReference: {fileID: 3434213305987472323, guid: d43a0a1bfaa83be46aa579d5c98f6163, type: 3}
     - target: {fileID: 6797159655851215098, guid: 425cb006f2a67644aa19e6025a98f86f, type: 3}
       propertyPath: cam
       value: 
