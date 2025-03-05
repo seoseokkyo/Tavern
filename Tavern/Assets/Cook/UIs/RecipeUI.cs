@@ -20,7 +20,10 @@ public class RecipeUI : MonoBehaviour
 
     void Start()
     {
-        Selectbutton.onClick.AddListener(OnClickRecipe);
+        if(Selectbutton != null)
+        {
+            Selectbutton.onClick.AddListener(OnClickRecipe);
+        }
     }
 
     void Update()
@@ -40,12 +43,14 @@ public class RecipeUI : MonoBehaviour
     private void SetName(ItemData itemData)
     {
         itemNameText.text = itemData.itemName;
+        itemNameText.enabled = true;
     }
 
     private void SetPrice(ItemData itemData)
     {
         // °¡°Ý °ª
         //itemPriceText.text = itemData.price;
+        itemPriceText.enabled = true;
     }
 
     private void SetIcon(ItemData itemData)
@@ -55,6 +60,7 @@ public class RecipeUI : MonoBehaviour
         var tempSprite = Sprite.Create(itemData.itemIcon, rect, new Vector2(0.5f, 0.5f));
 
         itemIcon.sprite = tempSprite;
+        itemIcon.enabled = true;
     }
 
     private void OnClickRecipe()

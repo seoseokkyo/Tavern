@@ -52,7 +52,7 @@ public class ItemUI : MonoBehaviour
                 if (temp != null)
                 {
                     ItemViewImage.sprite = temp;
-
+                    ItemViewImage.enabled = true;
                     transform.SetParent(parentTransform);
                 }
             }
