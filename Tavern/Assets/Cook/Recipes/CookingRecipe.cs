@@ -17,4 +17,5 @@ public class CookingRecipe : ScriptableObject
 
     public string resultItemName;
     public ItemDatas result;
+    public float cookingTime;
 }

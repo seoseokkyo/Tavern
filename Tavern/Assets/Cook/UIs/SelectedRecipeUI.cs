@@ -1,5 +1,6 @@
 using NUnit.Framework.Interfaces;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,6 +32,12 @@ public class SelectedRecipeUI : MonoBehaviour
     private bool canCook = false;
     private bool foodSelected = false;
 
+    private ItemData currentRecipe;
+
+    public float cookingTime;
+    public UnityEngine.UI.Slider cookingTimerSlider;
+    public TextMeshProUGUI cookingStatus;
+
     void Start()
     {
         //    if (player != null)
@@ -44,9 +51,16 @@ public class SelectedRecipeUI : MonoBehaviour
 
     void Update()
     {
-        if(foodSelected == true)
+        if (foodSelected == true && cookButton != null)
         {
             CanCook();
+            // 버튼 활성화
+            cookButton.interactable = true;
+            
+        }
+        else
+        {
+            cookButton.interactable = false;
         }
     }
 
@@ -88,19 +102,20 @@ public class SelectedRecipeUI : MonoBehaviour
 
     public int CheckIngredientFromPlayerInventory(ItemData item)
     {
-        if(inventory != null)
+        int amount = 0;
+        if (inventory != null)
         {
             for(int i = 0; i < inventory.GetInventorySize(); i++)
             {
                 ItemBase temp = inventory.CheckItem(i);
                 if(temp != null && temp.CurrentItemData.itemName == item.itemName)
                 {
-                    return temp.CurrentItemData.itemCount;
+                    amount += temp.CurrentItemData.itemCount;
                 }
             }
         }
 
-        return 0;
+        return amount;
     }
 
     public int CheckRequiredAmount(ItemData ingredient)
@@ -164,6 +179,7 @@ public class SelectedRecipeUI : MonoBehaviour
 
             if(temp.recipe != null && temp.itemName == result)
             {
+                currentRecipe = temp;
                 GameObject prefab = Instantiate(resultItemView);
                 RecipeUI tempRecipeUI = prefab.GetComponent<RecipeUI>();
                 prefab.transform.SetParent(resultTransform, false);
@@ -193,18 +209,18 @@ public class SelectedRecipeUI : MonoBehaviour
     {
         foreach (IngredientAmount idg in selectedRecipe)
         {
-            // 플레이어 인벤토리 확인
-            for (int i = 0; i < inventory.GetInventorySize(); i++)
+            for(int i = 0; i < inventory.GetInventorySize(); i++)
             {
-                ItemBase currentItem = inventory.CheckItem(i);
-                // 재료 발견
-                if (currentItem != null && currentItem.CurrentItemData.itemName == idg.itemName)
+                ItemBase temp = inventory.CheckItem(i);
+                if (temp != null && temp.CurrentItemData.itemName == idg.itemName)
                 {
-                    // 수량 확인
-                    // ..
-                    // 플레이어 Inventory 재료 위치한 idx 반환
-                    canCook = true;
-                    return i;
+                    // 인벤토리 모든 슬롯에서 같은 아이템 수량 확인
+                    int havingCount = CheckIngredientFromPlayerInventory(temp.CurrentItemData);
+                    if(idg.amount - havingCount <= 0)
+                    {
+                        canCook = true;
+                        return i;
+                    }
                 }
             }
         }
@@ -213,26 +229,91 @@ public class SelectedRecipeUI : MonoBehaviour
         return -1;
     }
     
-    // 필요한 재료 리스트 UI 에서 재료가 플레이어 인벤토리에 없으면 조금 칙칙하게 표현하기 위한 기능 부분
-    private void CheckHasIngredients(int ingredientsListIdx)
+    public ItemData FindData(string name)
     {
+        for(int i = 0; i < itemDatas.items.Count; i++)
+        {
+            if (itemDatas.items[i].itemName == name)
+            {
+                return itemDatas.items[i];
+            }
+        }
+
+        // 아무거나 반환..
+        return itemDatas.items[0];
+    }
+
+    public void Cook()
+    {
+        if (cookingStatus != null)
+        {
+            cookingStatus.text = "cooking..";
+            cookingStatus.enabled = true;
+        }
+
+        foreach (IngredientAmount idg in selectedRecipe)
+        {
+            int reqAmount = idg.amount;
+
+            while(reqAmount > 0)
+            {
+                for (int i = 0; i < inventory.GetInventorySize(); i++)
+                {
+                    ItemBase temp = inventory.CheckItem(i);
+                    if (temp != null && temp.CurrentItemData.itemName == idg.itemName)
+                    {
+                        // 인벤토리 모든 슬롯에서 같은 아이템 수량 확인
+                        int havingCount = temp.CurrentItemData.itemCount;
+                        if (reqAmount - havingCount < 0)
+                        {
+                            ItemBase backup = temp;
+                            backup.CurrentItemData.itemCount -= havingCount - reqAmount;
+                            // 갯수 차감한 아이템으로 갈아끼워줌
+                            inventory.PopItem(i);
+                            inventory.AddItem(ref backup);
+                        }
+                        else
+                        {
+                            reqAmount -= havingCount;
+                            inventory.PopItem(i);
+                        }
+                    }
+                }
+            }
+        }
+
+        // 타이머 Start
+        StartTimer();
+
+        // 완성 !
+        string result = $"{currentRecipe.itemName} is Cooked! ";
+        Debug.Log(result);
+
+        cookingStatus.text = "Done!";
 
     }
 
-    public void Cook(int igIdx)
+    private void StartTimer()
     {
-        string strTemp = "";
-        strTemp = $"{inventory.CheckItem(CanCook()).CurrentItemData.itemName}, ";
-        inventory.PopItem(CanCook());
-        Debug.Log(strTemp);
-
+        cookingTime += Time.deltaTime;
+        if(cookingTimerSlider != null)
+        {
+            cookingTimerSlider.value = GetCookingTime();
+        }
+        if (GetCookingTime() > currentRecipe.recipe.cookingTime)
+        {
+            ResetTimer();
+            cookingTimerSlider.value = GetCookingTime();
+        }
     }
+    private void ResetTimer() => cookingTime = 0f;
+    private float GetCookingTime() => cookingTime;
 
     void OnClickCookButton()
     {
         if(canCook)
         {
-            Cook(CanCook());
+            Cook();
         }
     }
 }
