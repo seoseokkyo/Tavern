@@ -51,16 +51,18 @@ public class SelectedRecipeUI : MonoBehaviour
 
     void Update()
     {
-        if (foodSelected == true && cookButton != null)
+        if (foodSelected == true)
         {
             CanCook();
             // 버튼 활성화
-            cookButton.interactable = true;
-            
-        }
-        else
-        {
-            cookButton.interactable = false;
+            if(canCook == true)
+            {
+                cookButton.interactable = true;
+            }
+            else
+            {
+                cookButton.interactable = false;
+            }
         }
     }
 
@@ -284,12 +286,15 @@ public class SelectedRecipeUI : MonoBehaviour
             }
         }
 
+        // 레시피 재료 상태 업데이트
+        OnSelect(currentRecipe.itemName, inventory);
         // 타이머 Start
         StartTimer();
     }
 
     private void StartTimer()
     {
+        cookButton.interactable = false;
         canCook = false;
         foodSelected = false;
         if (cookingTimerSlider != null)
@@ -313,9 +318,7 @@ public class SelectedRecipeUI : MonoBehaviour
         string result = $"{currentRecipe.itemName} is Cooked! ";
         Debug.Log(result);
         cookingStatus.text = "Done!";
-
-        // 레시피 재료 상태 업데이트
-        OnSelect(currentRecipe.itemName, inventory);
+        cookingTimerSlider.value = GetCookingTime() / currentRecipe.recipe.cookingTime;
     }
 
     private void ResetTimer() => cookingTime = 0f;
