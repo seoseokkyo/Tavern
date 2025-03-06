@@ -268,6 +268,7 @@ public class SelectedRecipeUI : MonoBehaviour
                         {
                             ItemBase backup = temp;
                             backup.CurrentItemData.itemCount -= havingCount - reqAmount;
+                            reqAmount -= havingCount;
                             // 갯수 차감한 아이템으로 갈아끼워줌
                             inventory.PopItem(i);
                             inventory.AddItem(ref backup);
@@ -276,6 +277,7 @@ public class SelectedRecipeUI : MonoBehaviour
                         {
                             reqAmount -= havingCount;
                             inventory.PopItem(i);
+                            break;
                         }
                     }
                 }
@@ -284,30 +286,41 @@ public class SelectedRecipeUI : MonoBehaviour
 
         // 타이머 Start
         StartTimer();
-
-        // 완성 !
-        string result = $"{currentRecipe.itemName} is Cooked! ";
-        Debug.Log(result);
-
-        cookingStatus.text = "Done!";
-
     }
 
     private void StartTimer()
     {
-        cookingTime += Time.deltaTime;
-        if(cookingTimerSlider != null)
-        {
-            cookingTimerSlider.value = GetCookingTime();
-        }
-        if (GetCookingTime() > currentRecipe.recipe.cookingTime)
+        canCook = false;
+        foodSelected = false;
+        if (cookingTimerSlider != null)
         {
             ResetTimer();
             cookingTimerSlider.value = GetCookingTime();
+            StartCoroutine(CookingTimerCoroutine());
         }
     }
+
+    private System.Collections.IEnumerator CookingTimerCoroutine()
+    {
+        while(GetCookingTime() < currentRecipe.recipe.cookingTime)
+        {
+            IncreaseTimer();
+            cookingTimerSlider.value = GetCookingTime() / currentRecipe.recipe.cookingTime;
+            yield return null;
+        }
+
+        ResetTimer();
+        string result = $"{currentRecipe.itemName} is Cooked! ";
+        Debug.Log(result);
+        cookingStatus.text = "Done!";
+
+        // 레시피 재료 상태 업데이트
+        OnSelect(currentRecipe.itemName, inventory);
+    }
+
     private void ResetTimer() => cookingTime = 0f;
     private float GetCookingTime() => cookingTime;
+    private void IncreaseTimer() => cookingTime += Time.deltaTime;
 
     void OnClickCookButton()
     {
