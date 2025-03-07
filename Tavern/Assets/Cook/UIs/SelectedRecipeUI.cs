@@ -33,10 +33,13 @@ public class SelectedRecipeUI : MonoBehaviour
     private bool foodSelected = false;
 
     private ItemData currentRecipe;
+    private ItemBase currentResultItem;
 
     public float cookingTime;
     public UnityEngine.UI.Slider cookingTimerSlider;
     public TextMeshProUGUI cookingStatus;
+
+    public GameObject cookingPotObj;
 
     void Start()
     {
@@ -165,6 +168,14 @@ public class SelectedRecipeUI : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    private void SaveResultItemData(string result)
+    {
+        for(int i = 0; i < itemDatas.items.Count; i++)
+        {
+
         }
     }
 
@@ -319,6 +330,9 @@ public class SelectedRecipeUI : MonoBehaviour
         Debug.Log(result);
         cookingStatus.text = "Done!";
         cookingTimerSlider.value = GetCookingTime() / currentRecipe.recipe.cookingTime;
+
+        Interact_CookPot pot = cookingPotObj.GetComponent<Interact_CookPot>();
+        pot.SetSettingCooked(currentRecipe,5);
     }
 
     private void ResetTimer() => cookingTime = 0f;
