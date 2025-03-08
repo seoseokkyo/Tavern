@@ -15,6 +15,8 @@ MonoBehaviour:
   ingredients:
   - itemName: Cherry
     amount: 1
+  - itemName: Banana
+    amount: 1
   resultItemName: WaterMelon
   result: {fileID: 11400000, guid: 97dd72458fdd0f248b94ffe32fac6c82, type: 2}
   cookingTime: 3
