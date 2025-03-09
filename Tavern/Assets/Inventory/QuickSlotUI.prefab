@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 7140892245600963866}
   - component: {fileID: 5248130043337331258}
   m_Layer: 5
-  m_Name: InventoryUI
+  m_Name: QuickSlotUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

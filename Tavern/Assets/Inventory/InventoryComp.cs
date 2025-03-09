@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using static UnityEditor.Timeline.Actions.MenuPriority;
 using System;
+using System.Threading;
 
 public class InventoryComp : MonoBehaviour
 {
@@ -12,24 +13,9 @@ public class InventoryComp : MonoBehaviour
     public delegate void OnInventoryChanged();
     public OnInventoryChanged OnChanged;
 
-    public InventoryUI InventoryUI_prefab;
-    private InventoryUI InventoryUI;
-
     void Start()
     {
-        InventoryUI = Instantiate(InventoryUI_prefab);
-
-        InventoryUI.SetOwnerInventory(this);
-        InventoryUI.SlotNum = 10;
-
-        Canvas canvas = FindFirstObjectByType<Canvas>(); // 씬에 Canvas가 하나만 있을 경우
-
-        InventoryUI.transform.SetParent(canvas.transform, false); // Canvas의 자식으로 설정 (worldPositionStays = false)
-
-        // RectTransform을 사용하여 UI 위치 및 크기 설정 (선택 사항)
-        RectTransform rectTransform = InventoryUI.GetComponent<RectTransform>();
-
-        OnChanged();
+        //OnChanged();
     }
 
     // Update is called once per frame
@@ -103,7 +89,7 @@ public class InventoryComp : MonoBehaviour
             }
         }
 
-        CheckInventory();
+        //CheckInventory();
 
         OnChanged();
 
@@ -119,16 +105,41 @@ public class InventoryComp : MonoBehaviour
         return itemCheck;
     }
 
-    public void SwapItemByIndex(InventoryComp InventoryX, InventoryComp InventoryY, int SwapTargetIndexX, int SwapTargetIndexY)
+    public void SwapItemByIndex(ref InventoryComp InventoryX, ref InventoryComp InventoryY, int SwapTargetIndexX, int SwapTargetIndexY)
     {
         if (null != InventoryX && null != InventoryY)
         {
+            var TestX = InventoryX;
+            var TestY = InventoryY;
+
             var SwapItem = InventoryX.inventory[SwapTargetIndexX];
+            if (null != SwapItem)
+            {
+                SwapItem.OwnerInventory = InventoryY;
+            }
 
             InventoryX.inventory[SwapTargetIndexX] = InventoryY.inventory[SwapTargetIndexY];
             InventoryY.inventory[SwapTargetIndexY] = SwapItem;
 
-            OnChanged();
+            if (null != TestX.inventory[SwapTargetIndexX])
+            {
+                TestX.inventory[SwapTargetIndexX].OwnerInventory = TestX;
+            }
+
+            if (null != TestY.inventory[SwapTargetIndexY])
+            {
+                TestY.inventory[SwapTargetIndexY].OwnerInventory = TestY;
+            }
+
+            if (TestX != TestY)
+            {
+                TestX.OnChanged();
+                TestY.OnChanged();
+            }
+            else
+            {
+                OnChanged();
+            }
         }
     }
 
@@ -151,5 +162,59 @@ public class InventoryComp : MonoBehaviour
     public int GetInventorySize()
     {
         return inventory.Count;
+    }
+
+    public int CountItemByName(string ItemName)
+    {
+        int InventorySize = GetInventorySize();
+
+        int ItemCount = 0;
+
+        for (int i = 0; i < InventorySize; i++)
+        {
+            if (null != inventory[i])
+            {
+                if (inventory[i].CurrentItemData.itemName == ItemName)
+                {
+                    ItemCount += inventory[i].CurrentItemData.itemCount;
+                }
+            }
+        }
+
+        return ItemCount;
+    }
+
+    public bool ConsumeItem(string ItemName, int ConsumeNum)
+    {
+        if (CountItemByName(ItemName) < ConsumeNum)
+        {
+            return false;
+        }
+
+        int InventorySize = GetInventorySize();
+
+        for (int i = 0; i < InventorySize; i++)
+        {
+            if (null != inventory[i] && inventory[i].CurrentItemData.itemName == ItemName)
+            {
+                int val = Math.Min(inventory[i].CurrentItemData.itemCount, ConsumeNum);
+                inventory[i].CurrentItemData.itemCount -= val;
+                ConsumeNum -= val;
+
+                if (inventory[i].CurrentItemData.itemCount <= 0)
+                {
+                    inventory[i] = null;
+                }
+
+                if (ConsumeNum <= 0)
+                {
+                    break;
+                }
+            }
+        }
+
+        OnChanged();
+
+        return true;
     }
 }

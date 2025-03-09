@@ -17,25 +17,36 @@ public class PlayerController : MonoBehaviour
     private SelectedRecipeUI selectedRecipeUI;
     private RecipeUI recipeUI;
 
+    public InventoryUI QuickSlotUI_prefab;
+    private InventoryUI QuickSlotUI;
+
     void Start()
     {
         PlayerInventory = GetComponent<InventoryComp>();
 
-        // 인벤토리(퀵슬롯) 사이즈
+        // 인벤토리 사이즈
         PlayerInventory.InventoryInitialize(50);
 
+        // 플레이어의 캔버스 생성
+        GameObject PlayerCanvasObj = new GameObject("PlayerCanvas");
+        PlayerCanvas = PlayerCanvasObj.AddComponent<Canvas>();
+        PlayerCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
+        // 팝업 형태로 출력되는 인벤토리 UI
         PopupInventoryUI = Instantiate(PopupInventoryUI_Prefab);
-        PlayerCanvas = FindFirstObjectByType<Canvas>();
         PopupInventoryUI.transform.SetParent(PlayerCanvas.transform, false);
 
-
-        PopupInventoryUI.SetOwnerInventory(PlayerInventory);
-        PopupInventoryUI.SlotNum = 50;
+        PopupInventoryUI.SetOwnerInventory(PlayerInventory, 50, 10);
 
         PopupInventoryUI.gameObject.SetActive(false);
         PopupInventoryUI.enabled = false;
 
+        // 퀵슬롯 인벤토리 UI
+        QuickSlotUI = Instantiate(QuickSlotUI_prefab);
+
+        QuickSlotUI.SetOwnerInventory(PlayerInventory);
+
+        QuickSlotUI.transform.SetParent(PlayerCanvas.transform, false); // Canvas의 자식으로 설정 (worldPositionStays = false)
 
         selectedRecipeUI = selectedRecipe.GetComponent<SelectedRecipeUI>();
         selectedRecipeUI.GetInventoryFromController(this);

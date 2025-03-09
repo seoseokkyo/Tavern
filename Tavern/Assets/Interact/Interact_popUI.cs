@@ -1,3 +1,4 @@
+using Unity.Services.Lobbies.Models;
 using Unity.Services.Matchmaker.Models;
 using UnityEngine;
 
@@ -6,9 +7,14 @@ public class Interact_popUI : Interactable
     public GameObject popUI;
     public GameObject interactUI;
     public GameObject player;
-    private ModeController modeController;
 
-    private ClickEventTest clickEventTestScript;
+    // 이거 일단 Protected로 쓰겠읍니다. SSK
+    protected ModeController modeController;
+
+    // 이거 일단 Protected로 쓰겠읍니다. SSK
+    protected ClickEventTest clickEventTestScript;
+
+    public GameObject InstantInteractUI;
 
     private void Start()
     {

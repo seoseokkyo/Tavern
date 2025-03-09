@@ -33,7 +33,8 @@ public class ItemBase
 
     public ItemData CurrentItemData;
 
-    public InventoryComp OwnerInventory;
+    private object _ownerInventoryLock = new object();
+    public InventoryComp OwnerInventory = null;
 
     public void RandDataSet()
     {

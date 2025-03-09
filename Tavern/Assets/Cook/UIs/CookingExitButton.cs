@@ -10,6 +10,9 @@ public class CookingExitButton : MonoBehaviour
 
     private bool isActivated = false;
 
+    // Start의 UI Active를 끄는 기능 플래그
+    public bool bTestFlag = false;
+
     public void SetUIActivated(bool state)
     {
         isActivated = state;
@@ -18,8 +21,16 @@ public class CookingExitButton : MonoBehaviour
     void Start()
     {
         exitButton.onClick.AddListener(OnClickButton);
-        modeController = player.GetComponent<ModeController>();
-        cookingUI.SetActive(false);
+
+        if (null != player)
+        {
+            modeController = player.GetComponent<ModeController>();
+        }
+
+        if (!bTestFlag)
+        {
+            cookingUI.SetActive(false);
+        }
     }
 
     void Update()

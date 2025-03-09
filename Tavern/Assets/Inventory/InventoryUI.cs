@@ -27,11 +27,16 @@ public class InventoryUI : MonoBehaviour
 
     }
 
-    public void SetOwnerInventory(InventoryComp Inventory)
+    public void SetOwnerInventory(InventoryComp Inventory, int UseSlotSize = 10, int StartIndex = 0)
     {
+        SlotNum = UseSlotSize;
+        ViewStartNum = StartIndex;
+
         PlayerInventory = Inventory;
 
         PlayerInventory.OnChanged += RefreshInventory;
+
+        RefreshInventory();
     }
 
     void ClearList()
@@ -57,9 +62,20 @@ public class InventoryUI : MonoBehaviour
                 }
             }
         }
+
+        iCount = ItemViewList.Count;
+        for (int i = iCount - 1; i >= 0; i--)
+        {
+            var ItemUITemp = ItemViewList[i];
+
+            if (ItemUITemp != null && ItemUITemp != ItemDrag.beingDraggedIcon)
+            {
+                Destroy(ItemUITemp.gameObject);
+            }
+        }
     }
 
-    void RefreshInventory()
+    public void RefreshInventory()
     {
         ClearList();
 
@@ -73,7 +89,7 @@ public class InventoryUI : MonoBehaviour
 
             GameObject instItemUI = Instantiate(ItemUI);
             ItemUI TempItemView = instItemUI.GetComponent<ItemUI>();
-            
+
 
             if (TempItemView != null)
             {
@@ -90,9 +106,9 @@ public class InventoryUI : MonoBehaviour
             ItemViewList.Add(instItemUI);
         }
     }
-    public void SwapItemFromUI(InventoryComp InventoryX, InventoryComp InventoryY, int SwapTargetIndexX, int SwapTargetIndexY)
+    public void SwapItemFromUI(ref InventoryComp InventoryX, ref InventoryComp InventoryY, int SwapTargetIndexX, int SwapTargetIndexY)
     {
         // 나중에 슬롯이랑 아이템UI 완성 되면 실제 아이템이 있는 슬롯인지 확인하는거 추가
-        PlayerInventory.SwapItemByIndex(InventoryX, InventoryY, SwapTargetIndexX, SwapTargetIndexY);
+        PlayerInventory.SwapItemByIndex(ref InventoryX, ref InventoryY, SwapTargetIndexX, SwapTargetIndexY);
     }
 }
