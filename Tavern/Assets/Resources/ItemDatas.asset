@@ -20,6 +20,7 @@ MonoBehaviour:
     itemMesh: {fileID: 2300000, guid: 7977e423937da9b48aac1866c67bb5be, type: 3}
     itemID: 1
     itemCount: 1
+    itemAmount: 0
     itemCountLimit: 5
     recipe: {fileID: 11400000, guid: b5000be3f2ddc5e4f98965a4b084807c, type: 2}
   - itemName: Cherry
@@ -29,6 +30,7 @@ MonoBehaviour:
     itemMesh: {fileID: 2300000, guid: da4eeef492c0d1842963d6576330682d, type: 3}
     itemID: 2
     itemCount: 1
+    itemAmount: 0
     itemCountLimit: 5
     recipe: {fileID: 0}
   - itemName: Banana
@@ -38,6 +40,7 @@ MonoBehaviour:
     itemMesh: {fileID: 2300000, guid: 461f0170c82b53340a9812199b63bbd4, type: 3}
     itemID: 3
     itemCount: 1
+    itemAmount: 0
     itemCountLimit: 5
     recipe: {fileID: 0}
   - itemName: Hamburger
@@ -47,6 +50,7 @@ MonoBehaviour:
     itemMesh: {fileID: 2300000, guid: 54b107e50acd7e24b96d7de887c68833, type: 3}
     itemID: 5
     itemCount: 1
+    itemAmount: 0
     itemCountLimit: 5
     recipe: {fileID: 0}
   - itemName: Hotdog
@@ -56,6 +60,7 @@ MonoBehaviour:
     itemMesh: {fileID: 2300000, guid: fdc7d8dffa381b54cb7740b8761d54c0, type: 3}
     itemID: 6
     itemCount: 1
+    itemAmount: 0
     itemCountLimit: 5
     recipe: {fileID: 0}
   - itemName: Olive
@@ -65,6 +70,7 @@ MonoBehaviour:
     itemMesh: {fileID: 2300000, guid: bd232805ec57aa245a81c2df3f69f66a, type: 3}
     itemID: 7
     itemCount: 1
+    itemAmount: 0
     itemCountLimit: 5
     recipe: {fileID: 0}
   - itemName: Bowl
@@ -74,5 +80,26 @@ MonoBehaviour:
     itemMesh: {fileID: 7027445525973085653, guid: dde23328ab1bbf54d83681a532516af3, type: 3}
     itemID: 8
     itemCount: 1
+    itemAmount: 0
     itemCountLimit: 5
+    recipe: {fileID: 0}
+  - itemName: EmptyBucket
+    itemDescription: No Water
+    itemIcon: {fileID: 2800000, guid: 2c0194e85f77a044181701fcff7efb0d, type: 3}
+    itemMeshFilter: {fileID: 8006077289263575046, guid: f65ff9a7e31221e488cdf281cb24a048, type: 3}
+    itemMesh: {fileID: 5260129226680452300, guid: f65ff9a7e31221e488cdf281cb24a048, type: 3}
+    itemID: 9
+    itemCount: 1
+    itemAmount: 0
+    itemCountLimit: 1
+    recipe: {fileID: 0}
+  - itemName: WaterBucket
+    itemDescription: Yes Water
+    itemIcon: {fileID: 2800000, guid: 7f942c98aeb60d347b2d449738f70f69, type: 3}
+    itemMeshFilter: {fileID: 9131307724021323161, guid: 70d0950a9e21be14fbb051ddc77d83ec, type: 3}
+    itemMesh: {fileID: 6439053140124934483, guid: 70d0950a9e21be14fbb051ddc77d83ec, type: 3}
+    itemID: 10
+    itemCount: 1
+    itemAmount: 0
+    itemCountLimit: 1
     recipe: {fileID: 0}
