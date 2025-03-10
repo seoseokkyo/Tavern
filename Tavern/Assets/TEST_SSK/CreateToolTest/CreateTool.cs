@@ -19,9 +19,14 @@ public class CreateTool : Interactable
     public GameObject InstantInteractUI;
     protected ModeController modeController;
     protected ClickEventTest clickEventTestScript;
+    public GameObject itemInfoUIInstance;
 
     private bool bTimerOn = false;
     private float Timer;
+
+    public GameObject cookedUI;
+    private CookedScript cookedScript;
+    private bool isCooked = false;
 
     public CreateItemType ToolType = CreateItemType.Tool;
 
@@ -80,13 +85,21 @@ public class CreateTool : Interactable
 
         TempInitFunction();
 
-        Interacting.transform.SetParent(interactPlayer.PlayerCanvas.transform, false);
+        if (isCooked == false || this.ToolType == CreateItemType.Tool)
+        {
+            Interacting.transform.SetParent(interactPlayer.PlayerCanvas.transform, false);
 
-        // test UI 띄움
-        Interacting.SetActive(true);
-        // UI Mode 
-        modeController.SetMode(true);
-        clickEventTestScript.SetUIActivated(true);
+            // test UI 띄움
+            Interacting.SetActive(true);
+            // UI Mode 
+            modeController.SetMode(true);
+            clickEventTestScript.SetUIActivated(true);
+        }
+        else if(isCooked == true && this.ToolType == CreateItemType.Cooking)
+        {
+            InventoryComp inventroy = player.GetComponentInChildren<InventoryComp>();
+            cookedScript.CheckCanTakeFood(inventroy);
+        }
     }
 
     void TempInitFunction()
@@ -157,22 +170,57 @@ public class CreateTool : Interactable
 
     public void ProductCreate()
     {
-        ItemData CreateItemData = ItemManager.Instance.GetItemDataByName(CreateToolUIScript.CurrentSelectedRecipe);
-        ItemBase CreateItem = new ItemBase();
-        CreateItem.SetItemData(CreateItemData);
 
-        GameObject instItemUI = Instantiate(CreateToolUIScript.ItemUI);
-        instItemUI.transform.SetParent(CreateToolUIScript.ProductSlot.transform);
-        instItemUI.transform.position = CreateToolUIScript.ProductSlot.transform.position;
-        ItemUI TempItemView = instItemUI.GetComponent<ItemUI>();
+            ItemData CreateItemData = ItemManager.Instance.GetItemDataByName(CreateToolUIScript.CurrentSelectedRecipe);
+            ItemBase CreateItem = new ItemBase();
+            CreateItem.SetItemData(CreateItemData);
 
-        ToolInventory.AddItem(ref CreateItem);
+            GameObject instItemUI = Instantiate(CreateToolUIScript.ItemUI);
+            instItemUI.transform.SetParent(CreateToolUIScript.ProductSlot.transform);
+            instItemUI.transform.position = CreateToolUIScript.ProductSlot.transform.position;
+            ItemUI TempItemView = instItemUI.GetComponent<ItemUI>();
 
-        if (TempItemView != null)
+        if (this.ToolType == CreateItemType.Tool)
         {
-            TempItemView.InitData(CreateItem, CreateToolUIScript.ProductSlot.transform, 0);
+            ToolInventory.AddItem(ref CreateItem);
+
+            if (TempItemView != null)
+            {
+                TempItemView.InitData(CreateItem, CreateToolUIScript.ProductSlot.transform, 0);
+            }
+        }
+        // cookedUI
+        else if(this.ToolType == CreateItemType.Cooking)
+        {
+            SetIsCooked(CreateItemData, 5);
         }
     }
+
+    private void SetIsCooked(ItemData itemData, int itemAmount)
+    {
+        isCooked = true;
+
+        // UI 모드 해제
+        modeController.SetMode(false);
+
+        // 기존 레시피 리스트 UI 끄고 CookedUI 띄움
+        Interacting.SetActive(false);
+        cookedUI.SetActive(true);
+        cookedScript = cookedUI.GetComponentInChildren<CookedScript>();
+        cookedScript.SetCookedItem(itemData, itemAmount);
+
+        // UI pop 에서 Press 로 상호작용 타입 변경
+        this.interactionType = InteractionType.Press;
+    }
+
+    public void SetNotCooked()
+    {
+        isCooked = false;
+        Interacting.SetActive(true);
+        cookedUI.SetActive(false);
+        this.interactionType = InteractionType.UIPop;
+    }
+
     public void TimerStart(float Time)
     {
         Timer = Time;
@@ -181,6 +229,11 @@ public class CreateTool : Interactable
 
     public override string GetInteractingDescription()
     {
-        return "Press [E] To Interact!";
+        if(isCooked == false)
+        {
+            return "Press [E] To Interact!";
+        }
+
+        return "Press [E] To Take!";
     }
 }

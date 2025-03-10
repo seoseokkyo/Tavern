@@ -24,6 +24,7 @@ public class CookedScript : MonoBehaviour
     void Start()
     {
         canNotTakeFoodImage.enabled = false;
+        needToolText.enabled = false;
     }
 
     void Update()

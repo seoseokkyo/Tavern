@@ -23,6 +23,10 @@ public class CreateToolUI : MonoBehaviour
 
     public CreateItemType ToolType = CreateItemType.Tool;
 
+    public GameObject itemInfoUIInstance;
+    public Transform itemInfoTransform;
+    SelectedItemInfoUI itemInfoUI;
+
     void Start()
     {
         RecipeDropDown = GetComponentInChildren<TMP_Dropdown>();
@@ -59,6 +63,21 @@ public class CreateToolUI : MonoBehaviour
     {
         CurrentSelectedRecipe = RecipeDropDown.options[index].text;
         RefreshItemView(CurrentSelectedRecipe);
+
+        SetResultItemInfo(CurrentSelectedRecipe);
+    }
+
+    void SetResultItemInfo(string itemName)
+    {
+        GameObject temp = Instantiate(itemInfoUIInstance);
+        itemInfoUI = temp.GetComponent<SelectedItemInfoUI>();
+        if (itemInfoUI != null)
+        {
+            itemInfoUI.transform.SetParent(itemInfoTransform);
+            itemInfoUI.transform.SetLocalPositionAndRotation(new Vector3(0, 0), new Quaternion(0, 0, 0, 0));
+            ItemData data = ItemManager.Instance.GetItemDataByName(itemName);
+            itemInfoUI.SetResultItem(data);
+        }
     }
 
 
@@ -89,6 +108,11 @@ public class CreateToolUI : MonoBehaviour
                     Destroy(temp.gameObject);
                 }
             }
+        }
+
+        if(itemInfoUI != null)
+        {
+            Destroy(itemInfoUI.gameObject);
         }
 
         //iCount = ItemViewList.Count;

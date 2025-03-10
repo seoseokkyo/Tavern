@@ -121,6 +121,15 @@ MonoBehaviour:
     itemCount: 1
     itemCountLimit: 1
     recipe: {fileID: 0}
+  - itemName: Bowl
+    itemDescription: You can take food
+    itemIcon: {fileID: 2800000, guid: 60580ff86013aaa499bfb49baeabd950, type: 3}
+    itemMeshFilter: {fileID: 5071747182241536287, guid: dde23328ab1bbf54d83681a532516af3, type: 3}
+    itemMesh: {fileID: 7027445525973085653, guid: dde23328ab1bbf54d83681a532516af3, type: 3}
+    itemID: 13
+    itemCount: 1
+    itemCountLimit: 5
+    recipe: {fileID: 0}
   createRecipes:
   - CreateItemData:
       ItemName: Hamburger
