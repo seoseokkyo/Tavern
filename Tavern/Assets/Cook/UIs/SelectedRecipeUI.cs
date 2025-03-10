@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class SelectedRecipeUI : MonoBehaviour
 {
-
     public Button cookButton;
 
     public Transform contentTransform;

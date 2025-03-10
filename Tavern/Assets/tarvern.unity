@@ -4305,7 +4305,7 @@ MonoBehaviour:
   cookingCanvasUI: {fileID: 968680666}
   interactUI: {fileID: 1958809314}
   player: {fileID: 549627783}
-  cookedUI: {fileID: 0}
+  cookedUI: {fileID: 5757609478076692844, guid: f10980bfbd944434b9ac0f8cdaee8631, type: 3}
 --- !u!1001 &1337135359
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -74,9 +74,11 @@ public class ItemBase
 
         int RandNum = UnityEngine.Random.Range(0, Size);
 
-        // WaterBucket 제외 -> 테스트용
-        if(RandNum != 10)
-            CurrentItemData = ItemManager.Instance.items[RandNum];
+        CurrentItemData = ItemManager.Instance.items[RandNum];
+
+        //// WaterBucket 제외 -> 테스트용
+        //if(RandNum != 10)
+        //    CurrentItemData = ItemManager.Instance.items[RandNum];
     }
 
     public void SetItemData(ItemData Data)
