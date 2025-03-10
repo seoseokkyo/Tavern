@@ -7433,6 +7433,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4877494728335367294, guid: d9deccaf32d8b8c40a86071f18742c26, type: 3}
     - target: {fileID: 2937878544111144036, guid: 26bf203581d33994a809223e6c10e8da, type: 3}
+      propertyPath: interactPlayer
+      value: 
+      objectReference: {fileID: 1139771828}
+    - target: {fileID: 2937878544111144036, guid: 26bf203581d33994a809223e6c10e8da, type: 3}
       propertyPath: interactionType
       value: 2
       objectReference: {fileID: 0}
