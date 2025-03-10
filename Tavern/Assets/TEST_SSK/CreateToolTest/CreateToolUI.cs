@@ -28,7 +28,7 @@ public class CreateToolUI : MonoBehaviour
         RecipeDropDown = GetComponentInChildren<TMP_Dropdown>();
         RecipeDropDown.ClearOptions();
 
-        var CreateList = ItemManager.Instance.GetCreateRecipeList();
+        var CreateList = ItemManager.Instance.GetCreateRecipeAllList();
 
         List<TMP_Dropdown.OptionData> OptionsWithSprite = new List<TMP_Dropdown.OptionData>();
 

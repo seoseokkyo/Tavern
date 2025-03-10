@@ -116,13 +116,28 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public List<string> GetCreateRecipeList()
+    public List<string> GetCreateRecipeAllList()
     {
         List<string> CreateItemList = new List<string>();
 
         foreach (var rcp in createRecipes)
         {
             CreateItemList.Add(rcp.CreateItemData.ItemName);
+        }
+
+        return CreateItemList;
+    }
+
+    public List<string> GetCreateRecipeListByType(CreateItemType createType)
+    {
+        List<string> CreateItemList = new List<string>();
+
+        foreach (var rcp in createRecipes)
+        {
+            if (rcp.CreateItemData.CreateItemType == createType)
+            {
+                CreateItemList.Add(rcp.CreateItemData.ItemName);
+            }
         }
 
         return CreateItemList;
