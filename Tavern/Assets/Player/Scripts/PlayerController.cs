@@ -94,52 +94,52 @@ public class PlayerController : MonoBehaviour
         }
 
         // 뭔가 방법을 찾아야 한다.....
-        if (UnityEngine.Input.GetKeyDown("1"))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha1) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad1))
         {
             Debug.Log("You Pressed \"1?\"");
         }
 
-        if (UnityEngine.Input.GetKeyDown("2"))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha2) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad2))
         {
             Debug.Log("You Pressed \"2?\"");
         }
 
-        if (UnityEngine.Input.GetKeyDown("3"))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha3) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad3))
         {
             Debug.Log("You Pressed \"3?\"");
         }
 
-        if (UnityEngine.Input.GetKeyDown("4"))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha4) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad4))
         {
             Debug.Log("You Pressed \"4?\"");
         }
 
-        if (UnityEngine.Input.GetKeyDown("5"))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha5) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad5))
         {
             Debug.Log("You Pressed \"5?\"");
         }
 
-        if (UnityEngine.Input.GetKeyDown("6"))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha6) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad6))
         {
             Debug.Log("You Pressed \"6?\"");
         }
 
-        if (UnityEngine.Input.GetKeyDown("7"))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha7) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad7))
         {
             Debug.Log("You Pressed \"7?\"");
         }
 
-        if (UnityEngine.Input.GetKeyDown("8"))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha8) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad8))
         {
             Debug.Log("You Pressed \"8?\"");
         }
 
-        if (UnityEngine.Input.GetKeyDown("9"))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha9) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad9))
         {
             Debug.Log("You Pressed \"9?\"");
         }
 
-        if (UnityEngine.Input.GetKeyDown("0"))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha0) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad0))
         {
             Debug.Log("You Pressed \"0?\"");
         }
