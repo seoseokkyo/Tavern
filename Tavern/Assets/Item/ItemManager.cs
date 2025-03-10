@@ -55,7 +55,6 @@ public class ItemManager : MonoBehaviour
     {
         WorldItem SpawnWorldItem = Instantiate(itemPrefab, SpawnPos, SpawnRotation);
 
-        SpawnItem.ItemType = ItemBase.EItemType.NoUseAble;
         SpawnWorldItem.SetItem(SpawnItem);
         SpawnWorldItem.bRandSet = false;
     }

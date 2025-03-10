@@ -92,5 +92,58 @@ public class PlayerController : MonoBehaviour
             gameObject.GetComponent<ModeController>().SetMode(!modeCon.GetMode());
 
         }
+
+        // 뭔가 방법을 찾아야 한다.....
+        if (UnityEngine.Input.GetKeyDown("1"))
+        {
+            Debug.Log("You Pressed \"1?\"");
+        }
+
+        if (UnityEngine.Input.GetKeyDown("2"))
+        {
+            Debug.Log("You Pressed \"2?\"");
+        }
+
+        if (UnityEngine.Input.GetKeyDown("3"))
+        {
+            Debug.Log("You Pressed \"3?\"");
+        }
+
+        if (UnityEngine.Input.GetKeyDown("4"))
+        {
+            Debug.Log("You Pressed \"4?\"");
+        }
+
+        if (UnityEngine.Input.GetKeyDown("5"))
+        {
+            Debug.Log("You Pressed \"5?\"");
+        }
+
+        if (UnityEngine.Input.GetKeyDown("6"))
+        {
+            Debug.Log("You Pressed \"6?\"");
+        }
+
+        if (UnityEngine.Input.GetKeyDown("7"))
+        {
+            Debug.Log("You Pressed \"7?\"");
+        }
+
+        if (UnityEngine.Input.GetKeyDown("8"))
+        {
+            Debug.Log("You Pressed \"8?\"");
+        }
+
+        if (UnityEngine.Input.GetKeyDown("9"))
+        {
+            Debug.Log("You Pressed \"9?\"");
+        }
+
+        if (UnityEngine.Input.GetKeyDown("0"))
+        {
+            Debug.Log("You Pressed \"0?\"");
+        }
+
+        // Item Use
     }
 }
