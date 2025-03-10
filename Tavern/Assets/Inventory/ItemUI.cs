@@ -52,7 +52,7 @@ public class ItemUI : MonoBehaviour
                 if (temp != null)
                 {
                     ItemViewImage.sprite = temp;
-
+                    ItemViewImage.enabled = true;
                     transform.SetParent(parentTransform);
                 }
             }
@@ -68,6 +68,13 @@ public class ItemUI : MonoBehaviour
             ItemCountbackground.enabled = true;
 
             ItemCount.text = itemData.itemCount.ToString();
+            ItemCount.enabled = true;
+        }
+        else if(itemData.itemName == "EmptyBucket")
+        {
+            ItemCountbackground.enabled = true;
+
+            ItemCount.text = 0.ToString();
             ItemCount.enabled = true;
         }
         else

@@ -1,5 +1,6 @@
 using NUnit.Framework.Interfaces;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ public class SelectedRecipeUI : MonoBehaviour
     public Button cookButton;
 
     public Transform contentTransform;
+    public Transform resultTransform;
 
     public List<IngredientAmount> selectedRecipe;
     public GameObject ingredientView;
@@ -30,6 +32,15 @@ public class SelectedRecipeUI : MonoBehaviour
     private bool canCook = false;
     private bool foodSelected = false;
 
+    private ItemData currentRecipe;
+    private ItemBase currentResultItem;
+
+    public float cookingTime;
+    public UnityEngine.UI.Slider cookingTimerSlider;
+    public TextMeshProUGUI cookingStatus;
+
+    public GameObject cookingPotObj;
+
     void Start()
     {
         //    if (player != null)
@@ -38,14 +49,23 @@ public class SelectedRecipeUI : MonoBehaviour
         //     inventory = controller.PlayerInventory;
         //    cookButton.onClick.AddListener(OnClickCookButton);
         // }
-        OnSelect("WaterMelon", controller.PlayerInventory);
+        //OnSelect("WaterMelon", controller.PlayerInventory);
     }
 
     void Update()
     {
-        if(foodSelected == true)
+        if (foodSelected == true)
         {
             CanCook();
+            // 버튼 활성화
+            if(canCook == true)
+            {
+                cookButton.interactable = true;
+            }
+            else
+            {
+                cookButton.interactable = false;
+            }
         }
     }
 
@@ -85,6 +105,35 @@ public class SelectedRecipeUI : MonoBehaviour
         }
     }
 
+    public int CheckIngredientFromPlayerInventory(ItemData item)
+    {
+        int amount = 0;
+        if (inventory != null)
+        {
+            for(int i = 0; i < inventory.GetInventorySize(); i++)
+            {
+                ItemBase temp = inventory.CheckItem(i);
+                if(temp != null && temp.CurrentItemData.itemName == item.itemName)
+                {
+                    amount += temp.CurrentItemData.itemCount;
+                }
+            }
+        }
+
+        return amount;
+    }
+
+    public int CheckRequiredAmount(ItemData ingredient)
+    {
+        foreach (IngredientAmount idg in selectedRecipe)
+        {
+            if (idg.itemName == ingredient.itemName)
+                return idg.amount;
+        }
+
+        return 0;
+    }
+
     public void SetIngredientList(List<IngredientAmount> ingds)
     {
         selectedRecipe = ingds;
@@ -101,15 +150,17 @@ public class SelectedRecipeUI : MonoBehaviour
                     {
                         GameObject prefab = Instantiate(ingredientView);
                         prefab.transform.SetParent(contentTransform, false);
-                        ItemUI tempIngredientView = prefab.GetComponent<ItemUI>();
+                        IngredientUI tempIngredientView = prefab.GetComponent<IngredientUI>();
                         if (tempIngredientView != null)
                         {
-//                            Debug.Log($"Setting Recipe UI for {currentItem.itemName}");
-                            tempIngredientView.InitData(itemDatas.items[j], contentTransform);
+                            // 플레이어 인벤토리에 해당 재료가 있는지 확인 후 전달
+                            int havingCount = CheckIngredientFromPlayerInventory(currentItem);
+                            int requiredCount = CheckRequiredAmount(currentItem);
+                            tempIngredientView.InitData(itemDatas.items[j], contentTransform, havingCount, requiredCount);
                         }
                         else
                         {
-                            tempIngredientView.InitData(itemDatas.items[j], contentTransform);
+                            tempIngredientView.InitData(itemDatas.items[j], contentTransform, 0,0);
                         }
 
                         prefab.SetActive(true);
@@ -117,6 +168,14 @@ public class SelectedRecipeUI : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    private void SaveResultItemData(string result)
+    {
+        for(int i = 0; i < itemDatas.items.Count; i++)
+        {
+
         }
     }
 
@@ -133,13 +192,17 @@ public class SelectedRecipeUI : MonoBehaviour
 
             if(temp.recipe != null && temp.itemName == result)
             {
+                currentRecipe = temp;
                 GameObject prefab = Instantiate(resultItemView);
                 RecipeUI tempRecipeUI = prefab.GetComponent<RecipeUI>();
-
+                prefab.transform.SetParent(resultTransform, false);
+                prefab.transform.SetLocalPositionAndRotation(new Vector3(0, 0), new Quaternion(0, 0, 0, 0));
+                prefab.transform.localScale = new Vector3(0.7f, 0.6f, 0.6f);
                 if (tempRecipeUI != null)
                 {
                     // 완성품 ICON 띄우기
                     tempRecipeUI.AddItemData(temp);
+
                     // ingredientsList 전달
                     SetIngredientList(temp.recipe.ingredients);
                     foodSelected = true;
@@ -159,18 +222,18 @@ public class SelectedRecipeUI : MonoBehaviour
     {
         foreach (IngredientAmount idg in selectedRecipe)
         {
-            // 플레이어 인벤토리 확인
-            for (int i = 0; i < inventory.GetInventorySize(); i++)
+            for(int i = 0; i < inventory.GetInventorySize(); i++)
             {
-                ItemBase currentItem = inventory.CheckItem(i);
-                // 재료 발견
-                if (currentItem != null && currentItem.CurrentItemData.itemName == idg.itemName)
+                ItemBase temp = inventory.CheckItem(i);
+                if (temp != null && temp.CurrentItemData.itemName == idg.itemName)
                 {
-                    // 수량 확인
-                    // ..
-                    // 플레이어 Inventory 재료 위치한 idx 반환
-                    canCook = true;
-                    return i;
+                    // 인벤토리 모든 슬롯에서 같은 아이템 수량 확인
+                    int havingCount = CheckIngredientFromPlayerInventory(temp.CurrentItemData);
+                    if(idg.amount - havingCount <= 0)
+                    {
+                        canCook = true;
+                        return i;
+                    }
                 }
             }
         }
@@ -179,26 +242,108 @@ public class SelectedRecipeUI : MonoBehaviour
         return -1;
     }
     
-    // 필요한 재료 리스트 UI 에서 재료가 플레이어 인벤토리에 없으면 조금 칙칙하게 표현하기 위한 기능 부분
-    private void CheckHasIngredients(int ingredientsListIdx)
+    public ItemData FindData(string name)
     {
+        for(int i = 0; i < itemDatas.items.Count; i++)
+        {
+            if (itemDatas.items[i].itemName == name)
+            {
+                return itemDatas.items[i];
+            }
+        }
 
+        // 아무거나 반환..
+        return itemDatas.items[0];
     }
 
-    public void Cook(int igIdx)
+    public void Cook()
     {
-        string strTemp = "";
-        strTemp = $"{inventory.CheckItem(CanCook()).CurrentItemData.itemName}, ";
-        inventory.PopItem(CanCook());
-        Debug.Log(strTemp);
+        if (cookingStatus != null)
+        {
+            cookingStatus.text = "cooking..";
+            cookingStatus.enabled = true;
+        }
 
+        foreach (IngredientAmount idg in selectedRecipe)
+        {
+            int reqAmount = idg.amount;
+
+            while(reqAmount > 0)
+            {
+                for (int i = 0; i < inventory.GetInventorySize(); i++)
+                {
+                    ItemBase temp = inventory.CheckItem(i);
+                    if (temp != null && temp.CurrentItemData.itemName == idg.itemName)
+                    {
+                        // 인벤토리 모든 슬롯에서 같은 아이템 수량 확인
+                        int havingCount = temp.CurrentItemData.itemCount;
+                        if (reqAmount - havingCount < 0)
+                        {
+                            ItemBase backup = temp;
+                            backup.CurrentItemData.itemCount -= havingCount - reqAmount;
+                            reqAmount -= havingCount;
+                            // 갯수 차감한 아이템으로 갈아끼워줌
+                            inventory.PopItem(i);
+                            inventory.AddItem(ref backup);
+                        }
+                        else
+                        {
+                            reqAmount -= havingCount;
+                            inventory.PopItem(i);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // 레시피 재료 상태 업데이트
+        OnSelect(currentRecipe.itemName, inventory);
+        // 타이머 Start
+        StartTimer();
     }
+
+    private void StartTimer()
+    {
+        cookButton.interactable = false;
+        canCook = false;
+        foodSelected = false;
+        if (cookingTimerSlider != null)
+        {
+            ResetTimer();
+            cookingTimerSlider.value = GetCookingTime();
+            StartCoroutine(CookingTimerCoroutine());
+        }
+    }
+
+    private System.Collections.IEnumerator CookingTimerCoroutine()
+    {
+        while(GetCookingTime() < currentRecipe.recipe.cookingTime)
+        {
+            IncreaseTimer();
+            cookingTimerSlider.value = GetCookingTime() / currentRecipe.recipe.cookingTime;
+            yield return null;
+        }
+
+        ResetTimer();
+        string result = $"{currentRecipe.itemName} is Cooked! ";
+        Debug.Log(result);
+        cookingStatus.text = "Done!";
+        cookingTimerSlider.value = GetCookingTime() / currentRecipe.recipe.cookingTime;
+
+        Interact_CookPot pot = cookingPotObj.GetComponent<Interact_CookPot>();
+        pot.SetSettingCooked(currentRecipe,5);
+    }
+
+    private void ResetTimer() => cookingTime = 0f;
+    private float GetCookingTime() => cookingTime;
+    private void IncreaseTimer() => cookingTime += Time.deltaTime;
 
     void OnClickCookButton()
     {
         if(canCook)
         {
-            Cook(CanCook());
+            Cook();
         }
     }
 }
