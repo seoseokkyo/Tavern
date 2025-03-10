@@ -484,7 +484,7 @@ MonoBehaviour:
   cookedViewImage: {fileID: 4406474868053372864}
   cookedItemName: {fileID: 4262675112876185466}
   remainedAmount: {fileID: 118013116162750813}
-  cookingObj: {fileID: 0}
+  cookingObj: {fileID: 641525263825513889, guid: 26bf203581d33994a809223e6c10e8da, type: 3}
   canNotTakeFoodImage: {fileID: 4646600809332524926}
   needToolText: {fileID: 8335672108862592981}
 --- !u!1 &6475859874586530102

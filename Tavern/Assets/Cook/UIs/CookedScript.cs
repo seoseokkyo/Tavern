@@ -68,6 +68,7 @@ public class CookedScript : MonoBehaviour
                 temp.CurrentItemData.itemCount -= 1;
                 playerInventroy.PopItem(bowlIdx);
                 playerInventroy.AddItem(ref temp);
+                TakeFood(playerInventroy);
             }
             else if(temp != null && temp.CurrentItemData.itemCount == 1)
             {
@@ -142,8 +143,8 @@ public class CookedScript : MonoBehaviour
             item.SetItemData(itemData);
             playerInventroy.AddItem(ref item);
 
-            Interact_CookPot pot = cookingObj.GetComponent<Interact_CookPot>();
-            pot.SetSettingNotCooked();
+            CreateTool pot = cookingObj.GetComponent<CreateTool>();
+            pot.SetNotCooked();
         }
     }
 }

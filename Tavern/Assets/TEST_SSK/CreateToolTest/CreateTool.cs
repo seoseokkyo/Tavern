@@ -192,7 +192,7 @@ public class CreateTool : Interactable
         // cookedUI
         else if(this.ToolType == CreateItemType.Cooking)
         {
-            SetIsCooked(CreateItemData, 5);
+            SetIsCooked(CreateItemData, 2);
         }
     }
 
@@ -216,7 +216,6 @@ public class CreateTool : Interactable
     public void SetNotCooked()
     {
         isCooked = false;
-        Interacting.SetActive(true);
         cookedUI.SetActive(false);
         this.interactionType = InteractionType.UIPop;
     }
