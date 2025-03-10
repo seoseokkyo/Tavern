@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using WebSocketSharp;
 using static UnityEditor.Progress;
@@ -18,6 +19,8 @@ public class WorldItem : Interactable
 
     public bool bRandSet = true;
 
+    public string InitItemName;
+
     void Start()
     {
         WorldItemMeshFilter = GetComponent<MeshFilter>();
@@ -29,6 +32,11 @@ public class WorldItem : Interactable
 
             WorldItemMeshFilter.sharedMesh = item.CurrentItemData.itemMeshFilter.sharedMesh;
             WorldItemMesh.sharedMaterials = item.CurrentItemData.itemMesh.sharedMaterials;
+        }
+        else
+        {
+            item.SetItemData(ItemManager.Instance.GetItemDataByName(InitItemName));
+            SetItem(item);
         }
     }
 

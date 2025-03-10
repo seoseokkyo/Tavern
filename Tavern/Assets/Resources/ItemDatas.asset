@@ -85,21 +85,39 @@ MonoBehaviour:
     itemCount: 1
     itemCountLimit: 10
     recipe: {fileID: 0}
-  - itemName: Rock
-    itemDescription: This is Rock
-    itemIcon: {fileID: 2800000, guid: 670d799ef2cb49e4c8d0de16084c49b0, type: 3}
-    itemMeshFilter: {fileID: 3888464626952931651, guid: f258cc6c6bf24454488bc8b8899a1529, type: 3}
-    itemMesh: {fileID: 1302224944475897225, guid: f258cc6c6bf24454488bc8b8899a1529, type: 3}
-    itemID: 9
-    itemCount: 1
-    itemCountLimit: 10
-    recipe: {fileID: 0}
   - itemName: RockHammer
     itemDescription: This is RockHammer
     itemIcon: {fileID: 2800000, guid: 74deb219e2a47ac49ab6f9b2ad8a6043, type: 3}
     itemMeshFilter: {fileID: 7092173212855748337, guid: 89689d1b04b9dd34aa5e6bedd76f5ea7, type: 3}
     itemMesh: {fileID: 5010398346190139963, guid: 89689d1b04b9dd34aa5e6bedd76f5ea7, type: 3}
+    itemID: 9
+    itemCount: 1
+    itemCountLimit: 1
+    recipe: {fileID: 0}
+  - itemName: EmptyBucket
+    itemDescription: This is EmptyBucket
+    itemIcon: {fileID: 2800000, guid: 2c0194e85f77a044181701fcff7efb0d, type: 3}
+    itemMeshFilter: {fileID: 8006077289263575046, guid: f65ff9a7e31221e488cdf281cb24a048, type: 3}
+    itemMesh: {fileID: 5260129226680452300, guid: f65ff9a7e31221e488cdf281cb24a048, type: 3}
     itemID: 10
+    itemCount: 1
+    itemCountLimit: 1
+    recipe: {fileID: 0}
+  - itemName: FilledBucket
+    itemDescription: This is FilledBucket
+    itemIcon: {fileID: 2800000, guid: 7f942c98aeb60d347b2d449738f70f69, type: 3}
+    itemMeshFilter: {fileID: 9131307724021323161, guid: 70d0950a9e21be14fbb051ddc77d83ec, type: 3}
+    itemMesh: {fileID: 6439053140124934483, guid: 70d0950a9e21be14fbb051ddc77d83ec, type: 3}
+    itemID: 11
+    itemCount: 1
+    itemCountLimit: 1
+    recipe: {fileID: 0}
+  - itemName: Rock
+    itemDescription: This is Rock
+    itemIcon: {fileID: 2800000, guid: 670d799ef2cb49e4c8d0de16084c49b0, type: 3}
+    itemMeshFilter: {fileID: 3888464626952931651, guid: f258cc6c6bf24454488bc8b8899a1529, type: 3}
+    itemMesh: {fileID: 1302224944475897225, guid: f258cc6c6bf24454488bc8b8899a1529, type: 3}
+    itemID: 12
     itemCount: 1
     itemCountLimit: 1
     recipe: {fileID: 0}
