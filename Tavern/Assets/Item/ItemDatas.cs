@@ -6,4 +6,5 @@ using System.Collections.Generic;
 public class ItemDatas : ScriptableObject
 {
     public List<ItemData> items;
+    public List<CreateRecipe> createRecipes;
 }

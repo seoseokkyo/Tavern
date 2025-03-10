@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using Unity.VisualScripting;
+using TMPro;
 
 public class CreateTool : Interact_popUI
 {
@@ -14,8 +16,10 @@ public class CreateTool : Interact_popUI
 
     public InventoryComp ToolInventory;
 
-    public ItemSlotUI ProductSlot;
+    private bool bTimerOn = false;
+    private float Timer;
 
+    public CreateItemType ToolType = CreateItemType.Tool;
 
     void Start()
     {
@@ -34,14 +38,17 @@ public class CreateTool : Interact_popUI
             ToolInventoryUI.SetOwnerInventory(ToolInventory, 5 + 1, 1);
 
             // 결과물 슬롯
-            if (null != ProductSlot)
+            if (null != CreateToolUIScript.ProductSlot)
             {
-                ProductSlot.SlotIndex = 0;
-                ProductSlot.OwnerInventory = ToolInventory;
+                var slot = CreateToolUIScript.ProductSlot.GetComponent<ItemSlotUI>();
+
+                slot.SlotIndex = 0;
+                slot.OwnerInventory = ToolInventory;
             }
         }
 
         CreateToolUIScript.ApplyButton.onClick.AddListener(ConditionCheck);
+        CreateToolUIScript.ToolType = ToolType;
 
         Interacting.SetActive(false);
     }
@@ -50,7 +57,18 @@ public class CreateTool : Interact_popUI
     // Update is called once per frame
     void Update()
     {
+        if (bTimerOn)
+        {
+            Timer -= Time.deltaTime;
+            CreateToolUIScript.TimerText.text = Timer.ToString();
 
+            if (0 >= Timer)
+            {
+                Timer = 0f;
+                CreateToolUIScript.TimerText.text = Timer.ToString();
+                bTimerOn = false;
+            }
+        }
     }
     public override void Interact()
     {
@@ -83,21 +101,77 @@ public class CreateTool : Interact_popUI
         clickEventTestScript.bTestFlag = true;
     }
 
+    bool CheckProductSlotEmpty()
+    {
+        return (ToolInventory.CheckItem(0) == null);
+    }
+
     void ConditionCheck()
     {
         // 선택한 레시피에 필요한 재료 확인
         // 인벤토리 내에 해당 재료들이 있는지 확인
         // 재료가 충분히 있으면 요구량만큼 소모 후 결과물 생성
 
-        bool bCheck = ToolInventory.ConsumeItem("Cheese", 5);
+        //bool bCheck = ToolInventory.ConsumeItem("Cheese", 5);
+
+        if (false == CheckProductSlotEmpty() || bTimerOn)
+        {
+            return;
+        }
+
+        string CreateTargetItemName = CreateToolUIScript.CurrentSelectedRecipe;
+        var ResourceList = ItemManager.Instance.GetCreateItemResourcesListByName(CreateTargetItemName);
+        var RcpData = ItemManager.Instance.GetRecipeDataByName(CreateTargetItemName);
+
+        bool bCheck = true;
+
+        foreach (var res in ResourceList)
+        {
+            if (res.NeedNumber > ToolInventory.CountItemByName(res.ItemName))
+            {
+                bCheck = false;
+            }
+        }
 
         if (bCheck)
         {
+            foreach (var res in ResourceList)
+            {
+                ToolInventory.ConsumeItem(res.ItemName, res.NeedNumber);
+            }
+
+            TimerStart(RcpData.CreateNeedTime);
+            Invoke("ProductCreate", RcpData.CreateNeedTime);
+
             Debug.Log("ConsumeItem Success");
         }
         else
         {
             Debug.Log("ConsumeItem Failed");
         }
+    }
+
+    public void ProductCreate()
+    {
+        ItemData CreateItemData = ItemManager.Instance.GetItemDataByName(CreateToolUIScript.CurrentSelectedRecipe);
+        ItemBase CreateItem = new ItemBase();
+        CreateItem.SetItemData(CreateItemData);
+
+        GameObject instItemUI = Instantiate(CreateToolUIScript.ItemUI);
+        instItemUI.transform.SetParent(CreateToolUIScript.ProductSlot.transform);
+        instItemUI.transform.position = CreateToolUIScript.ProductSlot.transform.position;
+        ItemUI TempItemView = instItemUI.GetComponent<ItemUI>();
+
+        ToolInventory.AddItem(ref CreateItem);
+
+        if (TempItemView != null)
+        {
+            TempItemView.InitData(CreateItem, CreateToolUIScript.ProductSlot.transform, 0);
+        }
+    }
+    public void TimerStart(float Time)
+    {
+        Timer = Time;
+        bTimerOn = true;
     }
 }

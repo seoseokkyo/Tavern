@@ -8,6 +8,8 @@ public class ItemSlotUI : MonoBehaviour, IDropHandler
 
     public InventoryComp OwnerInventory;
 
+    public bool bNoUseDrop = false;
+
     GameObject Icon()
     {
         // 슬롯에 아이템(자식 트랜스폼)이 있으면 아이템의 gameobject를 리턴
@@ -23,13 +25,18 @@ public class ItemSlotUI : MonoBehaviour, IDropHandler
     // 포인터 드랍이 발생하면 실행되는 콜백함수
     public void OnDrop(PointerEventData eventData)
     {
+        if(bNoUseDrop)
+        {
+            return;
+        }
+
         if (null != ItemDrag.beingDraggedIcon)
         {
             ItemUI DragItemUI = ItemDrag.beingDraggedIcon.GetComponent<ItemUI>();
 
             if (null != DragItemUI)
             {
-                GetComponentInParent<InventoryUI>().SwapItemFromUI(ref OwnerInventory, ref DragItemUI.CurrentItemBase.OwnerInventory, SlotIndex, DragItemUI.ItemIndex);
+                OwnerInventory.SwapItemByIndex(ref OwnerInventory, ref DragItemUI.CurrentItemBase.OwnerInventory, SlotIndex, DragItemUI.ItemIndex);
 
                 Destroy(DragItemUI.gameObject);
             }

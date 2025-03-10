@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 [System.Serializable]
@@ -13,6 +15,36 @@ public struct ItemData
     public int itemCountLimit;
 
     public CookingRecipe recipe;
+}
+
+[Serializable]
+public enum CreateItemType
+{
+    Tool,
+    Cooking,
+    CreateItemTypeMax
+}
+
+[Serializable]
+public class CreateResources
+{
+    public string ItemName;
+    public int NeedNumber;
+}
+
+[Serializable]
+public class CreateTargetRecipeData
+{
+    public string ItemName;
+    public CreateItemType CreateItemType;
+    public float CreateNeedTime;
+}
+
+[Serializable]
+public class CreateRecipe
+{
+    public CreateTargetRecipeData CreateItemData;
+    public List<CreateResources> Resources;
 }
 
 [System.Serializable]
@@ -40,7 +72,7 @@ public class ItemBase
     {
         int Size = ItemManager.Instance.items.Count;
 
-        int RandNum = Random.Range(0, Size);
+        int RandNum = UnityEngine.Random.Range(0, Size);
 
         CurrentItemData = ItemManager.Instance.items[RandNum];
     }

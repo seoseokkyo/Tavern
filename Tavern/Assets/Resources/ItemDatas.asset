@@ -76,3 +76,56 @@ MonoBehaviour:
     itemCount: 1
     itemCountLimit: 5
     recipe: {fileID: 0}
+  - itemName: WoodScrap
+    itemDescription: This is WoodScrap
+    itemIcon: {fileID: 2800000, guid: ec21cf67667c9ed4d9a2b71a00f23720, type: 3}
+    itemMeshFilter: {fileID: 992078667064122293, guid: 676b4155b01f5e94d8d3cfdfe61ba033, type: 3}
+    itemMesh: {fileID: 3035537214311853951, guid: 676b4155b01f5e94d8d3cfdfe61ba033, type: 3}
+    itemID: 8
+    itemCount: 1
+    itemCountLimit: 10
+    recipe: {fileID: 0}
+  - itemName: Rock
+    itemDescription: This is Rock
+    itemIcon: {fileID: 2800000, guid: 670d799ef2cb49e4c8d0de16084c49b0, type: 3}
+    itemMeshFilter: {fileID: 3888464626952931651, guid: f258cc6c6bf24454488bc8b8899a1529, type: 3}
+    itemMesh: {fileID: 1302224944475897225, guid: f258cc6c6bf24454488bc8b8899a1529, type: 3}
+    itemID: 9
+    itemCount: 1
+    itemCountLimit: 10
+    recipe: {fileID: 0}
+  - itemName: RockHammer
+    itemDescription: This is RockHammer
+    itemIcon: {fileID: 2800000, guid: 74deb219e2a47ac49ab6f9b2ad8a6043, type: 3}
+    itemMeshFilter: {fileID: 7092173212855748337, guid: 89689d1b04b9dd34aa5e6bedd76f5ea7, type: 3}
+    itemMesh: {fileID: 5010398346190139963, guid: 89689d1b04b9dd34aa5e6bedd76f5ea7, type: 3}
+    itemID: 10
+    itemCount: 1
+    itemCountLimit: 1
+    recipe: {fileID: 0}
+  createRecipes:
+  - CreateItemData:
+      ItemName: Hamburger
+      CreateItemType: 0
+      CreateNeedTime: 10
+    Resources:
+    - ItemName: Cheese
+      NeedNumber: 3
+    - ItemName: Hotdog
+      NeedNumber: 1
+  - CreateItemData:
+      ItemName: RockHammer
+      CreateItemType: 0
+      CreateNeedTime: 20
+    Resources:
+    - ItemName: WoodScrap
+      NeedNumber: 2
+    - ItemName: Rock
+      NeedNumber: 1
+  - CreateItemData:
+      ItemName: Cherry
+      CreateItemType: 1
+      CreateNeedTime: 2
+    Resources:
+    - ItemName: Olive
+      NeedNumber: 1
