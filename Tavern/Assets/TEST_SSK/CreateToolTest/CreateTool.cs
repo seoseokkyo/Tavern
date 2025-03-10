@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 using Unity.VisualScripting;
 using TMPro;
 
-public class CreateTool : Interact_popUI
+public class CreateTool : Interactable
 {
     // 일단은 구조상 UI기능이랑 게임오브젝트 기능 분리가 번거로워서 여기서 둘 다
     // 하려고 했는데... 흠... UI 스크립트랑 얘랑 아예 엮어서 쓰는게 편할듯 기능 파편화랑 스파게티긴 한디
@@ -15,6 +15,10 @@ public class CreateTool : Interact_popUI
     private CreateToolUI CreateToolUIScript;
 
     public InventoryComp ToolInventory;
+    public GameObject player;
+    public GameObject InstantInteractUI;
+    protected ModeController modeController;
+    protected ClickEventTest clickEventTestScript;
 
     private bool bTimerOn = false;
     private float Timer;
@@ -173,5 +177,10 @@ public class CreateTool : Interact_popUI
     {
         Timer = Time;
         bTimerOn = true;
+    }
+
+    public override string GetInteractingDescription()
+    {
+        return "Press [E] To Interact!";
     }
 }
