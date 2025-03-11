@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     public InventoryUI QuickSlotUI_prefab;
     private InventoryUI QuickSlotUI;
 
+    public EquipmentItem CurrentEquipmentItem = null;
+
     void Start()
     {
         PlayerInventory = GetComponent<InventoryComp>();
@@ -97,51 +99,61 @@ public class PlayerController : MonoBehaviour
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha1) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad1))
         {
             Debug.Log("You Pressed \"1?\"");
+            PlayerInventory.UseItemByIndex(this, 0);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha2) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad2))
         {
             Debug.Log("You Pressed \"2?\"");
+            PlayerInventory.UseItemByIndex(this, 1);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha3) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad3))
         {
             Debug.Log("You Pressed \"3?\"");
+            PlayerInventory.UseItemByIndex(this, 2);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha4) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad4))
         {
             Debug.Log("You Pressed \"4?\"");
+            PlayerInventory.UseItemByIndex(this, 3);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha5) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad5))
         {
             Debug.Log("You Pressed \"5?\"");
+            PlayerInventory.UseItemByIndex(this, 4);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha6) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad6))
         {
             Debug.Log("You Pressed \"6?\"");
+            PlayerInventory.UseItemByIndex(this, 5);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha7) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad7))
         {
             Debug.Log("You Pressed \"7?\"");
+            PlayerInventory.UseItemByIndex(this, 6);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha8) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad8))
         {
             Debug.Log("You Pressed \"8?\"");
+            PlayerInventory.UseItemByIndex(this, 7);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha9) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad9))
         {
             Debug.Log("You Pressed \"9?\"");
+            PlayerInventory.UseItemByIndex(this, 8);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha0) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad0))
         {
             Debug.Log("You Pressed \"0?\"");
+            PlayerInventory.UseItemByIndex(this, 9);
         }
 
         // Item Use

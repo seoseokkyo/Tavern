@@ -111,7 +111,7 @@ MonoBehaviour:
     itemID: 10
     itemCount: 1
     itemCountLimit: 1
-    ItemType: 0
+    ItemType: 2
     recipe: {fileID: 0}
   - itemName: FilledBucket
     itemDescription: This is FilledBucket
@@ -121,7 +121,7 @@ MonoBehaviour:
     itemID: 11
     itemCount: 1
     itemCountLimit: 1
-    ItemType: 0
+    ItemType: 2
     recipe: {fileID: 0}
   - itemName: Rock
     itemDescription: This is Rock

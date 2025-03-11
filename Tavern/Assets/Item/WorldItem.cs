@@ -26,6 +26,8 @@ public class WorldItem : Interactable
         WorldItemMeshFilter = GetComponent<MeshFilter>();
         WorldItemMesh = GetComponent<MeshRenderer>();
 
+
+
         if (bRandSet)
         {
             item.RandDataSet();
@@ -38,6 +40,8 @@ public class WorldItem : Interactable
             item.SetItemData(ItemManager.Instance.GetItemDataByName(InitItemName));
             SetItem(item);
         }
+
+        item = ItemManager.Instance.CastItemType(item);
     }
 
     // Update is called once per frame

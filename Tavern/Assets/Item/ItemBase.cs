@@ -85,4 +85,9 @@ public class ItemBase
     {
         CurrentItemData = Data;
     }
+
+    public virtual void UseItem(PlayerController playerController)
+    {
+        Debug.Log("This is ItemBase");
+    }
 }
