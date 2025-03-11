@@ -59,20 +59,20 @@ public class CookedScript : MonoBehaviour
     // 플레이어가 아이템을 챙길 수 있는지 확인 -> 도구 확인(그릇, 잔..)
     public void CheckCanTakeFood(InventoryComp playerInventroy)
     {
-        int bowlIdx = CheckBowl(playerInventroy);
-        if(bowlIdx != -1)
+        int toolIdx = CheckTool(playerInventroy, itemData);
+        if(toolIdx != -1)
         {
-            ItemBase temp = playerInventroy.CheckItem(bowlIdx);
+            ItemBase temp = playerInventroy.CheckItem(toolIdx);
             if(temp != null && temp.CurrentItemData.itemCount > 1)
             {
                 temp.CurrentItemData.itemCount -= 1;
-                playerInventroy.PopItem(bowlIdx);
+                playerInventroy.PopItem(toolIdx);
                 playerInventroy.AddItem(ref temp);
                 TakeFood(playerInventroy);
             }
             else if(temp != null && temp.CurrentItemData.itemCount == 1)
             {
-                playerInventroy.PopItem(bowlIdx);
+                playerInventroy.PopItem(toolIdx);
                 TakeFood(playerInventroy);
             }
         }
@@ -84,8 +84,10 @@ public class CookedScript : MonoBehaviour
 
     private void StartErrorTimer()
     {
+        string toolName = itemData.requireToolType.ToString();
+
         canNotTakeFoodImage.enabled = true;
-        needToolText.text = "You Need Bowl!";
+        needToolText.text = "You Need " + toolName;
         needToolText.enabled = true;
 
         ResetTimer();
@@ -109,13 +111,14 @@ public class CookedScript : MonoBehaviour
     private float GetErrorTime() => errorTimer;
     private void IncreaseTimer() => errorTimer += Time.deltaTime;
 
-    private int CheckBowl(InventoryComp playerInventroy)
+    private int CheckTool(InventoryComp playerInventroy, ItemData data)
     {
         for (int i = 0; i < playerInventroy.GetInventorySize(); i++)
         {
+            string toolName = data.requireToolType.ToString();
             // Bowl 체크
             ItemBase temp = playerInventroy.CheckItem(i);
-            if (temp != null && temp.CurrentItemData.itemName == "Bowl")
+            if (temp != null && temp.CurrentItemData.itemName == toolName)
             {
                 return i;
             }

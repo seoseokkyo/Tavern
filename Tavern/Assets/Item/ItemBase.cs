@@ -10,6 +10,15 @@ public enum EItemType
     EItemTypeMax
 }
 
+public enum ERequiredTool
+{
+    None,
+    Bowl,
+    Plate,
+    Cup,
+}
+
+
 [System.Serializable]
 public struct ItemData
 {
@@ -22,6 +31,7 @@ public struct ItemData
     public int itemCount;
     public int itemCountLimit;
     public EItemType ItemType;
+    public ERequiredTool requireToolType;
     public GameObject ItemPrefab;
 
     public CookingRecipe recipe;
@@ -32,6 +42,7 @@ public enum CreateItemType
 {
     Tool,
     Cooking,
+    Brewing,
     CreateItemTypeMax
 }
 
