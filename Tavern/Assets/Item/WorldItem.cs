@@ -1,3 +1,5 @@
+using NUnit.Framework.Constraints;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
@@ -31,16 +33,13 @@ public class WorldItem : Interactable
         if (bRandSet)
         {
             item.RandDataSet();
-
-            WorldItemMeshFilter.sharedMesh = item.CurrentItemData.itemMeshFilter.sharedMesh;
-            WorldItemMesh.sharedMaterials = item.CurrentItemData.itemMesh.sharedMaterials;
         }
         else
         {
             item.SetItemData(ItemManager.Instance.GetItemDataByName(InitItemName));
-            SetItem(item);
         }
 
+        SetItem(item);
         item = ItemManager.Instance.CastItemType(item);
     }
 
@@ -68,7 +67,17 @@ public class WorldItem : Interactable
     {
         item = inputItem;
 
-        WorldItemMeshFilter.sharedMesh = item.CurrentItemData.itemMeshFilter.sharedMesh;
-        WorldItemMesh.sharedMaterials = item.CurrentItemData.itemMesh.sharedMaterials;
+        if (item.CurrentItemData.ItemPrefab)
+        {
+            GameObject child = Instantiate(item.CurrentItemData.ItemPrefab);
+            child.transform.SetParent(transform, false);
+
+            child.SetActive(true);
+        }
+        else
+        {
+            WorldItemMeshFilter.sharedMesh = item.CurrentItemData.itemMeshFilter.sharedMesh;
+            WorldItemMesh.sharedMaterials = item.CurrentItemData.itemMesh.sharedMaterials;
+        }
     }
 }

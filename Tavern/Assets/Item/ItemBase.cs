@@ -22,6 +22,7 @@ public struct ItemData
     public int itemCount;
     public int itemCountLimit;
     public EItemType ItemType;
+    public GameObject ItemPrefab;
 
     public CookingRecipe recipe;
 }
