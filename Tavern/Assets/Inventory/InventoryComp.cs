@@ -222,7 +222,7 @@ public class InventoryComp : MonoBehaviour
     {
         int InventorySize = GetInventorySize();
 
-        if(0 > UseItemIndex || UseItemIndex >= InventorySize)
+        if(0 > UseItemIndex || UseItemIndex >= InventorySize || null == inventory[UseItemIndex])
         {
             return;
         }
