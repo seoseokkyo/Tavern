@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bowl
       objectReference: {fileID: 0}
+    - target: {fileID: 4539436211592025068, guid: e9a8cf7ae452c1348956518872b9ce52, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3160724643686960022, guid: e9a8cf7ae452c1348956518872b9ce52, type: 3}

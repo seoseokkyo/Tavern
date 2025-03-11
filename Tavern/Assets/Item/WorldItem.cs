@@ -71,7 +71,7 @@ public class WorldItem : Interactable
         {
             GameObject child = Instantiate(item.CurrentItemData.ItemPrefab);
             child.transform.SetParent(transform, false);
-
+            
             child.SetActive(true);
         }
         else
