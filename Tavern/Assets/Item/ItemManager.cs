@@ -55,8 +55,7 @@ public class ItemManager : MonoBehaviour
     {
         WorldItem SpawnWorldItem = Instantiate(itemPrefab, SpawnPos, SpawnRotation);
 
-        SpawnItem.ItemType = ItemBase.EItemType.NoUseAble;
-        SpawnWorldItem.SetItem(SpawnItem);
+        SpawnWorldItem.SetItem(CastItemType(SpawnItem));
         SpawnWorldItem.bRandSet = false;
     }
 
@@ -151,5 +150,27 @@ public class ItemManager : MonoBehaviour
     public CreateTargetRecipeData GetRecipeDataByName(string ItemName)
     {
         return CreateRecipesDictionary[ItemName].Item1;
+    }
+
+    public ItemBase CastItemType(ItemBase CurrentItemBase)
+    {
+        ItemBase NewItemBase = null;
+
+        if(CurrentItemBase.CurrentItemData.ItemType == EItemType.UseAble)
+        {
+            NewItemBase = new UseableItem();
+            NewItemBase.SetItemData(CurrentItemBase.CurrentItemData);
+
+            Debug.Log($"{CurrentItemBase.CurrentItemData.itemName} Was Changed To UseableItem");
+        }
+        else if (CurrentItemBase.CurrentItemData.ItemType == EItemType.Equipment)
+        {
+            NewItemBase = new EquipmentItem();
+            NewItemBase.SetItemData(CurrentItemBase.CurrentItemData);
+
+            Debug.Log($"{CurrentItemBase.CurrentItemData.itemName} Was Changed To EquipmentItem");
+        }
+
+        return NewItemBase ?? CurrentItemBase;
     }
 }

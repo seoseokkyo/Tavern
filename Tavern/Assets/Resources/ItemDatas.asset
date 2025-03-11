@@ -21,6 +21,7 @@ MonoBehaviour:
     itemID: 1
     itemCount: 1
     itemCountLimit: 5
+    ItemType: 0
     recipe: {fileID: 11400000, guid: b5000be3f2ddc5e4f98965a4b084807c, type: 2}
   - itemName: Cherry
     itemDescription: This is Cherry
@@ -30,6 +31,7 @@ MonoBehaviour:
     itemID: 2
     itemCount: 1
     itemCountLimit: 5
+    ItemType: 0
     recipe: {fileID: 0}
   - itemName: Banana
     itemDescription: This is Banana
@@ -39,6 +41,7 @@ MonoBehaviour:
     itemID: 3
     itemCount: 1
     itemCountLimit: 5
+    ItemType: 0
     recipe: {fileID: 0}
   - itemName: Cheese
     itemDescription: This is Cheese
@@ -48,6 +51,7 @@ MonoBehaviour:
     itemID: 4
     itemCount: 1
     itemCountLimit: 5
+    ItemType: 0
     recipe: {fileID: 0}
   - itemName: Hamburger
     itemDescription: This is Hamburger
@@ -57,6 +61,7 @@ MonoBehaviour:
     itemID: 5
     itemCount: 1
     itemCountLimit: 5
+    ItemType: 1
     recipe: {fileID: 0}
   - itemName: Hotdog
     itemDescription: This is Hotdog
@@ -66,6 +71,7 @@ MonoBehaviour:
     itemID: 6
     itemCount: 1
     itemCountLimit: 5
+    ItemType: 1
     recipe: {fileID: 0}
   - itemName: Olive
     itemDescription: This is Olive
@@ -75,6 +81,7 @@ MonoBehaviour:
     itemID: 7
     itemCount: 1
     itemCountLimit: 5
+    ItemType: 0
     recipe: {fileID: 0}
   - itemName: WoodScrap
     itemDescription: This is WoodScrap
@@ -84,6 +91,7 @@ MonoBehaviour:
     itemID: 8
     itemCount: 1
     itemCountLimit: 10
+    ItemType: 0
     recipe: {fileID: 0}
   - itemName: RockHammer
     itemDescription: This is RockHammer
@@ -93,6 +101,7 @@ MonoBehaviour:
     itemID: 9
     itemCount: 1
     itemCountLimit: 1
+    ItemType: 2
     recipe: {fileID: 0}
   - itemName: EmptyBucket
     itemDescription: This is EmptyBucket
@@ -102,6 +111,7 @@ MonoBehaviour:
     itemID: 10
     itemCount: 1
     itemCountLimit: 1
+    ItemType: 2
     recipe: {fileID: 0}
   - itemName: FilledBucket
     itemDescription: This is FilledBucket
@@ -111,6 +121,7 @@ MonoBehaviour:
     itemID: 11
     itemCount: 1
     itemCountLimit: 1
+    ItemType: 2
     recipe: {fileID: 0}
   - itemName: Rock
     itemDescription: This is Rock
@@ -120,6 +131,7 @@ MonoBehaviour:
     itemID: 12
     itemCount: 1
     itemCountLimit: 1
+    ItemType: 0
     recipe: {fileID: 0}
   - itemName: Bowl
     itemDescription: You can take food

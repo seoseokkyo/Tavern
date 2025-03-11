@@ -217,4 +217,16 @@ public class InventoryComp : MonoBehaviour
 
         return true;
     }
+
+    public void UseItemByIndex(PlayerController playerController, int UseItemIndex)
+    {
+        int InventorySize = GetInventorySize();
+
+        if(0 > UseItemIndex || UseItemIndex >= InventorySize)
+        {
+            return;
+        }
+
+        inventory[UseItemIndex].UseItem(playerController);
+    }
 }
