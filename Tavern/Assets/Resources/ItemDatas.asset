@@ -124,9 +124,36 @@ MonoBehaviour:
   - itemName: Bowl
     itemDescription: You can take food
     itemIcon: {fileID: 2800000, guid: 60580ff86013aaa499bfb49baeabd950, type: 3}
+    itemMeshFilter: {fileID: 5071747182241536287, guid: 837a178e0bcaa614f8d056a59f874578, type: 3}
+    itemMesh: {fileID: 7027445525973085653, guid: 837a178e0bcaa614f8d056a59f874578, type: 3}
+    itemID: 13
+    itemCount: 1
+    itemCountLimit: 5
+    recipe: {fileID: 0}
+  - itemName: Chickens
+    itemDescription: YumYum
+    itemIcon: {fileID: 2800000, guid: c51b473b7824d1747a58f7843c926031, type: 3}
+    itemMeshFilter: {fileID: 5071747182241536287, guid: 549a3cc0eda2488498710f46d386ef5b, type: 3}
+    itemMesh: {fileID: 7027445525973085653, guid: 549a3cc0eda2488498710f46d386ef5b, type: 3}
+    itemID: 14
+    itemCount: 1
+    itemCountLimit: 5
+    recipe: {fileID: 0}
+  - itemName: Breads
+    itemDescription: Not Bad
+    itemIcon: {fileID: 2800000, guid: e3a108defc7e56b4296bfb31495f5458, type: 3}
     itemMeshFilter: {fileID: 5071747182241536287, guid: dde23328ab1bbf54d83681a532516af3, type: 3}
     itemMesh: {fileID: 7027445525973085653, guid: dde23328ab1bbf54d83681a532516af3, type: 3}
-    itemID: 13
+    itemID: 15
+    itemCount: 1
+    itemCountLimit: 5
+    recipe: {fileID: 0}
+  - itemName: Vegetable Soup
+    itemDescription: Better to eat
+    itemIcon: {fileID: 2800000, guid: 7dcae9d3ae473884090a38e037975246, type: 3}
+    itemMeshFilter: {fileID: 5071747182241536287, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
+    itemMesh: {fileID: 7027445525973085653, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
+    itemID: 16
     itemCount: 1
     itemCountLimit: 5
     recipe: {fileID: 0}
