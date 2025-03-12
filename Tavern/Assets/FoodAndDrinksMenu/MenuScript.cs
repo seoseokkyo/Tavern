@@ -13,7 +13,12 @@ public class MenuScript : Interactable
     public GameObject instantInteractUI;
     private FaDMenuUI menuUI;
 
-
+    private void Start()
+    {
+        interacting = Instantiate(instantInteractUI);
+        menuUI = interacting.GetComponent<FaDMenuUI>();
+        interacting.SetActive(true);
+    }
     public override string GetInteractingDescription()
     {
         return "Press [E] to Set Menu";
@@ -23,14 +28,14 @@ public class MenuScript : Interactable
     {
         player = interactPlayer.gameObject;
 
-        interacting = Instantiate(instantInteractUI);
-        menuUI = interacting.GetComponent<FaDMenuUI>();
-
         TempInitFunction();
+
+       // interacting.transform.SetParent(interactPlayer.PlayerCanvas.transform, false);
+        interacting.SetActive(true);
+        
         menuUI.player = interactPlayer.gameObject;
         menuUI.SetMenuList();
 
-        interacting.SetActive(true);
         modeController.SetMode(true);
         clickEventTestScript.SetUIActivated(true);
     }
