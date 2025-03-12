@@ -45,8 +45,16 @@ public class ItemSpawner : MonoBehaviour
 
                 int Rand = Random.Range(0, SpawnTargetItemsName.Count);
                 string TartgetItemName = SpawnTargetItemsName[Rand];
+                if(TartgetItemName == "")
+                {
+                    int iTemp = 0;
+                }
 
                 ItemData TargetItemData = ItemManager.Instance.GetItemDataByName(TartgetItemName);
+                if(TargetItemData.itemName == "")
+                {
+                    continue;
+                }
 
                 var CreatedItemBase = ItemManager.Instance.CreateItemBase(TargetItemData);
 
@@ -56,6 +64,7 @@ public class ItemSpawner : MonoBehaviour
                 CurrentSpawnPos.x++;
             }
 
+            CurrentSpawnPos.x = transform.position.x;
             CurrentSpawnPos.z++;
         }
 
@@ -82,6 +91,11 @@ public class ItemSpawner : MonoBehaviour
         {
             for (int j = 0; j < SpawnGridNum; j++)
             {
+                if(CreateItemBases.Count <= Count)
+                {
+                    return;
+                }
+
                 WorldItem WorldItemTemp = ItemManager.Instance.ItemSpawn(CreateItemBases[Count], Positions[Count], Quaternion.identity);
 
                 SpawnWorldItem.Add(WorldItemTemp);

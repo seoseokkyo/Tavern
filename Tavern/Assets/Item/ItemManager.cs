@@ -93,6 +93,12 @@ public class ItemManager : MonoBehaviour
 
     public ItemData GetItemDataByName(string ItemName)
     {
+        if(!CreateRecipesDictionary.ContainsKey(ItemName))
+        {
+            ItemData EmptyItemData = new ItemData();
+            return EmptyItemData;
+        }
+
         return ItemsDictionary[ItemName];
     }
 
@@ -183,14 +189,12 @@ public class ItemManager : MonoBehaviour
         if (CurrentItemData.ItemType == EItemType.UseAble)
         {
             NewItemBase = new UseableItem();
-            NewItemBase.SetItemData(CurrentItemData);
 
             Debug.Log($"{CurrentItemData.itemName} Was Changed To UseableItem");
         }
         else if (CurrentItemData.ItemType == EItemType.Equipment)
         {
             NewItemBase = new EquipmentItem();
-            NewItemBase.SetItemData(CurrentItemData);
 
             Debug.Log($"{CurrentItemData.itemName} Was Changed To EquipmentItem");
         }
@@ -200,6 +204,8 @@ public class ItemManager : MonoBehaviour
 
             Debug.Log($"{CurrentItemData.itemName} Was Create To ItemBase");
         }
+
+        NewItemBase.SetItemData(CurrentItemData);
 
         return NewItemBase;
     }
