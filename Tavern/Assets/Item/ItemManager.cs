@@ -54,9 +54,9 @@ public class ItemManager : MonoBehaviour
     public WorldItem ItemSpawn(ItemBase SpawnItem, Vector3 SpawnPos, Quaternion SpawnRotation)
     {
         WorldItem SpawnWorldItem = Instantiate(itemPrefab, SpawnPos, SpawnRotation);
+        SpawnWorldItem.bRandSet = false;
 
         SpawnWorldItem.SetItem(CastItemType(SpawnItem));
-        SpawnWorldItem.bRandSet = false;
 
         return SpawnWorldItem;
     }

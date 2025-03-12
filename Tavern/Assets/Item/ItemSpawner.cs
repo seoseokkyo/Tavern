@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ItemSpawner : MonoBehaviour
 {
@@ -12,11 +13,14 @@ public class ItemSpawner : MonoBehaviour
 
     public GameObject StartPointObject;
 
+    private List<ItemBase> CreateItemBases = new List<ItemBase>();
+    private List<Vector3> Positions = new List<Vector3>();
+
     void Start()
     {
         if(StartPointObject)
         {
-            Destroy(StartPointObject);
+
         }
 
         SpawnWorldItem.Clear();
@@ -32,23 +36,30 @@ public class ItemSpawner : MonoBehaviour
                 if (GroundCheck(CurrentSpawnPos, out hit))
                 {
                     CurrentSpawnPos.y = hit.point.y;
+                    CurrentSpawnPos.y++;
                 }
                 else
                 {
                     continue;
                 }
 
-                var CreatedItemBase = ItemManager.Instance.CreateItemBase(ItemManager.Instance.GetItemDataByName(SpawnTargetItemsName[Random.Range(0, SpawnTargetItemsName.Count)]));
+                int Rand = Random.Range(0, SpawnTargetItemsName.Count);
+                string TartgetItemName = SpawnTargetItemsName[Rand];
 
-                WorldItem WorldItemTemp = ItemManager.Instance.ItemSpawn(CreatedItemBase, CurrentSpawnPos, Quaternion.identity);
+                ItemData TargetItemData = ItemManager.Instance.GetItemDataByName(TartgetItemName);
 
-                SpawnWorldItem.Add(WorldItemTemp);
+                var CreatedItemBase = ItemManager.Instance.CreateItemBase(TargetItemData);
+
+                CreateItemBases.Add(CreatedItemBase);
+                Positions.Add(CurrentSpawnPos);
 
                 CurrentSpawnPos.x++;
             }
 
             CurrentSpawnPos.z++;
         }
+
+        Invoke("SpawnItems", 1);
     }
 
     // Update is called once per frame
@@ -62,5 +73,21 @@ public class ItemSpawner : MonoBehaviour
         Ray ray = new Ray(Position, new Vector3(0, -1, 0));
 
         return Physics.Raycast(ray, out hit, 10);
+    }
+
+    public void SpawnItems()
+    {
+        int Count = 0;
+        for(int i = 0; i < SpawnGridNum; i++)
+        {
+            for (int j = 0; j < SpawnGridNum; j++)
+            {
+                WorldItem WorldItemTemp = ItemManager.Instance.ItemSpawn(CreateItemBases[Count], Positions[Count], Quaternion.identity);
+
+                SpawnWorldItem.Add(WorldItemTemp);
+
+                Count++;
+            }
+        }
     }
 }
