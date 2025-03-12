@@ -167,7 +167,7 @@ MonoBehaviour:
     itemCountLimit: 5
     ItemType: 2
     requireToolType: 0
-    ItemPrefab: {fileID: 4539436211592025068, guid: e9a8cf7ae452c1348956518872b9ce52, type: 3}
+    ItemPrefab: {fileID: 1356757611425855530, guid: 837a178e0bcaa614f8d056a59f874578, type: 3}
     recipe: {fileID: 0}
   - itemName: Chickens
     itemDescription: YumYum

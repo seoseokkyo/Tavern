@@ -55,8 +55,7 @@ public class ItemManager : MonoBehaviour
     {
         WorldItem SpawnWorldItem = Instantiate(itemPrefab, SpawnPos, SpawnRotation);
         SpawnWorldItem.bRandSet = false;
-
-        SpawnWorldItem.SetItem(CastItemType(SpawnItem));
+        SpawnWorldItem.InitItemName = SpawnItem.CurrentItemData.itemName;
 
         return SpawnWorldItem;
     }
@@ -93,7 +92,7 @@ public class ItemManager : MonoBehaviour
 
     public ItemData GetItemDataByName(string ItemName)
     {
-        if(!CreateRecipesDictionary.ContainsKey(ItemName))
+        if(!ItemsDictionary.ContainsKey(ItemName))
         {
             ItemData EmptyItemData = new ItemData();
             return EmptyItemData;
@@ -109,7 +108,7 @@ public class ItemManager : MonoBehaviour
 
     public Sprite GetItemSpriteByName(string ItemName)
     {
-        if (ItemName == "" || !CreateRecipesDictionary.ContainsKey(ItemName))
+        if (ItemName == "" || !ItemsDictionary.ContainsKey(ItemName))
         {
             Rect EmptyRect = new Rect(0, 0, Mathf.Min(EmptyImage.width, 500), Mathf.Min(EmptyImage.height, 500));
 

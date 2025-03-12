@@ -37,8 +37,8 @@ public class WorldItem : Interactable
             item.SetItemData(ItemManager.Instance.GetItemDataByName(InitItemName));
         }
 
-        SetItem(item);
         item = ItemManager.Instance.CastItemType(item);
+        SetItem(item);
     }
 
     // Update is called once per frame
@@ -63,13 +63,18 @@ public class WorldItem : Interactable
 
     public void SetItem(ItemBase inputItem)
     {
+        if (inputItem == null)
+        {
+            Debug.Log("SetItem(ItemBase inputItem) Null Input");
+        }
+
         item = inputItem;
 
         if (item.CurrentItemData.ItemPrefab)
         {
             GameObject child = Instantiate(item.CurrentItemData.ItemPrefab);
             child.transform.SetParent(transform, false);
-            
+
             child.SetActive(true);
         }
         else
