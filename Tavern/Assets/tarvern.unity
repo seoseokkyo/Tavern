@@ -4225,7 +4225,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8800059771866093615, guid: 6ec0c99469ac4624b9fe866978b5f080, type: 3}
       propertyPath: InitItemName
-      value: FilledBucket
+      value: WaterBucket
       objectReference: {fileID: 0}
     - target: {fileID: 8800059771866093615, guid: 6ec0c99469ac4624b9fe866978b5f080, type: 3}
       propertyPath: item.CurrentItemData.itemID
