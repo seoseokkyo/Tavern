@@ -180,32 +180,4 @@ public class ItemManager : MonoBehaviour
 
         return NewItemBase ?? CurrentItemBase;
     }
-
-    public ItemBase CreateItemBase(ItemData CurrentItemData)
-    {
-        ItemBase NewItemBase = null;
-
-        if (CurrentItemData.ItemType == EItemType.UseAble)
-        {
-            NewItemBase = new UseableItem();
-
-            Debug.Log($"{CurrentItemData.itemName} Was Changed To UseableItem");
-        }
-        else if (CurrentItemData.ItemType == EItemType.Equipment)
-        {
-            NewItemBase = new EquipmentItem();
-
-            Debug.Log($"{CurrentItemData.itemName} Was Changed To EquipmentItem");
-        }
-        else
-        {
-            NewItemBase = ItemBase.ItemBaseCreator.CreateItemBase();
-
-            Debug.Log($"{CurrentItemData.itemName} Was Create To ItemBase");
-        }
-
-        NewItemBase.SetItemData(CurrentItemData);
-
-        return NewItemBase;
-    }
 }

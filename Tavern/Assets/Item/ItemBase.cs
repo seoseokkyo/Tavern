@@ -83,9 +83,31 @@ public class ItemBase
 
     // 아이템베이스 생성자 접근수준 변경
     protected ItemBase() { }
+    protected ItemBase(ItemData ItemData) { CurrentItemData = ItemData; }
+
     public class ItemBaseCreator
     {
-        internal static ItemBase CreateItemBase() => new ItemBase();
+        internal static ItemBase CreateItemBase(ItemData ItemData)
+        {
+            ItemBase NewItemBase = null;
+
+            if (ItemData.ItemType == EItemType.UseAble)
+            {
+                NewItemBase = new UseableItem();
+            }
+            else if (ItemData.ItemType == EItemType.Equipment)
+            {
+                NewItemBase = new EquipmentItem();
+            }
+            else
+            {
+                NewItemBase = new ItemBase();
+            }
+
+            NewItemBase.SetItemData(ItemData);
+
+            return NewItemBase;
+        }
     }
 
     public void RandDataSet()

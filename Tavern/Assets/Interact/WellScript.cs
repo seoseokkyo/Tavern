@@ -30,7 +30,7 @@ public class WellScript : Interactable
                         ItemData temp = itemDatas.items[i];
                         if (temp.itemName == "WaterBucket")
                         {
-                            ItemBase filledBucket = ItemManager.Instance.CreateItemBase(temp);
+                            ItemBase filledBucket = ItemBase.ItemBaseCreator.CreateItemBase(temp);
                             filledBucket.CurrentItemData.itemCount = 10;
 
                             playerInventory.PopItem(bucketIdx);

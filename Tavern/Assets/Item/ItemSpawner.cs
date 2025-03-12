@@ -15,7 +15,7 @@ public class ItemSpawner : MonoBehaviour
 
     void Start()
     {
-        if(StartPointObject)
+        if (StartPointObject)
         {
             Destroy(StartPointObject);
         }
@@ -33,7 +33,7 @@ public class ItemSpawner : MonoBehaviour
                 if (GroundCheck(CurrentSpawnPos, out hit))
                 {
                     CurrentSpawnPos.y = hit.point.y;
-                    CurrentSpawnPos.y++;
+                    CurrentSpawnPos.y += 0.2f;
                 }
                 else
                 {
@@ -44,7 +44,7 @@ public class ItemSpawner : MonoBehaviour
                 int Rand = Random.Range(0, SpawnTargetItemsName.Count);
                 string TartgetItemName = SpawnTargetItemsName[Rand];
                 ItemData TargetItemData = ItemManager.Instance.GetItemDataByName(TartgetItemName);
-                var CreatedItemBase = ItemManager.Instance.CreateItemBase(TargetItemData);
+                var CreatedItemBase = ItemBase.ItemBaseCreator.CreateItemBase(TargetItemData);
 
                 WorldItem WorldItemTemp = ItemManager.Instance.ItemSpawn(CreatedItemBase, CurrentSpawnPos, Quaternion.identity);
 

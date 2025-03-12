@@ -172,7 +172,7 @@ public class CreateTool : Interactable
     {
         ItemData CreateItemData = ItemManager.Instance.GetItemDataByName(CreateToolUIScript.CurrentSelectedRecipe);
         var CreateRecipeData = ItemManager.Instance.GetRecipeDataByName(CreateToolUIScript.CurrentSelectedRecipe);
-        ItemBase CreateItem = ItemManager.Instance.CreateItemBase(CreateItemData);
+        ItemBase CreateItem = ItemBase.ItemBaseCreator.CreateItemBase(CreateItemData);
 
         CreateItem.CurrentItemData.itemCount = CreateRecipeData.CreateNum;
 

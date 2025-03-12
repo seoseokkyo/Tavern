@@ -31,13 +31,14 @@ public class WorldItem : Interactable
         if (bRandSet)
         {
             item.RandDataSet();
+
+            item = ItemManager.Instance.CastItemType(item);
         }
         else
         {
-            item.SetItemData(ItemManager.Instance.GetItemDataByName(InitItemName));
+            item = ItemBase.ItemBaseCreator.CreateItemBase(ItemManager.Instance.GetItemDataByName(InitItemName));
         }
 
-        item = ItemManager.Instance.CastItemType(item);
         SetItem(item);
     }
 
@@ -63,11 +64,6 @@ public class WorldItem : Interactable
 
     public void SetItem(ItemBase inputItem)
     {
-        if (inputItem == null)
-        {
-            Debug.Log("SetItem(ItemBase inputItem) Null Input");
-        }
-
         item = inputItem;
 
         if (item.CurrentItemData.ItemPrefab)
