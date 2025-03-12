@@ -51,12 +51,14 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public void ItemSpawn(ItemBase SpawnItem, Vector3 SpawnPos, Quaternion SpawnRotation)
+    public WorldItem ItemSpawn(ItemBase SpawnItem, Vector3 SpawnPos, Quaternion SpawnRotation)
     {
         WorldItem SpawnWorldItem = Instantiate(itemPrefab, SpawnPos, SpawnRotation);
 
         SpawnWorldItem.SetItem(CastItemType(SpawnItem));
         SpawnWorldItem.bRandSet = false;
+
+        return SpawnWorldItem;
     }
 
     void InitCreateRecipeDictionary()
@@ -156,7 +158,7 @@ public class ItemManager : MonoBehaviour
     {
         ItemBase NewItemBase = null;
 
-        if(CurrentItemBase.CurrentItemData.ItemType == EItemType.UseAble)
+        if (CurrentItemBase.CurrentItemData.ItemType == EItemType.UseAble)
         {
             NewItemBase = new UseableItem();
             NewItemBase.SetItemData(CurrentItemBase.CurrentItemData);
@@ -172,5 +174,33 @@ public class ItemManager : MonoBehaviour
         }
 
         return NewItemBase ?? CurrentItemBase;
+    }
+
+    public ItemBase CreateItemBase(ItemData CurrentItemData)
+    {
+        ItemBase NewItemBase = null;
+
+        if (CurrentItemData.ItemType == EItemType.UseAble)
+        {
+            NewItemBase = new UseableItem();
+            NewItemBase.SetItemData(CurrentItemData);
+
+            Debug.Log($"{CurrentItemData.itemName} Was Changed To UseableItem");
+        }
+        else if (CurrentItemData.ItemType == EItemType.Equipment)
+        {
+            NewItemBase = new EquipmentItem();
+            NewItemBase.SetItemData(CurrentItemData);
+
+            Debug.Log($"{CurrentItemData.itemName} Was Changed To EquipmentItem");
+        }
+        else
+        {
+            NewItemBase = ItemBase.ItemBaseCreator.CreateItemBase();
+
+            Debug.Log($"{CurrentItemData.itemName} Was Create To ItemBase");
+        }
+
+        return NewItemBase;
     }
 }

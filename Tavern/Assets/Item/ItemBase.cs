@@ -59,6 +59,7 @@ public class CreateTargetRecipeData
     public string ItemName;
     public CreateItemType CreateItemType;
     public float CreateNeedTime;
+    public int CreateNum;
 }
 
 [Serializable]
@@ -79,6 +80,13 @@ public class ItemBase
 
     private object _ownerInventoryLock = new object();
     public InventoryComp OwnerInventory = null;
+
+    // 아이템베이스 생성자 접근수준 변경
+    protected ItemBase() { }
+    public class ItemBaseCreator
+    {
+        internal static ItemBase CreateItemBase() => new ItemBase();
+    }
 
     public void RandDataSet()
     {

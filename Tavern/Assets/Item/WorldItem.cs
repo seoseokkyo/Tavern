@@ -28,8 +28,6 @@ public class WorldItem : Interactable
         WorldItemMeshFilter = GetComponent<MeshFilter>();
         WorldItemMesh = GetComponent<MeshRenderer>();
 
-
-
         if (bRandSet)
         {
             item.RandDataSet();

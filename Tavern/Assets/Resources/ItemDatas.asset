@@ -160,8 +160,8 @@ MonoBehaviour:
   - itemName: Bowl
     itemDescription: You can take food
     itemIcon: {fileID: 2800000, guid: 60580ff86013aaa499bfb49baeabd950, type: 3}
-    itemMeshFilter: {fileID: 5071747182241536287, guid: 837a178e0bcaa614f8d056a59f874578, type: 3}
-    itemMesh: {fileID: 7027445525973085653, guid: 837a178e0bcaa614f8d056a59f874578, type: 3}
+    itemMeshFilter: {fileID: 3328196280465173813, guid: 837a178e0bcaa614f8d056a59f874578, type: 3}
+    itemMesh: {fileID: 708428174164744703, guid: 837a178e0bcaa614f8d056a59f874578, type: 3}
     itemID: 13
     itemCount: 1
     itemCountLimit: 5
@@ -172,8 +172,8 @@ MonoBehaviour:
   - itemName: Chickens
     itemDescription: YumYum
     itemIcon: {fileID: 2800000, guid: c51b473b7824d1747a58f7843c926031, type: 3}
-    itemMeshFilter: {fileID: 5071747182241536287, guid: 549a3cc0eda2488498710f46d386ef5b, type: 3}
-    itemMesh: {fileID: 7027445525973085653, guid: 549a3cc0eda2488498710f46d386ef5b, type: 3}
+    itemMeshFilter: {fileID: 3328196280465173813, guid: 549a3cc0eda2488498710f46d386ef5b, type: 3}
+    itemMesh: {fileID: 708428174164744703, guid: 549a3cc0eda2488498710f46d386ef5b, type: 3}
     itemID: 14
     itemCount: 1
     itemCountLimit: 5
@@ -184,8 +184,8 @@ MonoBehaviour:
   - itemName: Breads
     itemDescription: Not Bad
     itemIcon: {fileID: 2800000, guid: e3a108defc7e56b4296bfb31495f5458, type: 3}
-    itemMeshFilter: {fileID: 5071747182241536287, guid: dde23328ab1bbf54d83681a532516af3, type: 3}
-    itemMesh: {fileID: 7027445525973085653, guid: dde23328ab1bbf54d83681a532516af3, type: 3}
+    itemMeshFilter: {fileID: 5636505576078174809, guid: 596e9a20beeb55e4fa5293152a3741d4, type: 3}
+    itemMesh: {fileID: 7627994670147378835, guid: 596e9a20beeb55e4fa5293152a3741d4, type: 3}
     itemID: 15
     itemCount: 1
     itemCountLimit: 5
@@ -196,8 +196,8 @@ MonoBehaviour:
   - itemName: Vegetable Soup
     itemDescription: Better to eat
     itemIcon: {fileID: 2800000, guid: 7dcae9d3ae473884090a38e037975246, type: 3}
-    itemMeshFilter: {fileID: 5071747182241536287, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
-    itemMesh: {fileID: 7027445525973085653, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
+    itemMeshFilter: {fileID: 3328196280465173813, guid: 0cbf0da23b85ad843919a3fe8043e210, type: 3}
+    itemMesh: {fileID: 708428174164744703, guid: 0cbf0da23b85ad843919a3fe8043e210, type: 3}
     itemID: 16
     itemCount: 1
     itemCountLimit: 5
@@ -208,8 +208,8 @@ MonoBehaviour:
   - itemName: RawChicken
     itemDescription: Coocooduldledoo
     itemIcon: {fileID: 2800000, guid: c76bc33d7e5e164499693a520d1f3d38, type: 3}
-    itemMeshFilter: {fileID: 5071747182241536287, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
-    itemMesh: {fileID: 7027445525973085653, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
+    itemMeshFilter: {fileID: 4668314183990169035, guid: f55bb3160942bf04bb2f40b30e8734b4, type: 3}
+    itemMesh: {fileID: 7434836388684904705, guid: f55bb3160942bf04bb2f40b30e8734b4, type: 3}
     itemID: 17
     itemCount: 1
     itemCountLimit: 5
@@ -220,8 +220,8 @@ MonoBehaviour:
   - itemName: Carrot
     itemDescription: Rabbit Likes it
     itemIcon: {fileID: 2800000, guid: 2718b7d28e8894b4aa650d03a7426851, type: 3}
-    itemMeshFilter: {fileID: 5071747182241536287, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
-    itemMesh: {fileID: 7027445525973085653, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
+    itemMeshFilter: {fileID: 2951643992989460868, guid: 839e9101248f0f84ca102081a9790d6d, type: 3}
+    itemMesh: {fileID: 1086123816685247822, guid: 839e9101248f0f84ca102081a9790d6d, type: 3}
     itemID: 18
     itemCount: 1
     itemCountLimit: 5
@@ -232,8 +232,8 @@ MonoBehaviour:
   - itemName: MushRoom
     itemDescription: Taste like meat!
     itemIcon: {fileID: 2800000, guid: 911db75946321164ba285c775c96d241, type: 3}
-    itemMeshFilter: {fileID: 5071747182241536287, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
-    itemMesh: {fileID: 7027445525973085653, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
+    itemMeshFilter: {fileID: 4540891420393616635, guid: e883ef9085352484c9e3e76351515178, type: 3}
+    itemMesh: {fileID: 1792586556582576177, guid: e883ef9085352484c9e3e76351515178, type: 3}
     itemID: 19
     itemCount: 1
     itemCountLimit: 5
@@ -244,8 +244,8 @@ MonoBehaviour:
   - itemName: Pumpkin
     itemDescription: Halloween?
     itemIcon: {fileID: 2800000, guid: 5e76301ed77abc14f8da4bea9327879d, type: 3}
-    itemMeshFilter: {fileID: 5071747182241536287, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
-    itemMesh: {fileID: 7027445525973085653, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
+    itemMeshFilter: {fileID: 8828675975192657185, guid: e532945e283cca7478582f8a1880fdc7, type: 3}
+    itemMesh: {fileID: 6728717918809541099, guid: e532945e283cca7478582f8a1880fdc7, type: 3}
     itemID: 20
     itemCount: 1
     itemCountLimit: 5
@@ -256,8 +256,8 @@ MonoBehaviour:
   - itemName: Garlic
     itemDescription: Ghost doesn't like this
     itemIcon: {fileID: 2800000, guid: b3561d896755e524ea2f4d69deb93cf2, type: 3}
-    itemMeshFilter: {fileID: 5071747182241536287, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
-    itemMesh: {fileID: 7027445525973085653, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
+    itemMeshFilter: {fileID: 8069657077781477248, guid: b701910af56d089428c372aa6ba53383, type: 3}
+    itemMesh: {fileID: 5195422319005221706, guid: b701910af56d089428c372aa6ba53383, type: 3}
     itemID: 21
     itemCount: 1
     itemCountLimit: 5
@@ -268,8 +268,8 @@ MonoBehaviour:
   - itemName: RawMeat
     itemDescription: Meat is the best
     itemIcon: {fileID: 2800000, guid: 86f0cdcbfb6245f4f8a48719741db915, type: 3}
-    itemMeshFilter: {fileID: 5071747182241536287, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
-    itemMesh: {fileID: 7027445525973085653, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
+    itemMeshFilter: {fileID: 5562369475347357653, guid: 10ab30527b9bc8a4995e798ac0706a37, type: 3}
+    itemMesh: {fileID: 7698189811460270879, guid: 10ab30527b9bc8a4995e798ac0706a37, type: 3}
     itemID: 22
     itemCount: 1
     itemCountLimit: 5
@@ -280,8 +280,8 @@ MonoBehaviour:
   - itemName: Flour
     itemDescription: You Can Make Bakery
     itemIcon: {fileID: 2800000, guid: 0ac07501c672c9e4db452f33ecd4ccaa, type: 3}
-    itemMeshFilter: {fileID: 5071747182241536287, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
-    itemMesh: {fileID: 7027445525973085653, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
+    itemMeshFilter: {fileID: 5357923890230945228, guid: 6e581a4bd8646fa4d91cd709b8b8ee37, type: 3}
+    itemMesh: {fileID: 7908281560424222982, guid: 6e581a4bd8646fa4d91cd709b8b8ee37, type: 3}
     itemID: 23
     itemCount: 1
     itemCountLimit: 5
@@ -292,8 +292,8 @@ MonoBehaviour:
   - itemName: Plate
     itemDescription: You Can Serve Somethin
     itemIcon: {fileID: 2800000, guid: 316039f77cd66e949996255fa44a466a, type: 3}
-    itemMeshFilter: {fileID: 5071747182241536287, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
-    itemMesh: {fileID: 7027445525973085653, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
+    itemMeshFilter: {fileID: 7811336510746373443, guid: 058ff2646cf550241b0df25317f5848e, type: 3}
+    itemMesh: {fileID: 5441340532171430281, guid: 058ff2646cf550241b0df25317f5848e, type: 3}
     itemID: 24
     itemCount: 1
     itemCountLimit: 5
@@ -304,8 +304,8 @@ MonoBehaviour:
   - itemName: Steak
     itemDescription: Soo Rich
     itemIcon: {fileID: 2800000, guid: 89c5530db47dff94c97fbd028810570d, type: 3}
-    itemMeshFilter: {fileID: 5071747182241536287, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
-    itemMesh: {fileID: 7027445525973085653, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
+    itemMeshFilter: {fileID: 1753629736600943019, guid: 7388bf2e2ad343a4d9a5f1593c96e15d, type: 3}
+    itemMesh: {fileID: 4589963781760208225, guid: 7388bf2e2ad343a4d9a5f1593c96e15d, type: 3}
     itemID: 25
     itemCount: 1
     itemCountLimit: 1
@@ -316,8 +316,8 @@ MonoBehaviour:
   - itemName: PumpkinSoup
     itemDescription: So Sweet and Healthy
     itemIcon: {fileID: 2800000, guid: b93e3b1ec581b2d4fb3096dfe2403b7e, type: 3}
-    itemMeshFilter: {fileID: 5071747182241536287, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
-    itemMesh: {fileID: 7027445525973085653, guid: 0bb7f8f1efb5463489b09eeb21c0ae6b, type: 3}
+    itemMeshFilter: {fileID: 2817597412622938721, guid: a7a76974a1e1dc74f9761d276f1c26a7, type: 3}
+    itemMesh: {fileID: 71752628968867499, guid: a7a76974a1e1dc74f9761d276f1c26a7, type: 3}
     itemID: 26
     itemCount: 1
     itemCountLimit: 1
@@ -330,6 +330,7 @@ MonoBehaviour:
       ItemName: RockHammer
       CreateItemType: 0
       CreateNeedTime: 20
+      CreateNum: 1
     Resources:
     - ItemName: WoodScrap
       NeedNumber: 2
@@ -339,6 +340,7 @@ MonoBehaviour:
       ItemName: Chickens
       CreateItemType: 1
       CreateNeedTime: 5
+      CreateNum: 2
     Resources:
     - ItemName: RawChicken
       NeedNumber: 2
@@ -346,6 +348,7 @@ MonoBehaviour:
       ItemName: Breads
       CreateItemType: 1
       CreateNeedTime: 5
+      CreateNum: 3
     Resources:
     - ItemName: Flour
       NeedNumber: 2
@@ -355,6 +358,7 @@ MonoBehaviour:
       ItemName: Vegetable Soup
       CreateItemType: 1
       CreateNeedTime: 5
+      CreateNum: 2
     Resources:
     - ItemName: Carrot
       NeedNumber: 1
@@ -366,6 +370,7 @@ MonoBehaviour:
       ItemName: Steak
       CreateItemType: 1
       CreateNeedTime: 10
+      CreateNum: 3
     Resources:
     - ItemName: RawMeat
       NeedNumber: 1
@@ -377,6 +382,7 @@ MonoBehaviour:
       ItemName: PumpkinSoup
       CreateItemType: 1
       CreateNeedTime: 7
+      CreateNum: 3
     Resources:
     - ItemName: Pumpkin
       NeedNumber: 1

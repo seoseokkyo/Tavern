@@ -1,3 +1,4 @@
+using NUnit.Framework.Interfaces;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -29,8 +30,7 @@ public class WellScript : Interactable
                         ItemData temp = itemDatas.items[i];
                         if (temp.itemName == "WaterBucket")
                         {
-                            ItemBase filledBucket = new ItemBase();
-                            filledBucket.SetItemData(temp);
+                            ItemBase filledBucket = ItemManager.Instance.CreateItemBase(temp);
                             filledBucket.CurrentItemData.itemCount = 10;
 
                             playerInventory.PopItem(bucketIdx);

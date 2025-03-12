@@ -134,16 +134,14 @@ public class CookedScript : MonoBehaviour
             remainedItem -= 1;
             remainedAmount.text = remainedItem.ToString();
 
-            ItemBase item = new ItemBase();
-            item.SetItemData(itemData);
+            ItemBase item = ItemManager.Instance.CreateItemBase(itemData);
             playerInventroy.AddItem(ref item);
         }
         else if(remainedItem <= 1)
         {
             remainedItem = 0;
 
-            ItemBase item = new ItemBase();
-            item.SetItemData(itemData);
+            ItemBase item = ItemManager.Instance.CreateItemBase(itemData);
             playerInventroy.AddItem(ref item);
 
             CreateTool pot = cookingObj.GetComponent<CreateTool>();
