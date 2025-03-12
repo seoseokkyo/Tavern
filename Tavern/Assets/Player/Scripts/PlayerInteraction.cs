@@ -62,45 +62,44 @@ public class PlayerInteraction : MonoBehaviour
 
     void HandleInteraction(Interactable interactable)
     {
-        switch (interactable.interactionType)
+        PlayerController player = GetComponentInParent<PlayerController>();
+        if(player != null)
         {
-            case Interactable.InteractionType.Press:
-                if(UnityEngine.Input.GetButtonDown("Interact"))
-                {
-                    PlayerController player = GetComponentInParent<PlayerController>();
-                    if (player != null)
-                    {
-                        interactable.interactPlayer = player;
-                    }
-                    
-                    interactable.Interact();
-                }
-                break;
-            case Interactable.InteractionType.Hold:
-                KeyCode key = KeyCode.E;
-                if (UnityEngine.Input.GetKey(key))
-                {
-                    interactable.IncreaseHoldtime();
-                    if (interactable.GetHoldTime() > maxHoldTime)
+            interactable.interactPlayer = player;
+            switch (interactable.interactionType)
+            {
+                case Interactable.InteractionType.Press:
+                    if(UnityEngine.Input.GetButtonDown("Interact"))
                     {
                         interactable.Interact();
+                    }
+                    break;
+                case Interactable.InteractionType.Hold:
+                    KeyCode key = KeyCode.E;
+                    if (UnityEngine.Input.GetKey(key))
+                    {
+                        interactable.IncreaseHoldtime();
+                        if (interactable.GetHoldTime() > maxHoldTime)
+                        {
+                            interactable.Interact();
+                            interactable.ResetHoldTime();
+                        }
+                    }
+                    else
+                    {
                         interactable.ResetHoldTime();
                     }
-                }
-                else
-                {
-                    interactable.ResetHoldTime();
-                }
-                // slider (progressbar) 게이지 상태 업데이트
-                interactionProgress.value = interactable.GetHoldTime() / maxHoldTime;
-                break;
-            case Interactable.InteractionType.UIPop:
-                if (UnityEngine.Input.GetButtonDown("Interact"))
-                {
-                    SetActive(true);
-                    interactable.Interact();
-                }
-                break;
+                    // slider (progressbar) 게이지 상태 업데이트
+                    interactionProgress.value = interactable.GetHoldTime() / maxHoldTime;
+                    break;
+                case Interactable.InteractionType.UIPop:
+                    if (UnityEngine.Input.GetButtonDown("Interact"))
+                    {
+                        SetActive(true);
+                        interactable.Interact();
+                    }
+                    break;
+            }
         }
     }
 }
