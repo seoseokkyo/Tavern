@@ -7,7 +7,6 @@ public class ClickEventTest : MonoBehaviour
     public GameObject popUI;
     public GameObject player;
     private ModeController modeController;
-
     private bool isActivated = false;
 
     // Start의 UI Active를 끄는 기능 플래그

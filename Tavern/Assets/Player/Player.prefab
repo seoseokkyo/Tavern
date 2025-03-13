@@ -477,7 +477,7 @@ GameObject:
   - component: {fileID: 8499614538888706292}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -765,8 +765,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6167e3c255a66e44c914c99cb660951d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InventoryUI_prefab: {fileID: 5248130043337331258, guid: 1ada21c56a300d244bc84bb92dc8c3be, type: 3}
-  InventoryUI: {fileID: 0}
 --- !u!114 &6226858931125996059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -780,6 +778,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerInventory: {fileID: 0}
+  PopupInventoryUI_Prefab: {fileID: 0}
+  PlayerCanvas: {fileID: 0}
+  selectedRecipe: {fileID: 0}
+  recipe: {fileID: 0}
+  QuickSlotUI_prefab: {fileID: 0}
 --- !u!114 &8499614538888706292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -792,7 +795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a627a4f69d291bd4a9ca972c3ffd12e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 996853540725516794}
+  player: {fileID: 0}
   mainCamera: {fileID: 0}
 --- !u!1 &999734432400192511
 GameObject:

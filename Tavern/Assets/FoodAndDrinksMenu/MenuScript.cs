@@ -17,6 +17,7 @@ public class MenuScript : Interactable
     {
         interacting = Instantiate(instantInteractUI);
         menuUI = interacting.GetComponent<FaDMenuUI>();
+        menuUI.enabled = true;
         interacting.SetActive(true);
     }
     public override string GetInteractingDescription()
@@ -27,13 +28,16 @@ public class MenuScript : Interactable
     public override void Interact()
     {
         player = interactPlayer.gameObject;
+        menuUI.player = interactPlayer.gameObject;
 
         TempInitFunction();
 
-       // interacting.transform.SetParent(interactPlayer.PlayerCanvas.transform, false);
-        interacting.SetActive(true);
-        
-        menuUI.player = interactPlayer.gameObject;
+        // interacting.transform.SetParent(interactPlayer.PlayerCanvas.transform, false);
+        if (interacting.activeSelf == false)
+        {
+            interacting.SetActive(true);
+        }
+
         menuUI.SetMenuList();
 
         modeController.SetMode(true);
@@ -41,7 +45,7 @@ public class MenuScript : Interactable
     }
     void TempInitFunction()
     {
-        var ExitButton = interacting.GetComponentInChildren<MenuExitButton>();
+        var ExitButton = interacting.GetComponentInChildren<CookingExitButton>();
         if (null != ExitButton)
         {
             ExitButton.player = interactPlayer.gameObject;
