@@ -307,7 +307,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000061035156}
+  m_AnchoredPosition: {x: 0, y: -0.000030517578}
   m_SizeDelta: {x: -1, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6517157637679340885
@@ -642,6 +642,9 @@ MonoBehaviour:
   foodMenuContentTransform: {fileID: 8328611381955471819}
   drinkMenuUI: {fileID: 5843820515273111036, guid: 77c32fc40c355c347aaba9245a677a72, type: 3}
   drinkMenuContentTransform: {fileID: 185004791508520608}
+  menuManager: {fileID: 5480123380258955732, guid: 969e09a18fd45c54a983181cc36bc407, type: 3}
+  SetMenuButton: {fileID: 309039175902424787}
+  ownerObject: {fileID: 5422214384727210769, guid: fc714ddd559e04548b1026f636b63470, type: 3}
 --- !u!114 &2388863226506407356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1687,7 +1690,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000030517578}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
   m_SizeDelta: {x: -1, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8629656796939695011

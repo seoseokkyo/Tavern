@@ -450,6 +450,7 @@ MonoBehaviour:
   itemPrice: {fileID: 7254328252295175922}
   iconContentTransform: {fileID: 6132044987953564443}
   itemDatas: {fileID: 11400000, guid: 97dd72458fdd0f248b94ffe32fac6c82, type: 2}
+  menuManager: {fileID: 5480123380258955732, guid: 969e09a18fd45c54a983181cc36bc407, type: 3}
 --- !u!1 &8224668049962672766
 GameObject:
   m_ObjectHideFlags: 0

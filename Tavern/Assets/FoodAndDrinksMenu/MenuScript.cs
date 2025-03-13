@@ -18,6 +18,8 @@ public class MenuScript : Interactable
         interacting = Instantiate(instantInteractUI);
         menuUI = interacting.GetComponent<FaDMenuUI>();
         menuUI.enabled = true;
+        menuUI.modeController = modeController;
+        menuUI.clickEventTestScript = clickEventTestScript;
         interacting.SetActive(true);
     }
     public override string GetInteractingDescription()
@@ -39,6 +41,11 @@ public class MenuScript : Interactable
         }
 
         menuUI.SetMenuList();
+        if(menuUI.modeController == null || menuUI.clickEventTestScript == null)
+        {
+            menuUI.modeController = modeController;
+            menuUI.clickEventTestScript = clickEventTestScript;
+        }
 
         modeController.SetMode(true);
         clickEventTestScript.SetUIActivated(true);

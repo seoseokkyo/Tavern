@@ -17,14 +17,62 @@ public class MenuPanelUI : MonoBehaviour
     public ItemDatas itemDatas;
     private ItemData itemData;
 
+    public bool isSelected = false;
+
+    public MenuManager menuManagerScript;
+
     void Start()
     {
-        
+        setButton.onClick.AddListener(OnClickSetButton);
     }
 
     void Update()
     {
         
+    }
+
+    public void SetIsSelectedBefore()
+    {
+        isSelected = true;
+        setButton.image.color = Color.green;
+        setButton.enabled = true;
+        checkText.text = "V";
+        checkText.enabled = true;
+    }
+
+    void OnClickSetButton()
+    {
+        if (!isSelected)
+        {
+            isSelected = true;
+            setButton.image.color = Color.green;
+            setButton.enabled = true;
+            checkText.text = "V";
+            checkText.enabled = true;
+
+            if(menuManagerScript != null)
+            {
+                menuManagerScript.AddMenu(itemData);
+            }
+        }
+        else
+        {
+            isSelected = false;
+            setButton.image.color = Color.white;
+            setButton.enabled = true;
+            checkText.text = "";
+            checkText.enabled = true;
+            
+            if(menuManagerScript != null)
+            {
+                menuManagerScript.RemoveMenu(itemData);
+            }
+        }
+    }
+
+    public ItemData GetCurrentItem()
+    {
+        return itemData;
     }
 
     public void SetMenuInfo(string name)
@@ -48,7 +96,7 @@ public class MenuPanelUI : MonoBehaviour
         //itemPrice.enabled = true;
         setButton.image.color = Color.white;
         setButton.enabled = true;
-        checkText.text = "V";
+        checkText.text = "";
         checkText.enabled = true;
     }
 
@@ -63,6 +111,4 @@ public class MenuPanelUI : MonoBehaviour
         }
         return itemDatas.items[0];
     }
-
-
 }

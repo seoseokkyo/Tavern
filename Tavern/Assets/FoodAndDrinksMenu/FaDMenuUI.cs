@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class FaDMenuUI : MonoBehaviour
@@ -18,19 +19,38 @@ public class FaDMenuUI : MonoBehaviour
     public Transform drinkMenuContentTransform;
     List<GameObject> drinkViewList = new List<GameObject>();
 
-    List<GameObject> selectedFoodList = new List<GameObject>();
-    List<GameObject> selectedDrinkList = new List<GameObject>();
+    public GameObject menuManager;
+    private MenuManager menuManagerScript;
+
+    public UnityEngine.UI.Button SetMenuButton;
+    private List<ItemData> savedMenuList = new List<ItemData>();
+
+    public ModeController modeController;
+    public ClickEventTest clickEventTestScript;
+
     void Start()
     {
         foodViewList.Clear();
         drinkViewList.Clear();
-        selectedFoodList.Clear();
-        selectedDrinkList.Clear();
-
+        SetMenuButton.onClick.AddListener(OnSetMenuButtonClick);
     }
     void Update()
     {
 
+    }
+
+    void OnSetMenuButtonClick()
+    {
+        if (menuManagerScript != null)
+        {
+            savedMenuList = menuManagerScript.GetMenuList();
+            if(modeController != null & clickEventTestScript != null)
+            {
+                modeController.SetMode(false);
+                clickEventTestScript.SetUIActivated(false);
+                clickEventTestScript.popUI.SetActive(false);
+            }
+        }
     }
 
     public void SetMenuList()
@@ -38,6 +58,94 @@ public class FaDMenuUI : MonoBehaviour
         ClearList();
         SetFoodList();
         SetDrinkList();
+        SetMenuManager();
+    }
+
+    private void GetSavedMenuFromManager()
+    {
+        savedMenuList = menuManagerScript.GetMenuList();
+    }
+
+    private void SetMenuManager()
+    {
+        menuManagerScript = menuManager.GetComponent<MenuManager>();
+        if(menuManagerScript != null)
+        {
+            // foodS
+            for(int i = 0; i < foodMenuContentTransform.childCount; i++)
+            {
+                var temp = foodMenuContentTransform.GetChild(i);
+                if(temp != null)
+                {
+                    var tempUI = temp.GetComponent<MenuPanelUI>();
+                    if(tempUI != null)
+                    {
+                        tempUI.menuManagerScript = menuManagerScript;
+                    }
+                }
+            }
+            // drinks
+            for (int i = 0; i < drinkMenuContentTransform.childCount; i++)
+            {
+                var temp = foodMenuContentTransform.GetChild(i);
+                if (temp != null)
+                {
+                    var tempUI = temp.GetComponent<MenuPanelUI>();
+                    if (tempUI != null)
+                    {
+                        tempUI.menuManagerScript = menuManagerScript;
+                    }
+                }
+            }
+        }
+
+        SetSavedMenuList();
+    }
+
+    private void SetSavedMenuList()
+    {
+        GetSavedMenuFromManager();
+        if(savedMenuList.Count == 0)
+           return;
+
+        // foods
+        for(int i = 0; i < foodMenuContentTransform.childCount; i++)
+        {
+            var temp = foodMenuContentTransform.GetChild(i);
+            if(temp != null)
+            {
+                var item = temp.GetComponent<MenuPanelUI>();
+                ItemData itemData = item.GetCurrentItem();
+                for (int j = 0; j < savedMenuList.Count; j++)
+                {
+                    var menuTemp = savedMenuList[j];
+                    if(itemData.itemName == menuTemp.itemName)
+                    {
+                        item.SetIsSelectedBefore();
+                        break;
+                    }
+                }
+            }
+        }
+        // drinks
+        for (int i = 0; i < drinkMenuContentTransform.childCount; i++)
+        {
+            var temp = drinkMenuContentTransform.GetChild(i);
+            if (temp != null)
+            {
+                var item = temp.GetComponent<MenuPanelUI>();
+                ItemData itemData = item.GetCurrentItem();
+                for (int j = 0; j < savedMenuList.Count; j++)
+                {
+                    var menuTemp = savedMenuList[j];
+                    if (itemData.itemName == menuTemp.itemName)
+                    {
+                        item.SetIsSelectedBefore();
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     private void ClearList()
@@ -100,6 +208,7 @@ public class FaDMenuUI : MonoBehaviour
                 if(tempMenuUI != null)
                 {
                     tempMenuUI.SetMenuInfo(name);
+                    tempMenuUI.isSelected = false;
                 }
                 prefab.SetActive(true);
                 foodViewList.Add(prefab);
@@ -120,6 +229,7 @@ public class FaDMenuUI : MonoBehaviour
                 if (tempMenuUI != null)
                 {
                     tempMenuUI.SetMenuInfo(name);
+                    tempMenuUI.isSelected = false;
                 }
                 prefab.SetActive(true);
                 drinkViewList.Add(prefab);
