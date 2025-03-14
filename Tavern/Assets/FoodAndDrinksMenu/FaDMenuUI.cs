@@ -20,7 +20,7 @@ public class FaDMenuUI : MonoBehaviour
     List<GameObject> drinkViewList = new List<GameObject>();
 
     public GameObject menuManager;
-    private MenuManager menuManagerScript;
+    public MenuManager menuManagerScript;
 
     public UnityEngine.UI.Button SetMenuButton;
     private List<ItemData> savedMenuList = new List<ItemData>();
@@ -30,6 +30,7 @@ public class FaDMenuUI : MonoBehaviour
 
     void Start()
     {
+        menuManagerScript = GameObject.FindWithTag("MenuManager").GetComponent<MenuManager>();
         foodViewList.Clear();
         drinkViewList.Clear();
         SetMenuButton.onClick.AddListener(OnSetMenuButtonClick);
@@ -44,6 +45,7 @@ public class FaDMenuUI : MonoBehaviour
         if (menuManagerScript != null)
         {
             savedMenuList = menuManagerScript.GetMenuList();
+            menuManagerScript.menuList = savedMenuList;
             if(modeController != null & clickEventTestScript != null)
             {
                 modeController.SetMode(false);
@@ -68,8 +70,8 @@ public class FaDMenuUI : MonoBehaviour
 
     private void SetMenuManager()
     {
-        menuManagerScript = menuManager.GetComponent<MenuManager>();
-        if(menuManagerScript != null)
+        menuManagerScript = GameObject.FindWithTag("MenuManager").GetComponent<MenuManager>();
+        if (menuManagerScript != null)
         {
             // foodS
             for(int i = 0; i < foodMenuContentTransform.childCount; i++)

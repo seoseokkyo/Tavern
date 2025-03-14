@@ -17,7 +17,6 @@ public class MenuManager : MonoBehaviour
     }
 
 
-
     public void AddMenu(ItemData item)
     {
         if (!menuList.Contains(item))

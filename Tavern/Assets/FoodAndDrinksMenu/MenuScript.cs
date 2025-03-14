@@ -11,7 +11,7 @@ public class MenuScript : Interactable
     
     private GameObject interacting;
     public GameObject instantInteractUI;
-    private FaDMenuUI menuUI;
+    public FaDMenuUI menuUI;
 
     private void Start()
     {
