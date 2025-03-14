@@ -26,4 +26,13 @@ public class Player : MonoBehaviour
     {
         
     }
+    public void ChangeHP(float fValue)
+    {
+        currentHP += fValue;
+
+        if(currentHP <= 0)
+        {
+            Debug.Log($"{this.ToString()} Is Die");
+        }
+    }
 }

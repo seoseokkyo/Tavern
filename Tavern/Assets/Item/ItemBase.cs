@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using static ItemFunctions;
 
 public enum EItemType
 {
@@ -35,6 +36,13 @@ public struct ItemData
     public GameObject ItemPrefab;
 
     public CookingRecipe recipe;
+
+    [Tooltip("아이템을 사용할 때 적용되는 기능들")]
+    public List<ItemFunctionParam> ItemFunctionList;
+    [Tooltip("장비 아이템일 경우 내구도로 사용")]
+    public float fOptionValue1;
+    [Tooltip("미정")]
+    public float fOptionValue2;
 }
 
 [Serializable]
@@ -69,6 +77,7 @@ public class CreateRecipe
     public List<CreateResources> Resources;
 }
 
+
 [System.Serializable]
 public class ItemBase
 {
@@ -80,6 +89,14 @@ public class ItemBase
 
     private object _ownerInventoryLock = new object();
     public InventoryComp OwnerInventory = null;
+
+
+    /// <summary>
+    ///  아이템 사용시의 효과등을 갖고있는 구조체와 리스트
+    /// </summary>
+    /// 
+    protected List<ItemFunction> CurrentItemFunctions = new List<ItemFunction>();
+
 
     // 아이템베이스 생성자 접근수준 변경
     protected ItemBase() { }
@@ -122,6 +139,25 @@ public class ItemBase
     public void SetItemData(ItemData Data)
     {
         CurrentItemData = Data;
+
+        foreach (var funcData in CurrentItemData.ItemFunctionList)
+        {
+            var func = ItemManager.Instance.GetItemFunctionFromDictionary(funcData.eFunc.ToString());
+
+            if (null != func)
+            {
+                ItemFunction tempStruct = new ItemFunction();
+
+                ItemFunctionArgs tempArgs = new ItemFunctionArgs();
+                tempArgs.arg2 = this;
+                tempArgs.arg3 = funcData.tData;
+
+                tempStruct.action = func;
+                tempStruct.args = tempArgs;
+
+                CurrentItemFunctions.Add(tempStruct);
+            }
+        }
     }
 
     public virtual void UseItem(PlayerController playerController)

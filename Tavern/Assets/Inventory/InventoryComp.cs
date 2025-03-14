@@ -5,6 +5,7 @@ using UnityEngine;
 using static UnityEditor.Timeline.Actions.MenuPriority;
 using System;
 using System.Threading;
+using static UnityEditor.Progress;
 
 public class InventoryComp : MonoBehaviour
 {
@@ -222,11 +223,36 @@ public class InventoryComp : MonoBehaviour
     {
         int InventorySize = GetInventorySize();
 
-        if(0 > UseItemIndex || UseItemIndex >= InventorySize || null == inventory[UseItemIndex])
+        if (0 > UseItemIndex || UseItemIndex >= InventorySize || null == inventory[UseItemIndex])
         {
             return;
         }
 
         inventory[UseItemIndex].UseItem(playerController);
+    }
+
+    public void ConsumeItem(ItemBase itemBase)
+    {
+        if(1 > CountItemByName(itemBase.CurrentItemData.itemName))
+        {
+            Debug.Log($"ConsumeItem(ItemBase itemBase) Failed");
+            return;
+        }
+
+        int Size = GetInventorySize();
+        for(int i = 0; i < Size; i++)
+        {
+            if (inventory[i] == itemBase)
+            {
+                inventory[i].CurrentItemData.itemCount--;
+
+                if (inventory[i].CurrentItemData.itemCount <= 0)
+                {
+                    inventory[i] = null;
+                }
+
+                OnChanged();
+            }
+        }
     }
 }

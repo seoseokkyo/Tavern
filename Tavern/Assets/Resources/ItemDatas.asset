@@ -25,6 +25,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 11400000, guid: b5000be3f2ddc5e4f98965a4b084807c, type: 2}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: Cherry
     itemDescription: This is Cherry
     itemIcon: {fileID: 2800000, guid: 5ab63791388d7a247b7003efc6e00047, type: 3}
@@ -37,6 +40,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: Banana
     itemDescription: This is Banana
     itemIcon: {fileID: 2800000, guid: e7897366f81aa944faf55a0d665b86c8, type: 3}
@@ -49,6 +55,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: Cheese
     itemDescription: This is Cheese
     itemIcon: {fileID: 2800000, guid: 6a8b39bf05eff3e4194764cbaf554d4d, type: 3}
@@ -61,6 +70,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: Hamburger
     itemDescription: This is Hamburger
     itemIcon: {fileID: 2800000, guid: 016780dacb8385946a8db5555128d728, type: 3}
@@ -73,6 +85,20 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    ItemFunctionList:
+    - eFunc: 0
+      tData:
+        fValue1: 10
+        fValue2: 0
+        fValue3: 0
+        iValue1: 0
+        iValue2: 0
+        iValue3: 0
+        strValue1: 
+        strValue2: 
+        strValue3: 
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: Hotdog
     itemDescription: This is Hotdog
     itemIcon: {fileID: 2800000, guid: d560e86ea0764404c958031a0d392db0, type: 3}
@@ -85,6 +111,31 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    ItemFunctionList:
+    - eFunc: 0
+      tData:
+        fValue1: -100
+        fValue2: 0
+        fValue3: 0
+        iValue1: 0
+        iValue2: 0
+        iValue3: 0
+        strValue1: 
+        strValue2: 
+        strValue3: 
+    - eFunc: 2
+      tData:
+        fValue1: 0
+        fValue2: 0
+        fValue3: 0
+        iValue1: 0
+        iValue2: 0
+        iValue3: 0
+        strValue1: 
+        strValue2: 
+        strValue3: 
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: Olive
     itemDescription: This is Olive
     itemIcon: {fileID: 2800000, guid: 2b9bf257f73dcf74b8048b2af1cb2bee, type: 3}
@@ -97,6 +148,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: WoodScrap
     itemDescription: This is WoodScrap
     itemIcon: {fileID: 2800000, guid: ec21cf67667c9ed4d9a2b71a00f23720, type: 3}
@@ -109,6 +163,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: RockHammer
     itemDescription: This is RockHammer
     itemIcon: {fileID: 2800000, guid: 74deb219e2a47ac49ab6f9b2ad8a6043, type: 3}
@@ -121,6 +178,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 100
+    fOptionValue2: 0
   - itemName: EmptyBucket
     itemDescription: This is EmptyBucket
     itemIcon: {fileID: 2800000, guid: 2c0194e85f77a044181701fcff7efb0d, type: 3}
@@ -133,6 +193,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: WaterBucket
     itemDescription: This is FilledBucket
     itemIcon: {fileID: 2800000, guid: 7f942c98aeb60d347b2d449738f70f69, type: 3}
@@ -145,6 +208,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 4781944050027397254, guid: 70d0950a9e21be14fbb051ddc77d83ec, type: 3}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: Rock
     itemDescription: This is Rock
     itemIcon: {fileID: 2800000, guid: 670d799ef2cb49e4c8d0de16084c49b0, type: 3}
@@ -157,6 +223,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: Bowl
     itemDescription: You can take food
     itemIcon: {fileID: 2800000, guid: 60580ff86013aaa499bfb49baeabd950, type: 3}
@@ -169,6 +238,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 1356757611425855530, guid: 837a178e0bcaa614f8d056a59f874578, type: 3}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: Chickens
     itemDescription: YumYum
     itemIcon: {fileID: 2800000, guid: c51b473b7824d1747a58f7843c926031, type: 3}
@@ -181,6 +253,42 @@ MonoBehaviour:
     requireToolType: 1
     ItemPrefab: {fileID: 4592936018385963053, guid: 99e6306381f6dd64bb21f26d7aefb136, type: 3}
     recipe: {fileID: 0}
+    ItemFunctionList:
+    - eFunc: 0
+      tData:
+        fValue1: 50
+        fValue2: 0
+        fValue3: 0
+        iValue1: 0
+        iValue2: 0
+        iValue3: 0
+        strValue1: 
+        strValue2: 
+        strValue3: 
+    - eFunc: 1
+      tData:
+        fValue1: 0
+        fValue2: 0
+        fValue3: 0
+        iValue1: 1
+        iValue2: 0
+        iValue3: 0
+        strValue1: Bowl
+        strValue2: 
+        strValue3: 
+    - eFunc: 2
+      tData:
+        fValue1: 0
+        fValue2: 0
+        fValue3: 0
+        iValue1: 1
+        iValue2: 0
+        iValue3: 0
+        strValue1: Bowl
+        strValue2: 
+        strValue3: 
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: Breads
     itemDescription: Not Bad
     itemIcon: {fileID: 2800000, guid: e3a108defc7e56b4296bfb31495f5458, type: 3}
@@ -193,6 +301,9 @@ MonoBehaviour:
     requireToolType: 1
     ItemPrefab: {fileID: 8276746181830950726, guid: 596e9a20beeb55e4fa5293152a3741d4, type: 3}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: Vegetable Soup
     itemDescription: Better to eat
     itemIcon: {fileID: 2800000, guid: 7dcae9d3ae473884090a38e037975246, type: 3}
@@ -205,6 +316,9 @@ MonoBehaviour:
     requireToolType: 1
     ItemPrefab: {fileID: 2522778384400155642, guid: 109cff08e4ef3a142b51c6aef904c7b5, type: 3}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: RawChicken
     itemDescription: Coocooduldledoo
     itemIcon: {fileID: 2800000, guid: c76bc33d7e5e164499693a520d1f3d38, type: 3}
@@ -217,6 +331,9 @@ MonoBehaviour:
     requireToolType: 1
     ItemPrefab: {fileID: 8947847882826422484, guid: f55bb3160942bf04bb2f40b30e8734b4, type: 3}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: Carrot
     itemDescription: Rabbit Likes it
     itemIcon: {fileID: 2800000, guid: 2718b7d28e8894b4aa650d03a7426851, type: 3}
@@ -229,6 +346,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 1446310425941654683, guid: 839e9101248f0f84ca102081a9790d6d, type: 3}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: MushRoom
     itemDescription: Taste like meat!
     itemIcon: {fileID: 2800000, guid: 911db75946321164ba285c775c96d241, type: 3}
@@ -241,6 +361,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 279354611227255268, guid: e883ef9085352484c9e3e76351515178, type: 3}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: Pumpkin
     itemDescription: Halloween?
     itemIcon: {fileID: 2800000, guid: 5e76301ed77abc14f8da4bea9327879d, type: 3}
@@ -253,6 +376,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 5071555915851589694, guid: e532945e283cca7478582f8a1880fdc7, type: 3}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: Garlic
     itemDescription: Ghost doesn't like this
     itemIcon: {fileID: 2800000, guid: b3561d896755e524ea2f4d69deb93cf2, type: 3}
@@ -265,6 +391,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 5987858285101769375, guid: b701910af56d089428c372aa6ba53383, type: 3}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: RawMeat
     itemDescription: Meat is the best
     itemIcon: {fileID: 2800000, guid: 86f0cdcbfb6245f4f8a48719741db915, type: 3}
@@ -277,6 +406,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 8202614754564459210, guid: 10ab30527b9bc8a4995e798ac0706a37, type: 3}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: Flour
     itemDescription: You Can Make Bakery
     itemIcon: {fileID: 2800000, guid: 0ac07501c672c9e4db452f33ecd4ccaa, type: 3}
@@ -289,6 +421,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 8556593404563435731, guid: 6e581a4bd8646fa4d91cd709b8b8ee37, type: 3}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: Plate
     itemDescription: You Can Serve Somethin
     itemIcon: {fileID: 2800000, guid: 316039f77cd66e949996255fa44a466a, type: 3}
@@ -301,6 +436,9 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 5801614963863517276, guid: 058ff2646cf550241b0df25317f5848e, type: 3}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: Steak
     itemDescription: Soo Rich
     itemIcon: {fileID: 2800000, guid: 89c5530db47dff94c97fbd028810570d, type: 3}
@@ -313,6 +451,9 @@ MonoBehaviour:
     requireToolType: 2
     ItemPrefab: {fileID: 2644228491168869556, guid: 7388bf2e2ad343a4d9a5f1593c96e15d, type: 3}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   - itemName: PumpkinSoup
     itemDescription: So Sweet and Healthy
     itemIcon: {fileID: 2800000, guid: b93e3b1ec581b2d4fb3096dfe2403b7e, type: 3}
@@ -325,6 +466,9 @@ MonoBehaviour:
     requireToolType: 1
     ItemPrefab: {fileID: 2017074778599090046, guid: a7a76974a1e1dc74f9761d276f1c26a7, type: 3}
     recipe: {fileID: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   createRecipes:
   - CreateItemData:
       ItemName: RockHammer

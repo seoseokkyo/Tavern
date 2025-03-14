@@ -2,6 +2,7 @@ using NUnit.Framework.Interfaces;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static ItemFunctions;
 using static UnityEngine.Analytics.IAnalytic;
 
 public class ItemManager : MonoBehaviour
@@ -19,6 +20,7 @@ public class ItemManager : MonoBehaviour
 
     public Texture2D EmptyImage;
 
+    private ItemFunctions itemFunctions = null;
     void Awake()
     {
         if (Instance != null)
@@ -40,6 +42,7 @@ public class ItemManager : MonoBehaviour
         createRecipes = Resources.Load<ItemDatas>("ItemDatas").createRecipes;
         InitCreateRecipeDictionary();
 
+        itemFunctions = gameObject.AddComponent<ItemFunctions>();
 
         if (items != null)
         {
@@ -179,5 +182,10 @@ public class ItemManager : MonoBehaviour
         }
 
         return NewItemBase ?? CurrentItemBase;
+    }
+
+    public Action<ItemFunctionArgs> GetItemFunctionFromDictionary(string FunctionName)
+    {
+        return itemFunctions.GetItemFunctionFromDictionary(FunctionName);
     }
 }
