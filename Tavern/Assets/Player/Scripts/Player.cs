@@ -19,18 +19,19 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        
+
     }
     public void ChangeHP(float fValue)
     {
+        Debug.Log($"{currentHP} -> {currentHP + fValue}");
         currentHP += fValue;
 
-        if(currentHP <= 0)
+        if (currentHP <= 0)
         {
             Debug.Log($"{this.ToString()} Is Die");
         }

@@ -35,11 +35,6 @@ public class EquipmentItem : ItemBase
                 tempArgs.arg2 = func.args.arg2;
                 tempArgs.arg3 = func.args.arg3;
 
-                //if (tempArgs.arg3.bDelete)
-                //{
-                //    bDeleteCheck = true;
-                //}
-
                 func.action(tempArgs);
             }
 

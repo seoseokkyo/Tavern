@@ -3442,6 +3442,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eabcb7658db3194795d114cf1ec845a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1139771837 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1480623829964838869, guid: 425cb006f2a67644aa19e6025a98f86f, type: 3}
+  m_PrefabInstance: {fileID: 1421792609}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1161921096
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4345,6 +4350,10 @@ PrefabInstance:
       propertyPath: InventoryUI_prefab
       value: 
       objectReference: {fileID: 5248130043337331258, guid: 1ada21c56a300d244bc84bb92dc8c3be, type: 3}
+    - target: {fileID: 4579606965231840189, guid: 425cb006f2a67644aa19e6025a98f86f, type: 3}
+      propertyPath: PlayerAnimator
+      value: 
+      objectReference: {fileID: 1139771837}
     - target: {fileID: 4789187788882808879, guid: 425cb006f2a67644aa19e6025a98f86f, type: 3}
       propertyPath: m_Interpolate
       value: 1

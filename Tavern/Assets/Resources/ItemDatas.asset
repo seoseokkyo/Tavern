@@ -281,10 +281,10 @@ MonoBehaviour:
         fValue1: 0
         fValue2: 0
         fValue3: 0
-        iValue1: 1
+        iValue1: 0
         iValue2: 0
         iValue3: 0
-        strValue1: Bowl
+        strValue1: 
         strValue2: 
         strValue3: 
     fOptionValue1: 0

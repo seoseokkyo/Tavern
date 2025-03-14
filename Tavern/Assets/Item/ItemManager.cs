@@ -170,15 +170,11 @@ public class ItemManager : MonoBehaviour
         {
             NewItemBase = new UseableItem();
             NewItemBase.SetItemData(CurrentItemBase.CurrentItemData);
-
-            Debug.Log($"{CurrentItemBase.CurrentItemData.itemName} Was Changed To UseableItem");
         }
         else if (CurrentItemBase.CurrentItemData.ItemType == EItemType.Equipment)
         {
             NewItemBase = new EquipmentItem();
             NewItemBase.SetItemData(CurrentItemBase.CurrentItemData);
-
-            Debug.Log($"{CurrentItemBase.CurrentItemData.itemName} Was Changed To EquipmentItem");
         }
 
         return NewItemBase ?? CurrentItemBase;
