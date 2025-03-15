@@ -62,6 +62,7 @@ public class CustomerScript : MonoBehaviour
         if(orderUI != null)
         {
             orderUI.enabled = true;
+            orderUI.RemoveOrderPanel();
         }
     }
 

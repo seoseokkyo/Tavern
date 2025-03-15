@@ -20,7 +20,7 @@ public class OrderCanvas : MonoBehaviour
 
     void Start()
     {
-        this.enabled = true;
+        orderList.Clear();
         RemoveOrderPanel();
     }
 
@@ -31,28 +31,18 @@ public class OrderCanvas : MonoBehaviour
 
     public void RemoveOrderPanel()
     {
-        oneOrderImage.enabled = false;
-        twoOrder_firstImage.enabled = false;
-        twoOrder_secondImage.enabled = false;
         orderPanel.SetActive(false);
-    }
-
-    public void Initialize()
-    {
-        orderList.Clear();
     }
 
     public void SetOrderUI(ItemData itemData, int idx)
     {
-        orderList.Clear();
-
         stateText.enabled = false;
-        
-        orderPanel.SetActive(true);
-        
-        twoOrder_firstImage.enabled = false;
-        twoOrder_secondImage.enabled = false;
-        oneOrderImage.enabled = false;
+
+        orderPanel.gameObject.SetActive(false);
+
+        twoOrder_firstImage.gameObject.SetActive(false);
+        twoOrder_secondImage.gameObject.SetActive(false);
+        oneOrderImage.gameObject.SetActive(false);
 
 
         Rect rect = new Rect(0, 0, Mathf.Min(itemData.itemIcon.width, 500), Mathf.Min(itemData.itemIcon.height, 500));
@@ -64,21 +54,23 @@ public class OrderCanvas : MonoBehaviour
             if(idx == 0)
             {
                 oneOrderImage.sprite = temp;
+                oneOrderImage.gameObject.SetActive(true);
                 oneOrderImage.enabled = true;
-                orderList.Add(itemData);
             }
             if(idx == 1)
             {
                 twoOrder_firstImage.sprite = temp;
+                twoOrder_firstImage.gameObject.SetActive(true);
                 twoOrder_firstImage.enabled = true;
-                orderList.Add(itemData);
             }
             if(idx == 2)
             {
                 twoOrder_secondImage.sprite = temp;
+                twoOrder_secondImage.gameObject.SetActive(true);
                 twoOrder_secondImage.enabled = true;
-                orderList.Add(itemData);
             }
+            orderList.Add(itemData);
+            orderPanel.gameObject.SetActive(true);
         }
     }
 }
