@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ public class InventoryUI : MonoBehaviour
 
     public int ViewStartNum = 0;
     public int SlotNum;
+
+    private int CurrentSelectedIndex = -1;
 
     void Start()
     {
@@ -105,10 +108,34 @@ public class InventoryUI : MonoBehaviour
 
             ItemViewList.Add(instItemUI);
         }
+
+        if (CurrentSelectedIndex != -1)
+        {
+            SetSlotOutline(CurrentSelectedIndex);
+        }
     }
-    public void SwapItemFromUI(ref InventoryComp InventoryX, ref InventoryComp InventoryY, int SwapTargetIndexX, int SwapTargetIndexY)
+
+    public void SetSlotOutline(int Index)
     {
-        // 나중에 슬롯이랑 아이템UI 완성 되면 실제 아이템이 있는 슬롯인지 확인하는거 추가
-        PlayerInventory.SwapItemByIndex(ref InventoryX, ref InventoryY, SwapTargetIndexX, SwapTargetIndexY);
+        if(null == PlayerInventory.CheckItem(Index))
+        {
+            return;
+        }
+
+        CurrentSelectedIndex = Index;
+        int iCount = ContentTransform.childCount;
+        for (int i = iCount - 1; i >= 0; i--)
+        {
+            var temp = ContentTransform.GetChild(i);
+
+            if (temp != null)
+            {
+                var ItemSlotUITemp = temp.GetComponent<ItemSlotUI>();
+                if (ItemSlotUITemp != null)
+                {
+                    ItemSlotUITemp.SlotOutline.enabled = Index == ItemSlotUITemp.SlotIndex ? true : false;
+                }
+            }
+        }
     }
 }

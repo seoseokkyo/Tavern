@@ -378,6 +378,8 @@ MonoBehaviour:
   ItemSlotUI: {fileID: 7453816995341889087, guid: 898faaee56676fe4baf9ef261176b03c, type: 3}
   ItemUI: {fileID: 5784237410668640409, guid: 551f4ef54778843439716c196bfad15f, type: 3}
   EmptyIcon: {fileID: 2800000, guid: f06a7fc3811d09e40820e60a5ed4dc73, type: 3}
+  ViewStartNum: 0
+  SlotNum: 0
 --- !u!1 &8162482428639546404
 GameObject:
   m_ObjectHideFlags: 0

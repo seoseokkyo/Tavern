@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 855556810063373744}
   - component: {fileID: 7124345695358195926}
   - component: {fileID: 2530745149064278407}
+  - component: {fileID: 2351726143373577648}
   m_Layer: 5
   m_Name: ItemSlotUI
   m_TagString: Untagged
@@ -88,3 +89,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c6d7c37946be2b4da8a11f1c7bf3351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SlotIndex: 0
+  OwnerInventory: {fileID: 0}
+  bNoUseDrop: 0
+  SlotOutline: {fileID: 2351726143373577648}
+--- !u!114 &2351726143373577648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7453816995341889087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 10, y: -10}
+  m_UseGraphicAlpha: 1

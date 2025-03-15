@@ -107,60 +107,70 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("You Pressed \"1?\"");
             PlayerInventory.UseItemByIndex(this, 0);
+            QuickSlotUI.SetSlotOutline(0);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha2) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad2))
         {
             Debug.Log("You Pressed \"2?\"");
             PlayerInventory.UseItemByIndex(this, 1);
+            QuickSlotUI.SetSlotOutline(1);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha3) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad3))
         {
             Debug.Log("You Pressed \"3?\"");
             PlayerInventory.UseItemByIndex(this, 2);
+            QuickSlotUI.SetSlotOutline(2);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha4) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad4))
         {
             Debug.Log("You Pressed \"4?\"");
             PlayerInventory.UseItemByIndex(this, 3);
+            QuickSlotUI.SetSlotOutline(3);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha5) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad5))
         {
             Debug.Log("You Pressed \"5?\"");
             PlayerInventory.UseItemByIndex(this, 4);
+            QuickSlotUI.SetSlotOutline(4);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha6) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad6))
         {
             Debug.Log("You Pressed \"6?\"");
             PlayerInventory.UseItemByIndex(this, 5);
+            QuickSlotUI.SetSlotOutline(5);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha7) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad7))
         {
             Debug.Log("You Pressed \"7?\"");
             PlayerInventory.UseItemByIndex(this, 6);
+            QuickSlotUI.SetSlotOutline(6);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha8) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad8))
         {
             Debug.Log("You Pressed \"8?\"");
             PlayerInventory.UseItemByIndex(this, 7);
+            QuickSlotUI.SetSlotOutline(7);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha9) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad9))
         {
             Debug.Log("You Pressed \"9?\"");
             PlayerInventory.UseItemByIndex(this, 8);
+            QuickSlotUI.SetSlotOutline(8);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha0) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad0))
         {
             Debug.Log("You Pressed \"0?\"");
             PlayerInventory.UseItemByIndex(this, 9);
+            QuickSlotUI.SetSlotOutline(9);
         }
 
         // Item Use
