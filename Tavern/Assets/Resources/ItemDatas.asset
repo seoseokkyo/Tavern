@@ -25,6 +25,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 11400000, guid: b5000be3f2ddc5e4f98965a4b084807c, type: 2}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -40,6 +42,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -55,6 +59,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -70,6 +76,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -85,6 +93,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList:
     - eFunc: 0
       tData:
@@ -111,6 +121,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList:
     - eFunc: 0
       tData:
@@ -148,6 +160,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -163,6 +177,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -178,6 +194,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0.1, y: -0.326, z: 0.026}
+    AttachRotation: {x: 0, y: 0, z: 0.7372773, w: 0.6755902}
     ItemFunctionList: []
     fOptionValue1: 100
     fOptionValue2: 0
@@ -193,6 +211,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -208,6 +228,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 4781944050027397254, guid: 70d0950a9e21be14fbb051ddc77d83ec, type: 3}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -223,6 +245,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 0}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -238,6 +262,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 1356757611425855530, guid: 837a178e0bcaa614f8d056a59f874578, type: 3}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -253,6 +279,8 @@ MonoBehaviour:
     requireToolType: 1
     ItemPrefab: {fileID: 4592936018385963053, guid: 99e6306381f6dd64bb21f26d7aefb136, type: 3}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList:
     - eFunc: 0
       tData:
@@ -301,6 +329,8 @@ MonoBehaviour:
     requireToolType: 1
     ItemPrefab: {fileID: 8276746181830950726, guid: 596e9a20beeb55e4fa5293152a3741d4, type: 3}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -316,6 +346,8 @@ MonoBehaviour:
     requireToolType: 1
     ItemPrefab: {fileID: 2522778384400155642, guid: 109cff08e4ef3a142b51c6aef904c7b5, type: 3}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -331,6 +363,8 @@ MonoBehaviour:
     requireToolType: 1
     ItemPrefab: {fileID: 8947847882826422484, guid: f55bb3160942bf04bb2f40b30e8734b4, type: 3}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -346,6 +380,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 1446310425941654683, guid: 839e9101248f0f84ca102081a9790d6d, type: 3}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -361,6 +397,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 279354611227255268, guid: e883ef9085352484c9e3e76351515178, type: 3}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -376,6 +414,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 5071555915851589694, guid: e532945e283cca7478582f8a1880fdc7, type: 3}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -391,6 +431,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 5987858285101769375, guid: b701910af56d089428c372aa6ba53383, type: 3}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -406,6 +448,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 8202614754564459210, guid: 10ab30527b9bc8a4995e798ac0706a37, type: 3}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -421,6 +465,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 8556593404563435731, guid: 6e581a4bd8646fa4d91cd709b8b8ee37, type: 3}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -436,6 +482,8 @@ MonoBehaviour:
     requireToolType: 0
     ItemPrefab: {fileID: 5801614963863517276, guid: 058ff2646cf550241b0df25317f5848e, type: 3}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -451,6 +499,8 @@ MonoBehaviour:
     requireToolType: 2
     ItemPrefab: {fileID: 2644228491168869556, guid: 7388bf2e2ad343a4d9a5f1593c96e15d, type: 3}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
@@ -466,6 +516,8 @@ MonoBehaviour:
     requireToolType: 1
     ItemPrefab: {fileID: 2017074778599090046, guid: a7a76974a1e1dc74f9761d276f1c26a7, type: 3}
     recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0

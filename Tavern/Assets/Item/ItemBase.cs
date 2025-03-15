@@ -37,6 +37,10 @@ public struct ItemData
 
     public CookingRecipe recipe;
 
+    [Tooltip("아이템이 플레이어의 손에 붙을 때 사용할 Offset")]
+    public Vector3 AttachLocation;
+    [Tooltip("아이템이 플레이어의 손에 붙을 때 사용할 Rotation")]
+    public Quaternion AttachRotation;
     [Tooltip("아이템을 사용할 때 적용되는 기능들")]
     public List<ItemFunctionParam> ItemFunctionList;
     [Tooltip("장비 아이템일 경우 내구도로 사용")]
@@ -87,9 +91,9 @@ public class ItemBase
 
     public ItemData CurrentItemData;
 
-    private object _ownerInventoryLock = new object();
     public InventoryComp OwnerInventory = null;
 
+    
 
     /// <summary>
     ///  아이템 사용시의 효과등을 갖고있는 구조체와 리스트

@@ -97,6 +97,9 @@ public class Player : MonoBehaviour
         {
             RightHandItem = ItemManager.Instance.ItemSpawn(itemBase, Vector3.zero, Quaternion.identity);
             RightHandItem.transform.SetParent(RightHandSlot, false);
+            RightHandItem.transform.localPosition = itemBase.CurrentItemData.AttachLocation;
+            RightHandItem.transform.localRotation = itemBase.CurrentItemData.AttachRotation;
+
             RightHandItem.GetComponent<Collider>().enabled = false;
         }
     }
