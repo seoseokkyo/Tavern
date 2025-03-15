@@ -18,6 +18,8 @@ public class EquipmentItem : ItemBase
 
     public override void UseItem(PlayerController playerController)
     {
+        playerController.CurrentPlayer.ItemAttachToRightHand(this);
+
         if (playerController.CurrentEquipmentItem != this)
         {
             playerController.CurrentEquipmentItem = this;
@@ -26,8 +28,6 @@ public class EquipmentItem : ItemBase
         }
         else
         {
-            bool bDeleteCheck = false;
-
             foreach (var func in CurrentItemFunctions)
             {
                 ItemFunctionArgs tempArgs = new ItemFunctionArgs();
@@ -36,11 +36,6 @@ public class EquipmentItem : ItemBase
                 tempArgs.arg3 = func.args.arg3;
 
                 func.action(tempArgs);
-            }
-
-            if (bDeleteCheck)
-            {
-                OwnerInventory.ConsumeItem(this);
             }
         }
     }

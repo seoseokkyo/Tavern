@@ -69,7 +69,7 @@ public class ItemFunctions : MonoBehaviour
     Dictionary<string, Action<ItemFunctionArgs>> ItemFunctionDictionary = new Dictionary<string, Action<ItemFunctionArgs>>();
 
     private void Awake()
-    {        
+    {
         ItemFunctionDictionary.Add("AccumulateHP", AccumulateHP);
         ItemFunctionDictionary.Add("AddItem", AddItem);
         ItemFunctionDictionary.Add("ConsumeItem", ConsumeItem);
@@ -78,7 +78,7 @@ public class ItemFunctions : MonoBehaviour
 
     public Action<ItemFunctionArgs> GetItemFunctionFromDictionary(string FunctionName)
     {
-        if(!ItemFunctionDictionary.ContainsKey(FunctionName))
+        if (!ItemFunctionDictionary.ContainsKey(FunctionName))
         {
             return null;
         }
@@ -106,6 +106,22 @@ public class ItemFunctions : MonoBehaviour
 
     void ConsumeItem(ItemFunctionArgs FunctionArgs)
     {
+        // 여기 말고도 플레이어 Hand를 비워줄만한데가 있을텐데 일단 여기서
+        bool bCheck = false;
+        if (FunctionArgs.arg2.CurrentItemData.ItemType == EItemType.Equipment)
+        {
+            int RemainNum = FunctionArgs.arg2.CurrentItemData.itemCount;
+            if (RemainNum <= 1)
+            {
+                bCheck = true;
+            }
+        }
+
         FunctionArgs.arg2.OwnerInventory.ConsumeItem(FunctionArgs.arg2);
+
+        if(bCheck)
+        {
+            FunctionArgs.arg1.CurrentPlayer.OnChanged(null);
+        }
     }
 }
