@@ -643,6 +643,7 @@ GameObject:
   - component: {fileID: 5948549160182370712}
   - component: {fileID: 6882712774403938166}
   - component: {fileID: 6933374494897456208}
+  - component: {fileID: 3067543263281782811}
   m_Layer: 5
   m_Name: MatchMakingUI
   m_TagString: Untagged
@@ -733,6 +734,25 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3067543263281782811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3599521879621137050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e081116c306c0ff49853e33e27539d26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  steamManager: {fileID: 0}
+  scrollRect: {fileID: 0}
+  lobbyNameInput: {fileID: 0}
+  roomListUI: {fileID: 0}
+  contentTransform: {fileID: 0}
+  lastSelectedIndex: 0
+  netManager: {fileID: 0}
 --- !u!1 &4333219301941140220
 GameObject:
   m_ObjectHideFlags: 0
@@ -1080,7 +1100,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3067543263281782811}
         m_TargetAssemblyTypeName: TestUI, Assembly-CSharp
         m_MethodName: OnbnClickJoinButton
         m_Mode: 1
@@ -1558,7 +1578,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3067543263281782811}
         m_TargetAssemblyTypeName: TestUI, Assembly-CSharp
         m_MethodName: OnbnClickLeaveLobbyButton
         m_Mode: 1
@@ -1691,7 +1711,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3067543263281782811}
         m_TargetAssemblyTypeName: TestUI, Assembly-CSharp
         m_MethodName: OnbnClickCreateButton
         m_Mode: 1
@@ -1960,7 +1980,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3067543263281782811}
         m_TargetAssemblyTypeName: TestUI, Assembly-CSharp
         m_MethodName: OnbnClickCheckMyLobby
         m_Mode: 1
