@@ -50,11 +50,11 @@ public class ItemSpawner : MonoBehaviour
 
                 SpawnWorldItem.Add(WorldItemTemp);
 
-                CurrentSpawnPos.x++;
+                CurrentSpawnPos.x += 10;
             }
 
             CurrentSpawnPos.x = transform.position.x;
-            CurrentSpawnPos.z++;
+            CurrentSpawnPos.z += 10;
         }
     }
 

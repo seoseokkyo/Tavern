@@ -60,6 +60,8 @@ public class ItemManager : MonoBehaviour
         SpawnWorldItem.bRandSet = false;
         SpawnWorldItem.InitItemName = SpawnItem.CurrentItemData.itemName;
 
+        SpawnWorldItem.transform.localScale = new Vector3(10f, 10f, 10f);
+
         return SpawnWorldItem;
     }
 

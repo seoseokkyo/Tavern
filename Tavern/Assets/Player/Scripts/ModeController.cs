@@ -21,11 +21,36 @@ public class ModeController : MonoBehaviour
 
     void Update()
     {
-        
+
+    }
+
+    private void CheckData()
+    {
+        if (player == null)
+        {
+            player = GameObject.FindWithTag("Player");
+            playerMoveScript = player.GetComponent<PlayerMove>();
+            playerinteractionScript = player.GetComponent<PlayerInteraction>();
+        }
+        if(mainCamera == null)
+        {
+            mainCamera = Camera.main;
+            cameraRotateScript = mainCamera.GetComponent<CameraRotate>();
+        }
+        if(playerMoveScript == null || playerinteractionScript == null || cameraRotateScript == null)
+        {
+            player = GameObject.FindWithTag("Player");
+            mainCamera = Camera.main;
+            playerMoveScript = player.GetComponent<PlayerMove>();
+            playerinteractionScript = player.GetComponent<PlayerInteraction>();
+            cameraRotateScript = mainCamera.GetComponent<CameraRotate>();
+        }
     }
 
     public void SetMode(bool uiMode)
     {
+        CheckData();
+
         isUIMode = uiMode;
         playerMoveScript.enabled = !uiMode;
         cameraRotateScript.enabled = !uiMode;

@@ -1,15 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ClickEventTest : MonoBehaviour
+public class MenuExitButton : MonoBehaviour
 {
     [SerializeField] private Button exitButton;
-    public GameObject popUI;
-    public GameObject player;
     private ModeController modeController;
-    private bool isActivated = false;
+    public GameObject menuUI;
+    public GameObject player;
 
-    // Start의 UI Active를 끄는 기능 플래그
+    private bool isActivated = false;
     public bool bTestFlag = false;
 
     public void SetUIActivated(bool state)
@@ -28,7 +27,7 @@ public class ClickEventTest : MonoBehaviour
 
         if (!bTestFlag)
         {
-            popUI.SetActive(false);
+            menuUI.SetActive(false);
         }
     }
 
@@ -41,7 +40,7 @@ public class ClickEventTest : MonoBehaviour
     {
         isActivated = false;
         // test UI 지움
-        popUI.SetActive(false);
+        menuUI.SetActive(false);
         // Game Mode
         modeController.SetMode(false);
     }
