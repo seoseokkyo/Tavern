@@ -4378,6 +4378,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -0.00080770254
       objectReference: {fileID: 0}
+    - target: {fileID: 6763138706956163147, guid: 518017e8c5a5484408bacc4b19e92e17, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6763138706956163147, guid: 518017e8c5a5484408bacc4b19e92e17, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6763138706956163147, guid: 518017e8c5a5484408bacc4b19e92e17, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6763138706956163147, guid: 518017e8c5a5484408bacc4b19e92e17, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6911256352385118143, guid: 518017e8c5a5484408bacc4b19e92e17, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -4450,6 +4466,14 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8053439220326877942, guid: 518017e8c5a5484408bacc4b19e92e17, type: 3}
+      propertyPath: m_fontSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8053439220326877942, guid: 518017e8c5a5484408bacc4b19e92e17, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9022435809541753995, guid: 518017e8c5a5484408bacc4b19e92e17, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4479,7 +4503,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: -4061162369187961822, guid: 518017e8c5a5484408bacc4b19e92e17, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 518017e8c5a5484408bacc4b19e92e17, type: 3}

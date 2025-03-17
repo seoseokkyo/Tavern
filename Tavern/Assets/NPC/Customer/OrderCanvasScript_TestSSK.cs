@@ -5,7 +5,7 @@ using UnityEngine;
 public class OrderCanvasScript_TestSSK : MonoBehaviour
 {
     public Transform ContentTransform;
-
+    public ItemDatas itemdatas;
     public ItemUI ItemUI_Prefab;
     private List<ItemUI> ItemUIList = new List<ItemUI>();
 
@@ -17,7 +17,7 @@ public class OrderCanvasScript_TestSSK : MonoBehaviour
     {
         TargetCon = FindFirstObjectByType<PlayerController>();
 
-        InitRandMenu();
+       // InitRandMenu();
     }
 
     // Update is called once per frame
@@ -35,7 +35,7 @@ public class OrderCanvasScript_TestSSK : MonoBehaviour
             NormalDir.y = transform.position.y;
 
             Quaternion targetRotation = Quaternion.LookRotation(NormalDir);
-            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, targetRotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+           // transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, targetRotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         }
     }
 
@@ -54,6 +54,29 @@ public class OrderCanvasScript_TestSSK : MonoBehaviour
             var TempItemBase = ItemBase.ItemBaseCreator.CreateItemBase(ItemManager.Instance.items[randItem]);
 
             tempUI.InitData(TempItemBase, ContentTransform, i);
+            tempUI.transform.localScale = new Vector3(ScaleValue, ScaleValue, ScaleValue);
+            tempUI.transform.localPosition = new Vector3(tempUI.transform.localPosition.x, tempUI.transform.localPosition.y, 0);
+        }
+    }
+
+    public void SetOrderUI(List<ItemData> itemList)
+    {
+        int idx = 0;
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            for (int j = 0; j < itemdatas.items.Count; j++)
+            {
+                if (itemList[i].itemID == itemdatas.items[j].itemID)
+                {
+                    idx = i;
+                    break;
+                }
+            }
+
+            ItemUI tempUI = Instantiate(ItemUI_Prefab);
+            var tempItemBase = ItemBase.ItemBaseCreator.CreateItemBase(itemList[i]);
+
+            tempUI.InitData(tempItemBase, ContentTransform, i);
             tempUI.transform.localScale = new Vector3(ScaleValue, ScaleValue, ScaleValue);
             tempUI.transform.localPosition = new Vector3(tempUI.transform.localPosition.x, tempUI.transform.localPosition.y, 0);
         }

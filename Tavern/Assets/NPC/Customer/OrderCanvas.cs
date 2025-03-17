@@ -8,20 +8,23 @@ using UnityEngine.UIElements;
 
 public class OrderCanvas : MonoBehaviour
 {
-    List<ItemData> orderList = new List<ItemData>();
+    private List<ItemUI> ItemUIList = new List<ItemUI>();
+    public ItemDatas itemDatas;
 
     public GameObject orderPanel;
-    public UnityEngine.UI.Image oneOrderImage;
-    public UnityEngine.UI.Image twoOrder_firstImage;
-    public UnityEngine.UI.Image twoOrder_secondImage;  
 
     public TextMeshProUGUI stateText;
     public TextMeshProUGUI timeText;
 
+    public Transform ContentTransform;
+
+    public ItemUI ItemUI_Prefab;
+    private float ScaleValue = 0.007f;
+
     void Start()
     {
-        orderList.Clear();
-        RemoveOrderPanel();
+        stateText.enabled = true;
+        timeText.enabled = true;
     }
 
     void Update()
@@ -29,48 +32,29 @@ public class OrderCanvas : MonoBehaviour
         
     }
 
-    public void RemoveOrderPanel()
-    {
-        orderPanel.SetActive(false);
-    }
-
-    public void SetOrderUI(ItemData itemData, int idx)
+    public void SetOrderUI(List<ItemData> itemList)
     {
         stateText.enabled = false;
-
-        orderPanel.gameObject.SetActive(false);
-
-        twoOrder_firstImage.gameObject.SetActive(false);
-        twoOrder_secondImage.gameObject.SetActive(false);
-        oneOrderImage.gameObject.SetActive(false);
-
-
-        Rect rect = new Rect(0, 0, Mathf.Min(itemData.itemIcon.width, 500), Mathf.Min(itemData.itemIcon.height, 500));
-
-        var temp = Sprite.Create(itemData.itemIcon, rect, new Vector2(0.5f, 0.5f));
-
-        if (temp != null)
+        orderPanel.SetActive(true);
+        int idx = 0;
+        for(int i = 0; i < itemList.Count; i++)
         {
-            if(idx == 0)
+            for (int j = 0; j < itemDatas.items.Count; j++)
             {
-                oneOrderImage.sprite = temp;
-                oneOrderImage.gameObject.SetActive(true);
-                oneOrderImage.enabled = true;
+                if (itemList[i].itemID == itemDatas.items[j].itemID)
+                {
+                    idx = i;
+                    break;
+                }
             }
-            if(idx == 1)
-            {
-                twoOrder_firstImage.sprite = temp;
-                twoOrder_firstImage.gameObject.SetActive(true);
-                twoOrder_firstImage.enabled = true;
-            }
-            if(idx == 2)
-            {
-                twoOrder_secondImage.sprite = temp;
-                twoOrder_secondImage.gameObject.SetActive(true);
-                twoOrder_secondImage.enabled = true;
-            }
-            orderList.Add(itemData);
-            orderPanel.gameObject.SetActive(true);
+
+            ItemUI tempUI = Instantiate(ItemUI_Prefab);
+            var tempItemBase = ItemBase.ItemBaseCreator.CreateItemBase(ItemManager.Instance.items[idx]);
+
+            tempUI.InitData(tempItemBase, ContentTransform, i);
+//            tempUI.transform.SetParent(ContentTransform);
+            tempUI.transform.localScale = new Vector3(ScaleValue, ScaleValue, ScaleValue);
+            tempUI.transform.localPosition = new Vector3(tempUI.transform.localPosition.x, tempUI.transform.localPosition.y, 0);
         }
     }
 }
