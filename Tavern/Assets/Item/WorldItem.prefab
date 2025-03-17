@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8800059771866093615}
   - component: {fileID: 7265264429631978663}
   - component: {fileID: 419610879075113455}
-  - component: {fileID: 8122761880774166992}
+  - component: {fileID: 1089131710718548611}
   m_Layer: 0
   m_Name: WorldItem
   m_TagString: Untagged
@@ -47,18 +47,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ef72a7a43498cc43a17db037acea7a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactPlayer: {fileID: 0}
   interactionType: 0
   item:
-    ItemType: 1
     CurrentItemData:
       itemName: 
+      itemDescription: 
       itemIcon: {fileID: 0}
       itemMeshFilter: {fileID: 0}
       itemMesh: {fileID: 0}
       itemID: 0
-      itemDescription: 
+      itemCount: 0
+      itemCountLimit: 0
+      ItemType: 0
+      requireToolType: 0
+      ItemPrefab: {fileID: 0}
+      recipe: {fileID: 0}
+      AttachLocation: {x: 0, y: 0, z: 0}
+      AttachRotation: {x: 0, y: 0, z: 0, w: 0}
+      ItemFunctionList: []
+      fOptionValue1: 0
+      fOptionValue2: 0
+    OwnerInventory: {fileID: 0}
   WorldItemMeshFilter: {fileID: 7265264429631978663}
   WorldItemMesh: {fileID: 419610879075113455}
+  bRandSet: 1
+  InitItemName: 
 --- !u!33 &7265264429631978663
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -111,8 +125,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8122761880774166992
-MeshCollider:
+--- !u!65 &1089131710718548611
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -129,7 +143,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: 7977e423937da9b48aac1866c67bb5be, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
