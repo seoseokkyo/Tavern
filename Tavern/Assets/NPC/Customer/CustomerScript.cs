@@ -2,7 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustomerScript : MonoBehaviour
+public class CustomerScript : Interactable
 {
     public GameObject selfObj;
 
@@ -16,9 +16,34 @@ public class CustomerScript : MonoBehaviour
     private float time = 0f;
     public bool findSeat = false;
     public bool isOrdered = false;
+    private bool getOrdered = false;
 
     TableScript table;
     SeatData seat;
+
+    public Transform startLoc;
+
+    public override string GetInteractingDescription()
+    {
+        return "Press [E] to Serve";
+    }
+
+    public override void Interact()
+    {
+        if(interactPlayer != null && interactPlayer.CurrentEquipmentItem != null)
+        {
+            ItemBase equip = interactPlayer.CurrentEquipmentItem;
+            if (CheckOrder(equip.CurrentItemData))
+            {
+                interactPlayer.CurrentEquipmentItem.CurrentItemData.itemCount -= 1;
+            }
+            else
+            {
+                Debug.Log("WHAT?");
+            }
+        }
+    }
+
     void Start()
     {
         menuManager = GameObject.FindWithTag("MenuManager").GetComponent<MenuManager>();
@@ -45,7 +70,16 @@ public class CustomerScript : MonoBehaviour
                 checkTable();
             }
         }
-        
+        if(getOrdered == true)
+        {
+            time += Time.deltaTime;
+            if(time > 3)
+            {
+                getOrdered = false;
+                time = 0;
+                Leave();
+            }
+        }
     }
 
     void checkTable()
@@ -105,12 +139,13 @@ public class CustomerScript : MonoBehaviour
         if(menu != null)
         {
             int maxOrderCount = Random.Range(0, 2);
-            for(int i = 0; i < maxOrderCount + 1; i++)
+            while (maxOrderCount > 0)
             {
                 int random = Random.Range(0, menu.Count);
                 ItemData temp = menu[random];
                 orderItems.Add(temp);
                 orderUI.SetOrderUI(orderItems);
+                maxOrderCount--;
             }
         }
     }
@@ -123,6 +158,14 @@ public class CustomerScript : MonoBehaviour
             {
                 RemoveOrder(cur);
                 table.SetFood(food, seat);
+
+                if (orderItems.Count == 0)
+                {
+                    getOrdered = true;
+                   // Leave();
+                    return true;
+
+                }
                 return true;
             }
         }
@@ -144,7 +187,10 @@ public class CustomerScript : MonoBehaviour
     }
     public void Leave()
     {
+        selfObj.transform.position = startLoc.transform.position;
+
         table.RemoveFood(seat);
         table.ReleaseSeat(seat);
     }
+
 }

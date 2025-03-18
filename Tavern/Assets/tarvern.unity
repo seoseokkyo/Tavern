@@ -2646,6 +2646,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53c404ac74d49914d989280579371654, type: 3}
+--- !u!1 &1593080517
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1593080518}
+  m_Layer: 0
+  m_Name: npcLoc
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1593080518
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1593080517}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 44.7, y: 0, z: -124.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1638001005
 GameObject:
   m_ObjectHideFlags: 0
@@ -4088,12 +4119,16 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6735475584912939272, guid: fe7958d7b9554a34bafedbdabcc85131, type: 3}
+      propertyPath: 'SpawnTargetItemsName.Array.data[0]'
+      value: Chickens
+      objectReference: {fileID: 0}
+    - target: {fileID: 6735475584912939272, guid: fe7958d7b9554a34bafedbdabcc85131, type: 3}
       propertyPath: 'SpawnTargetItemsName.Array.data[1]'
-      value: WoodScrap
+      value: Chickens
       objectReference: {fileID: 0}
     - target: {fileID: 6735475584912939272, guid: fe7958d7b9554a34bafedbdabcc85131, type: 3}
       propertyPath: 'SpawnTargetItemsName.Array.data[2]'
-      value: RockHammer
+      value: Chickens
       objectReference: {fileID: 0}
     - target: {fileID: 6735475584912939272, guid: fe7958d7b9554a34bafedbdabcc85131, type: 3}
       propertyPath: 'SpawnTargetItemsName.Array.data[3]'
@@ -4925,3 +4960,4 @@ SceneRoots:
   - {fileID: 1754797212}
   - {fileID: 1932159924}
   - {fileID: 1569915431}
+  - {fileID: 1593080518}

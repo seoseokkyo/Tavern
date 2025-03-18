@@ -60,11 +60,15 @@ public class TableScript : MonoBehaviour
             if(seat.foodLeft == null)
             {
                 obj.transform.SetParent(seat.foodPositionLeft);
+                obj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+                obj.transform.localScale = Vector3.one;
                 seat.foodLeft = obj;
             }
             else if(seat.foodLeft != null)
             {
                 obj.transform.SetParent(seat.foodPositionRight);
+                obj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+                obj.transform.localScale = Vector3.one;
                 seat.foodRight = obj;
             }
         }
