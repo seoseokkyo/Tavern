@@ -1174,6 +1174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16349fb818121f94ebdc1505e219bf10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selfObj: {fileID: 2129419611706311001}
   menuObj: {fileID: 5422214384727210769, guid: fc714ddd559e04548b1026f636b63470, type: 3}
   orderUIObject: {fileID: 6512270272830251606}
   isOrdering: 0

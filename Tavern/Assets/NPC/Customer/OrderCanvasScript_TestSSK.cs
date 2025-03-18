@@ -81,4 +81,15 @@ public class OrderCanvasScript_TestSSK : MonoBehaviour
             tempUI.transform.localPosition = new Vector3(tempUI.transform.localPosition.x, tempUI.transform.localPosition.y, 0);
         }
     }
+
+    public void RemoveOrderUI(ItemData item)
+    {
+        for(int i = 0; i < ItemUIList.Count; i++)
+        {
+            if (item.itemIcon == ItemUIList[i].ItemViewImage.sprite.texture)
+            {
+                ItemUIList.RemoveAt(i);
+            }
+        }
+    }
 }
