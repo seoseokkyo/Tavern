@@ -138,14 +138,17 @@ public class CustomerScript : Interactable
         List<ItemData> menu = GetMenuFromManager();
         if(menu != null)
         {
-            int maxOrderCount = Random.Range(0, 2);
-            while (maxOrderCount > 0)
+            int maxOrderCount = Random.Range(1, 2);
+            while (true)
             {
                 int random = Random.Range(0, menu.Count);
                 ItemData temp = menu[random];
                 orderItems.Add(temp);
                 orderUI.SetOrderUI(orderItems);
                 maxOrderCount--;
+
+                if (maxOrderCount == 0)
+                    break;
             }
         }
     }

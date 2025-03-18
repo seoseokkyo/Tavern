@@ -84,12 +84,23 @@ public class OrderCanvasScript_TestSSK : MonoBehaviour
 
     public void RemoveOrderUI(ItemData item)
     {
-        for(int i = 0; i < ItemUIList.Count; i++)
+        int iCount = ContentTransform.childCount;
+        for(int i = iCount - 1; i >= 0; i--)
         {
-            if (item.itemIcon == ItemUIList[i].ItemViewImage.sprite.texture)
+            var temp = ContentTransform.GetChild(i);
+            if(temp != null)
             {
-                ItemUIList.RemoveAt(i);
+                var uiTemp = temp.GetComponent<ItemUI>();
+                if (uiTemp != null)
+                {
+                    if (uiTemp.CurrentItemBase.CurrentItemData.itemID == item.itemID)
+                    {
+                        Destroy(temp.gameObject);
+                        break;
+                    }
+                }
             }
         }
+        
     }
 }
