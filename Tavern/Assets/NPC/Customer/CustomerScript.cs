@@ -192,7 +192,6 @@ public class CustomerScript : Interactable
     {
         selfObj.transform.position = startLoc.transform.position;
 
-        table.RemoveFood(seat);
         table.ReleaseSeat(seat);
     }
 

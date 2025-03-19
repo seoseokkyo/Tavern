@@ -311,6 +311,7 @@ MonoBehaviour:
     foodRight: {fileID: 0}
     isSitting: 0
   foodPrefab: {fileID: 8602148699992709797, guid: 6ec0c99469ac4624b9fe866978b5f080, type: 3}
+  itemDatas: {fileID: 11400000, guid: 97dd72458fdd0f248b94ffe32fac6c82, type: 2}
 --- !u!1 &6680566376429097005
 GameObject:
   m_ObjectHideFlags: 0
