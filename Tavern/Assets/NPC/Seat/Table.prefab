@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1773273856333291232}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: served_2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3672132168573490659}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: served_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 743412170059506266}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: served_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1288530476296695030}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: served_1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,7 +138,8 @@ GameObject:
   - component: {fileID: 5918071082036686620}
   - component: {fileID: -674172296545024732}
   - component: {fileID: 4651251556931128460}
-  m_Layer: 0
+  - component: {fileID: 13329508456537491}
+  m_Layer: 6
   m_Name: Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,7 +245,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.86, y: 0.43178466, z: 0.84}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0.004853606, y: 0.21589221, z: 0.00000020861626}
 --- !u!54 &-674172296545024732
 Rigidbody:
@@ -312,6 +313,28 @@ MonoBehaviour:
     isSitting: 0
   foodPrefab: {fileID: 8602148699992709797, guid: 6ec0c99469ac4624b9fe866978b5f080, type: 3}
   itemDatas: {fileID: 11400000, guid: 97dd72458fdd0f248b94ffe32fac6c82, type: 2}
+--- !u!195 &13329508456537491
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4451428746462609742}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.7592425
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.8635691
+  m_BaseOffset: 0.43178454
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &6680566376429097005
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +344,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7670550850965878126}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: served_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +375,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2352554686421102516}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: served_3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -383,7 +406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7878884007759505246}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: served_0 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -414,7 +437,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5047061640196190356}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: served_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -500,6 +523,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Seat_1
       objectReference: {fileID: 0}
+    - target: {fileID: 7650832467678192067, guid: 426f5685ee9aca84491d8c314be1350f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -578,6 +605,10 @@ PrefabInstance:
     - target: {fileID: 7650832467678192067, guid: 426f5685ee9aca84491d8c314be1350f, type: 3}
       propertyPath: m_Name
       value: Seat_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7650832467678192067, guid: 426f5685ee9aca84491d8c314be1350f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -658,6 +689,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Seat_3
       objectReference: {fileID: 0}
+    - target: {fileID: 7650832467678192067, guid: 426f5685ee9aca84491d8c314be1350f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -736,6 +771,10 @@ PrefabInstance:
     - target: {fileID: 7650832467678192067, guid: 426f5685ee9aca84491d8c314be1350f, type: 3}
       propertyPath: m_Name
       value: Seat_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7650832467678192067, guid: 426f5685ee9aca84491d8c314be1350f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

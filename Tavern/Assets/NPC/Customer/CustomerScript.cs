@@ -5,6 +5,7 @@ using UnityEngine;
 public class CustomerScript : Interactable
 {
     public GameObject selfObj;
+    private CustomerAnim animScript;
 
     List<ItemData> orderItems = new List<ItemData>();
     public GameObject menuObj;
@@ -47,6 +48,7 @@ public class CustomerScript : Interactable
     void Start()
     {
         menuManager = GameObject.FindWithTag("MenuManager").GetComponent<MenuManager>();
+        animScript = GetComponent<CustomerAnim>();
     }
 
     void Update()
@@ -90,9 +92,10 @@ public class CustomerScript : Interactable
             seat = table.GetAvailableSeat(); // 여기서 isSitting 체크까지 하고 옴
             if (seat != null)
             {
-                selfObj.transform.position = seat.chair.transform.position;
-                Initialize();
-                DecideOrder();
+                animScript.MoveToLocation(seat.chair.transform);
+                //selfObj.transform.position = seat.chair.transform.position;
+                //Initialize();
+                //DecideOrder();
                 isOrdered = true;
             }
             else
@@ -106,7 +109,7 @@ public class CustomerScript : Interactable
         }
     }
 
-    void Initialize()
+    public void Initialize()
     {
         menuManager = GameObject.FindWithTag("MenuManager").GetComponent<MenuManager>();
         if (menuManager != null)
@@ -131,7 +134,7 @@ public class CustomerScript : Interactable
         return null;
     }
 
-    private void DecideOrder()
+    public void DecideOrder()
      {
         orderItems.Clear();
 
@@ -161,10 +164,12 @@ public class CustomerScript : Interactable
             {
                 RemoveOrder(cur);
                 table.SetFood(food, seat);
+                animScript.Check(true);
 
                 if (orderItems.Count == 0)
                 {
                     getOrdered = true;
+                    animScript.Eat();
                    // Leave();
                     return true;
 
@@ -172,7 +177,7 @@ public class CustomerScript : Interactable
                 return true;
             }
         }
-
+        animScript.Check(false);
         return false;
     }
 
@@ -190,8 +195,8 @@ public class CustomerScript : Interactable
     }
     public void Leave()
     {
-        selfObj.transform.position = startLoc.transform.position;
-
+        //selfObj.transform.position = startLoc.transform.position;
+        animScript.Leave();
         table.ReleaseSeat(seat);
     }
 
