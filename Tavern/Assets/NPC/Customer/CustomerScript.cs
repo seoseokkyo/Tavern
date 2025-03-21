@@ -23,6 +23,9 @@ public class CustomerScript : Interactable
     SeatData seat;
 
     public Transform startLoc;
+    private Interact_OpenCloseButton openCloseButton;
+
+    bool isVisited = false;
 
     public override string GetInteractingDescription()
     {
@@ -36,11 +39,18 @@ public class CustomerScript : Interactable
             ItemBase equip = interactPlayer.CurrentEquipmentItem;
             if (CheckOrder(equip.CurrentItemData))
             {
+                animScript.Check(true);
                 interactPlayer.CurrentEquipmentItem.CurrentItemData.itemCount -= 1;
+
+                if (orderItems.Count == 0)
+                {
+                    ResetTimer();
+                    StartCoroutine(LeaveTimer());
+                }
             }
             else
             {
-                Debug.Log("WHAT?");
+                animScript.Check(false);
             }
         }
     }
@@ -49,38 +59,17 @@ public class CustomerScript : Interactable
     {
         menuManager = GameObject.FindWithTag("MenuManager").GetComponent<MenuManager>();
         animScript = GetComponent<CustomerAnim>();
+        openCloseButton = GameObject.FindWithTag("Store").GetComponent<Interact_OpenCloseButton>();
     }
 
     void Update()
     {
-        
-        if(findSeat == false)
+        if(openCloseButton.isOpend == true)
         {
-            time += Time.deltaTime;
-            if (time > 10)
+            if (!isVisited)
             {
-                time = 0;
-                findSeat = true;
-            }
-        }
-        if (findSeat == true && isOrdered == false)
-        {
-            time += Time.deltaTime;
-            if(time > 5)
-            {
-                time = 0;
-                checkTable();
-            }
-        }
-        if(getOrdered == true)
-        {
-            time += Time.deltaTime;
-            if(time > 3)
-            {
-                getOrdered = false;
-                time = 0;
-                animScript.Eat();
-                Leave();
+                isVisited = true;
+                StartCoroutine(FindTableTimer());
             }
         }
     }
@@ -90,13 +79,10 @@ public class CustomerScript : Interactable
         table = TableManager.instance.FindRandomAvailableTable();
         if(table != null)
         {
-            seat = table.GetAvailableSeat(); // 여기서 isSitting 체크까지 하고 옴
+            seat = table.GetAvailableSeat();
             if (seat != null)
             {
                 animScript.MoveToLocation(seat.chair.transform);
-                //selfObj.transform.position = seat.chair.transform.position;
-                //Initialize();
-                //DecideOrder();
                 isOrdered = true;
             }
             else
@@ -165,19 +151,9 @@ public class CustomerScript : Interactable
             {
                 RemoveOrder(cur);
                 table.SetFood(food, seat);
-                animScript.Check(true);
-
-                if (orderItems.Count == 0)
-                {
-                    getOrdered = true;
-                   // Leave();
-                    return true;
-
-                }
                 return true;
             }
         }
-        animScript.Check(false);
         return false;
     }
 
@@ -195,9 +171,35 @@ public class CustomerScript : Interactable
     }
     public void Leave()
     {
-        //selfObj.transform.position = startLoc.transform.position;
         animScript.Leave();
         table.ReleaseSeat(seat);
     }
 
+    private System.Collections.IEnumerator FindTableTimer()
+    {
+        while(GetTime() < 3f)
+        {
+            IncreaseTimer();
+            yield return null;
+        }
+
+        ResetTimer();
+        checkTable();
+    }
+
+    private System.Collections.IEnumerator LeaveTimer()
+    {
+        while (GetTime() < 2f)
+        {
+            IncreaseTimer();
+            yield return null;
+        }
+
+        ResetTimer();
+        Leave();
+    }
+
+    private void ResetTimer() => time = 0f;
+    private float GetTime() => time;
+    private void IncreaseTimer() => time += Time.deltaTime;
 }

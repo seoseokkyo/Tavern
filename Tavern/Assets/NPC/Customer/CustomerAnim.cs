@@ -8,11 +8,14 @@ public class CustomerAnim : MonoBehaviour
 
     private Transform targetLoc;
     public Transform originLoc;
+    bool isCorrect = false;
     bool arrived = false;
     public bool isMoving = false;
 
     private NavMeshAgent agent;
     public Animator animator;
+
+    float timer = 0;
 
     void Start()
     {
@@ -56,7 +59,7 @@ public class CustomerAnim : MonoBehaviour
         if (targetLoc != originLoc)
         {
             animator.SetBool("isSitting", true);
-
+            animator.SetBool("isMove", false);
             customer.Initialize();
             customer.DecideOrder();
         }
@@ -64,7 +67,8 @@ public class CustomerAnim : MonoBehaviour
 
     public void Leave()
     {
-        animator.SetBool("isStting", false);
+        StartCoroutine(LeaveTimer());
+
         targetLoc = originLoc;
         agent.SetDestination(originLoc.position);
         animator.SetBool("isMove", true);
@@ -75,8 +79,9 @@ public class CustomerAnim : MonoBehaviour
 
     public void Check(bool correct)
     {
+        isCorrect = correct;
         animator.SetBool("isChecking", true);
-        if(correct)
+        if(isCorrect)
         {
             animator.SetBool("isCorrect", true);
         }
@@ -84,10 +89,42 @@ public class CustomerAnim : MonoBehaviour
         {
             animator.SetBool("isCorrect", false);
         }
+        
+        StartCoroutine(ResetCondition());
     }
 
     public void Eat()
     {
+        //animator.SetBool("isChecking", false);
+    }
+
+    private System.Collections.IEnumerator ResetCondition()
+    {
+        while(GetTime() < 2f)
+        {
+            IncreaseTimer();
+            yield return null;
+        }
+
+        ResetTimer();
+        animator.SetBool("isChecking", false);
+        animator.SetBool("isMove", false);
+        animator.SetBool("isStting", false);
+    }
+
+    private System.Collections.IEnumerator LeaveTimer()
+    {
+        while (GetTime() < 2f)
+        {
+            IncreaseTimer();
+            yield return null;
+        }
+
+        ResetTimer();
         animator.SetBool("isChecking", false);
     }
+
+    private void ResetTimer() => timer = 0f;
+    private float GetTime() => timer;
+    private void IncreaseTimer() => timer += Time.deltaTime;
 }
