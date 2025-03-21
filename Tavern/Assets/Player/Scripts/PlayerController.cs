@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     private InventoryUI QuickSlotUI;
 
     public EquipmentItem CurrentEquipmentItem = null;
-    public Player CurrentPlayer = null;
+    public TavernPlayer CurrentPlayer = null;
 
     void Start()
     {
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
         recipeUI = recipe.GetComponent<RecipeUI>();
         recipeUI.playerController = this;
 
-        CurrentPlayer = GetComponentInParent<Player>();
+        CurrentPlayer = GetComponentInParent<TavernPlayer>();
         if(null == CurrentPlayer)
         {
             Debug.Log("CurrentPlayer Is Null");
