@@ -66,10 +66,11 @@ public class CustomerAnim : MonoBehaviour
 
     public void Leave()
     {
+        agent.isStopped = false;
         StartCoroutine(LeaveTimer());
-
         targetLoc = originLoc;
         agent.SetDestination(originLoc.position);
+        animator.SetBool("isMove", true);
 
         arrived = false;
         isMoving = true;
@@ -105,9 +106,7 @@ public class CustomerAnim : MonoBehaviour
         }
 
         ResetTimer();
-        animator.SetBool("isSitting", false);
         animator.SetBool("isChecking", false);
-        animator.SetBool("isMove", true);
     }
 
     private System.Collections.IEnumerator LeaveTimer()
@@ -121,7 +120,6 @@ public class CustomerAnim : MonoBehaviour
         ResetTimer();
 
         animator.SetBool("isSitting", false);
-        animator.SetBool("isMove", false);
     }
 
     private void ResetTimer() => timer = 0f;
