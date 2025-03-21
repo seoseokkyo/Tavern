@@ -79,6 +79,7 @@ public class CustomerScript : Interactable
             {
                 getOrdered = false;
                 time = 0;
+                animScript.Eat();
                 Leave();
             }
         }
@@ -169,7 +170,6 @@ public class CustomerScript : Interactable
                 if (orderItems.Count == 0)
                 {
                     getOrdered = true;
-                    animScript.Eat();
                    // Leave();
                     return true;
 

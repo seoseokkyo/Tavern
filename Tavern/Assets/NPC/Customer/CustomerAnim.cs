@@ -9,6 +9,7 @@ public class CustomerAnim : MonoBehaviour
     private Transform targetLoc;
     public Transform originLoc;
     bool arrived = false;
+    public bool isMoving = false;
 
     private NavMeshAgent agent;
     public Animator animator;
@@ -22,16 +23,17 @@ public class CustomerAnim : MonoBehaviour
 
     void Update()
     {
-        if (!arrived && agent.remainingDistance <= agent.stoppingDistance)
+        if(isMoving == false)
+                return;
+
+        if (!arrived && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
-            if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
-            { 
-                if (agent.pathEndPosition == targetLoc.position)
-                {
-                    OnArrive();
-                    arrived = true;
-                }
-            }
+           if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+           {
+               OnArrive();
+               arrived = true;
+               isMoving = false;
+           }
         }
     }
 
@@ -41,6 +43,7 @@ public class CustomerAnim : MonoBehaviour
         agent.SetDestination(loc.position);
         animator.SetBool("isMove", true);
         arrived = false;
+        isMoving = true;
     }
 
     void OnArrive()
@@ -61,13 +64,13 @@ public class CustomerAnim : MonoBehaviour
 
     public void Leave()
     {
-        targetLoc = originLoc;
-
-        agent.SetDestination(originLoc.transform.position);
-
         animator.SetBool("isStting", false);
+        targetLoc = originLoc;
+        agent.SetDestination(originLoc.position);
         animator.SetBool("isMove", true);
+
         arrived = false;
+        isMoving = true;
     }
 
     public void Check(bool correct)
