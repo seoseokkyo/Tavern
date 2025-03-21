@@ -59,7 +59,6 @@ public class CustomerAnim : MonoBehaviour
         if (targetLoc != originLoc)
         {
             animator.SetBool("isSitting", true);
-            animator.SetBool("isMove", false);
             customer.Initialize();
             customer.DecideOrder();
         }
@@ -71,7 +70,6 @@ public class CustomerAnim : MonoBehaviour
 
         targetLoc = originLoc;
         agent.SetDestination(originLoc.position);
-        animator.SetBool("isMove", true);
 
         arrived = false;
         isMoving = true;
@@ -100,28 +98,30 @@ public class CustomerAnim : MonoBehaviour
 
     private System.Collections.IEnumerator ResetCondition()
     {
-        while(GetTime() < 2f)
+        while(GetTime() < 1f)
         {
             IncreaseTimer();
             yield return null;
         }
 
         ResetTimer();
+        animator.SetBool("isSitting", false);
         animator.SetBool("isChecking", false);
-        animator.SetBool("isMove", false);
-        animator.SetBool("isStting", false);
+        animator.SetBool("isMove", true);
     }
 
     private System.Collections.IEnumerator LeaveTimer()
     {
-        while (GetTime() < 2f)
+        while (GetTime() < 1f)
         {
             IncreaseTimer();
             yield return null;
         }
 
         ResetTimer();
-        animator.SetBool("isChecking", false);
+
+        animator.SetBool("isSitting", false);
+        animator.SetBool("isMove", false);
     }
 
     private void ResetTimer() => timer = 0f;
