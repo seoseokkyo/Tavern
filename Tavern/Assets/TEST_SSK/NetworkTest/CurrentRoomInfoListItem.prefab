@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8273067184967522289}
   - component: {fileID: 8402285448291263487}
   - component: {fileID: 1882546555616754484}
-  - component: {fileID: 7660396039057152097}
+  - component: {fileID: 8614938349722303108}
   m_Layer: 5
   m_Name: CurrentRoomInfoListItem
   m_TagString: Untagged
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7660396039057152097
+--- !u!114 &8614938349722303108
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,7 +86,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1583431396301046415}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c7862799ea046a4399288424d415684, type: 3}
+  m_Script: {fileID: 11500000, guid: 69c85eef505418d4e9c789576c5afc48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerName: {fileID: 7682262042680394377}

@@ -28,18 +28,20 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: 
+  DevRegion: rue
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - InstantiateOnServer
+  - InstantiateOnMaster
+  - MyRPCMethod
+  - PhotonRpcReadyCheck
+  - RPC_Ack
   - CheckRpcReceive
   - CheckRpcResponse
-  - ClickRpc
-  - DestroyRpc
-  - InstantiateOnMaster
   - LoadMainMenu
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
-  DevRegionSetOnce: 0
+  ShowSettings: 1
+  DevRegionSetOnce: 1

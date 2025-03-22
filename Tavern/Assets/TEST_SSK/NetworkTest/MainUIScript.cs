@@ -52,8 +52,6 @@ public class MainUIScript : MonoBehaviourPunCallbacks
             roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1000, 10000) : roomName;
 
             byte maxPlayers = 4;
-            //byte.TryParse(MaxPlayersInputField.text, out maxPlayers);
-            //maxPlayers = (byte)Mathf.Clamp(maxPlayers, 2, 8);
 
             RoomOptions options = new RoomOptions { MaxPlayers = maxPlayers, PlayerTtl = 10000 };
 
@@ -62,10 +60,10 @@ public class MainUIScript : MonoBehaviourPunCallbacks
             roomProperties["ViewRoomName"] = $"{SteamFriends.GetPersonaName()}'s Room";
             options.CustomRoomProperties = roomProperties;
 
-            // 로비에 표시할 프로퍼티 설정 (중요!)
             options.CustomRoomPropertiesForLobby = new string[] { "HostName", "ViewRoomName" };
 
-            PhotonNetwork.CreateRoom(roomName, options, null);
+            bool bCheck = PhotonNetwork.CreateRoom(roomName, options, null);
+            Debug.Log($"PhotonNetwork.CreateRoom : {bCheck}");
         }
     }
 
@@ -76,6 +74,10 @@ public class MainUIScript : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.IsOpen = true;
         PhotonNetwork.CurrentRoom.IsVisible = true;
     }
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        Debug.LogError($"방 생성 실패. 오류 코드: {returnCode}, 메시지: {message}");
+    }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
@@ -83,6 +85,8 @@ public class MainUIScript : MonoBehaviourPunCallbacks
 
         UpdateCachedRoomList(roomList);
         UpdateRoomListView();
+
+        Debug.Log($"PhotonNetwork.CountOfRooms:{PhotonNetwork.CountOfRooms}");        
     }
 
     private void UpdateCachedRoomList(List<RoomInfo> roomList)
@@ -272,6 +276,11 @@ public class MainUIScript : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InLobby)
         {
             PhotonNetwork.LeaveLobby();
+        }
+
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
         }
 
         SetActivePanel(SelectionPanel.name);
