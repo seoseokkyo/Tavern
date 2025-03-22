@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class ConnectionStatusPanel : MonoBehaviour
 {
-    private readonly string connectionStatusMessage = "    Connection Status: ";
+    private readonly string connectionStatusMessage = "Connection Status: ";
 
     [Header("UI References")]
     public TMP_Text ConnectionStatusText;

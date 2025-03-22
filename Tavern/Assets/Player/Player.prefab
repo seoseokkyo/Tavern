@@ -475,6 +475,8 @@ GameObject:
   - component: {fileID: 1972434506290253589}
   - component: {fileID: 6226858931125996059}
   - component: {fileID: 8499614538888706292}
+  - component: {fileID: 7960688566220752581}
+  - component: {fileID: 211247770618133189}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -714,7 +716,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda038947da0d6041b2bb5caab7da548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 0
+  maxHP: 100
   currentHP: 0
   moveSpeed: 3
 --- !u!114 &2644172225494649662
@@ -783,6 +785,7 @@ MonoBehaviour:
   selectedRecipe: {fileID: 0}
   recipe: {fileID: 0}
   QuickSlotUI_prefab: {fileID: 0}
+  CurrentPlayer: {fileID: 0}
 --- !u!114 &8499614538888706292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -797,6 +800,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   mainCamera: {fileID: 0}
+--- !u!114 &7960688566220752581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996853540725516794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 211247770618133189}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &211247770618133189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996853540725516794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29d7bb7f952817b49963fb6adac6fce0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &999734432400192511
 GameObject:
   m_ObjectHideFlags: 0

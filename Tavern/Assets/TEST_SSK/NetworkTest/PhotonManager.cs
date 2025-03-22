@@ -1,11 +1,11 @@
 using Photon.Pun;
 using Photon.Realtime;
 using Steamworks;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
@@ -13,22 +13,75 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     bool bPhotonInit = false;
     bool bPhotonRpcReady = false;
 
+    public delegate void OnJoinedRoomEnd();
+    public OnJoinedRoomEnd OnJoinedRoomEndDelegate;
+
+    public GameObject PlayerPrefab;
+
+    //<< Single
+    protected static bool p_EverInitialized = false;
+
+    protected static PhotonManager p_instance;
+    protected static PhotonManager Instance
+    {
+        get
+        {
+            if (p_instance == null)
+            {
+                return new GameObject("PhotonManager").AddComponent<PhotonManager>();
+            }
+            else
+            {
+                return p_instance;
+            }
+        }
+    }
+
+    protected bool m_bInitialized = false;
+    public static bool Initialized
+    {
+        get
+        {
+            return Instance.m_bInitialized;
+        }
+    }
+
     public void Awake()
     {
+        if (p_instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        p_instance = this;
 
+        if (p_EverInitialized)
+        {
+            throw new System.Exception("Tried to Initialize the PhotonManager twice in one session!");
+        }
+
+        DontDestroyOnLoad(gameObject);
+
+        DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
+        if (pool != null && this.PlayerPrefab != null)
+        {
+            pool.ResourceCache.Add(PlayerPrefab.name, PlayerPrefab);
+        }
     }
+    //<<
 
     private void Start()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
-        if(false == SteamAPI.Init())
+        if (false == SteamAPI.Init())
         {
             bSteamInit = false;
         }
         else
         {
-            bPhotonInit = PhotonNetwork.ConnectUsingSettings();
+            PhotonInit();
+
             bSteamInit = true;
         }
     }
@@ -44,6 +97,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
     }
 
+    void PhotonInit()
+    {
+        // Photon Init
+        PhotonNetwork.LocalPlayer.NickName = SteamFriends.GetPersonaName();
+        PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.EnableCloseConnection = true;
+    }
+
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
@@ -54,17 +116,33 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             }
 
             // 마스터일 경우 방 종료기능을 대신해 모든 플레이어 Kick
-            int PlayerNum = PhotonNetwork.PlayerList.Length;
-
-            for (int i = 0; i < PlayerNum; i++)
+            if (PhotonNetwork.IsMasterClient)
             {
-                // 만약 마스터클라이언트인 로컬플레이어가 리스트에 있을 경우 로컬 빼고
-                if (PhotonNetwork.LocalPlayer != PhotonNetwork.PlayerList[i])
+                foreach (Player player in PhotonNetwork.PlayerList)
                 {
-                    PhotonNetwork.CloseConnection(PhotonNetwork.PlayerList[i]);
+                    if (player != PhotonNetwork.LocalPlayer)
+                    {
+                        KickPlayer(player);
+                    }
                 }
             }
         }
+    }
+
+    public void KickPlayer(Player targetPlayer)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("LoadMainMenu", targetPlayer);
+
+            PhotonNetwork.CloseConnection(targetPlayer);
+        }
+    }
+
+    [PunRPC]
+    public void LoadMainMenu()
+    {
+        PhotonNetwork.LoadLevel("MainMenuScene");
     }
 
     private TaskCompletionSource<bool> _readyTaskCompletionSource;
@@ -110,8 +188,75 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         if (_readyTaskCompletionSource != null && !_readyTaskCompletionSource.Task.IsCompleted)
         {
-            bPhotonRpcReady = true;
             _readyTaskCompletionSource.TrySetResult(true);
         }
+    }
+
+    public override async void OnJoinedRoom()
+    {
+        bPhotonRpcReady = await PhotonRpcReadyCheckAsync();
+
+        Debug.Log($"PhotonRpcReadyCheckAsync : {bPhotonRpcReady}");
+        if (bPhotonRpcReady)
+        {
+            if (null != OnJoinedRoomEndDelegate)
+            {
+                OnJoinedRoomEndDelegate();
+            }
+        }
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "MainMenuScene" && scene.name != "ManagerSpawnScene")
+        {
+            if (bPhotonRpcReady)
+            {
+                RequestInstantiatePlayer();
+            }
+            else
+            {
+                OnJoinedRoomEndDelegate += RequestInstantiatePlayer;
+            }
+        }
+    }
+
+    void RequestInstantiatePlayer()
+    {
+        Vector3 SpawnPos = new Vector3(960f, 540f, -1.38f);
+
+        SpawnPos.x += Random.Range(0, 5);
+        SpawnPos.y += Random.Range(0, 5);
+
+        RequestInstantiate(PlayerPrefab.name, SpawnPos, Quaternion.identity);
+    }
+
+    void RequestInstantiate(string prefabName, Vector3 position, Quaternion rotation)
+    {
+        Debug.Log("[Client] Requesting Instantiate from Server...");
+        photonView.RequestOwnership();
+
+        photonView.RPC("InstantiateOnMaster", RpcTarget.MasterClient, prefabName, position, rotation);
+    }
+
+    [PunRPC]
+    void InstantiateOnMaster(string prefabName, Vector3 position, Quaternion rotation)
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+
+        Debug.Log($"[Server] Instantiating {prefabName} at {position}");
+        PhotonNetwork.Instantiate(prefabName, position, rotation);
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        PhotonNetwork.Disconnect();
+
+        PhotonInit();
+
+        Debug.Log("OnDisconnected");
     }
 }

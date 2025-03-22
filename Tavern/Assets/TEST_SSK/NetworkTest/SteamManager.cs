@@ -142,9 +142,7 @@ public class SteamManager : MonoBehaviour
 
         s_EverInitialized = true;
 
-        // Photon Init
-        PhotonNetwork.LocalPlayer.NickName = SteamFriends.GetPersonaName();
-        PhotonNetwork.ConnectUsingSettings();
+
 
         Debug.Log("AwakeFinished");
     }

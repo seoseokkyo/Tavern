@@ -74,7 +74,7 @@ public class MainUIScript : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.SetMasterClient(PhotonNetwork.LocalPlayer);
 
         PhotonNetwork.CurrentRoom.IsOpen = true;
-        PhotonNetwork.CurrentRoom.IsVisible = true;     
+        PhotonNetwork.CurrentRoom.IsVisible = true;
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -166,7 +166,7 @@ public class MainUIScript : MonoBehaviourPunCallbacks
 
     public void OnClickStartButton()
     {
-        PhotonNetwork.LoadLevel("EmptyScene");
+        PhotonNetwork.LoadLevel("tarvern");
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -185,32 +185,11 @@ public class MainUIScript : MonoBehaviourPunCallbacks
         playerListEntries.Remove(otherPlayer.ActorNumber);
     }
 
-    // 로비 생성 후 콜백 함수
-    private void OnLobbyCreated(LobbyCreated_t callbackData)
-    {
-        if (callbackData.m_eResult == EResult.k_EResultOK)
-        {
-            Debug.Log("로비 생성 성공!");
-
-            CSteamID lobbyID = new CSteamID(callbackData.m_ulSteamIDLobby);
-
-            string lobbyName = "My Game Lobby";
-
-            // 로비 이름 설정
-            SteamMatchmaking.SetLobbyData(lobbyID, "name", lobbyName);
-            Debug.Log($"로비 ID: {lobbyID}, 이름: {lobbyName}");
-
-        }
-        else
-        {
-            Debug.LogError("로비 생성 실패: " + callbackData.m_eResult);
-        }
-    }
     public override void OnJoinedRoom()
     {
         if (!PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("EmptyScene");
+            PhotonNetwork.LoadLevel("tarvern");
             Debug.Log("OnJoinedRoom");
         }
     }
@@ -244,8 +223,8 @@ public class MainUIScript : MonoBehaviourPunCallbacks
             GameObject entry = Instantiate(CurrentRoomInfoListItem);
             entry.transform.SetParent(CurrentRoomInfoListContent);
             entry.transform.localScale = Vector3.one;
-            entry.GetComponent<PlayerListItem>().Init(SteamFriends.GetPersonaName());
-            
+            entry.GetComponent<PlayerListItem>().Init(p.NickName);
+
             playerListEntries.Add(p.ActorNumber, entry);
         }
     }
@@ -253,6 +232,11 @@ public class MainUIScript : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         SetActivePanel(SelectionPanel.name);
+
+        if (playerListEntries == null)
+        {
+            return;
+        }
 
         foreach (GameObject entry in playerListEntries.Values)
         {

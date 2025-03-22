@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using static UnityEngine.InputManagerEntry;
 
 public class TavernPlayer : MonoBehaviour
 {
