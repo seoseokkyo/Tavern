@@ -16,7 +16,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public delegate void OnJoinedRoomEnd();
     public OnJoinedRoomEnd OnJoinedRoomEndDelegate;
 
-    public GameObject PlayerPrefab;
+    public List<GameObject> prefabsToCache;
 
     //<< Single
     protected static bool p_EverInitialized = false;
@@ -63,9 +63,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         DontDestroyOnLoad(gameObject);
 
         DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
-        if (pool != null && this.PlayerPrefab != null)
+        if (pool != null)
         {
-            pool.ResourceCache.Add(PlayerPrefab.name, PlayerPrefab);
+            foreach (GameObject prefab in prefabsToCache)
+            {
+                if (!pool.ResourceCache.ContainsKey(prefab.name))
+                {
+                    pool.ResourceCache.Add(prefab.name, prefab);
+                }
+            }
         }
     }
     //<<
@@ -228,7 +234,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         SpawnPos.x += Random.Range(0, 5);
         SpawnPos.y += Random.Range(0, 5);
 
-        RequestInstantiate(PlayerPrefab.name, SpawnPos, Quaternion.identity);
+        RequestInstantiate("Player", SpawnPos, Quaternion.identity);
     }
 
     void RequestInstantiate(string prefabName, Vector3 position, Quaternion rotation)
