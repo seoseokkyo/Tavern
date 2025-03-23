@@ -23,7 +23,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     protected static bool p_EverInitialized = false;
 
     protected static PhotonManager p_instance;
-    protected static PhotonManager Instance
+    public static PhotonManager Instance
     {
         get
         {

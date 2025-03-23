@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Photon.Pun;
 
-public abstract class Interactable : MonoBehaviour
+public abstract class Interactable : MonoBehaviourPunCallbacks
 {
     public enum InteractionType
     {

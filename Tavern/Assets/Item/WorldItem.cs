@@ -1,3 +1,5 @@
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 public class WorldItem : Interactable
@@ -14,11 +16,19 @@ public class WorldItem : Interactable
     // 나중에 메쉬 콜리더 사이즈 어떻게 할 지 생각해볼것
 
     public bool bRandSet = true;
+    public bool bInit = false;
 
     public string InitItemName;
 
     void Start()
     {
+        //if (!PhotonNetwork.OfflineMode && !PhotonNetwork.IsMasterClient)
+        //{
+        //    PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestInit;
+
+        //    return;
+        //}
+
         WorldItemMeshFilter = GetComponent<MeshFilter>();
         WorldItemMesh = GetComponent<MeshRenderer>();
 
@@ -39,8 +49,9 @@ public class WorldItem : Interactable
     // Update is called once per frame
     void Update()
     {
-
+        
     }
+
     public override string GetInteractingDescription() { return item.CurrentItemData.itemDescription; }
 
     public override void Interact()
@@ -51,7 +62,7 @@ public class WorldItem : Interactable
             {
                 item = null;
 
-                Destroy(gameObject);
+                PhotonNetwork.Destroy(gameObject);
             }
         }
     }
@@ -72,5 +83,43 @@ public class WorldItem : Interactable
             WorldItemMeshFilter.sharedMesh = item.CurrentItemData.itemMeshFilter.sharedMesh;
             WorldItemMesh.sharedMaterials = item.CurrentItemData.itemMesh.sharedMaterials;
         }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(item);
+            stream.SendNext(transform.localScale);
+        }
+        else
+        {
+            SetItem((ItemBase)stream.ReceiveNext());
+            transform.localScale = (Vector3)stream.ReceiveNext();
+        }
+    }
+
+    public void RequestInit()
+    {
+        photonView.RequestOwnership();
+        photonView.RPC("RequestItemData", RpcTarget.MasterClient);
+
+        Debug.Log($"Req_photonView ID : {photonView.InstantiationId}");
+    }
+
+    [PunRPC]
+    public void ReceiveItemData(ItemBase data)
+    {
+        SetItem(data);
+
+        Debug.Log($"Rec_photonView ID : {photonView.InstantiationId}");
+    }
+
+    [PunRPC]
+    public void RequestItemData(Player requester)
+    {
+        photonView.RPC("ReceiveItemData", requester, item);
+
+        Debug.Log($"Res_photonView ID : {photonView.InstantiationId}");
     }
 }

@@ -44,6 +44,10 @@ MonoBehaviour:
   - LoadMainMenu
   - ClickRpc
   - DestroyRpc
+  - SyncData
+  - ReceiveData
+  - RequestItemData
+  - ReceiveItemData
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

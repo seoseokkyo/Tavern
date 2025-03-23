@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Photon.Pun;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -21,6 +22,11 @@ public class ItemSpawner : MonoBehaviour
         }
 
         SpawnWorldItem.Clear();
+
+        if(!PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            return;
+        }
 
         Vector3 CurrentSpawnPos = transform.position;
 
