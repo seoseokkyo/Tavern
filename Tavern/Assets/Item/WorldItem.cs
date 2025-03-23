@@ -1,10 +1,4 @@
-using NUnit.Framework.Constraints;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
-using WebSocketSharp;
-using static UnityEditor.Progress;
 
 public class WorldItem : Interactable
 {

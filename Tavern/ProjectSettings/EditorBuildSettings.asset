@@ -4,7 +4,16 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/TEST_SSK/NetworkTest/ManagerSpawnScene.unity
+    guid: 7622dad69dc8e29428328fd23b111a93
+  - enabled: 1
+    path: Assets/TEST_SSK/NetworkTest/MainMenuScene.unity
+    guid: df38508726d095c4396a75bf4e57a732
+  - enabled: 1
+    path: Assets/tarvern.unity
+    guid: e4dcf40c547615848a526cdd2073f9ec
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 268b12de15f524e41a4c610ad4d8591d, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
