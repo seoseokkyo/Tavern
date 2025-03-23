@@ -22,6 +22,7 @@ public class TavernPlayer : MonoBehaviour
         this.maxHP = _maxHP;
         this.currentHP = _currentHP;
         this.moveSpeed = _moveSpeed;
+
     }
 
     void Start()

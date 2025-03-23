@@ -1,10 +1,11 @@
+using Photon.Pun;
 using System;
 using System.Threading;
 using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviourPunCallbacks
 {
     [HideInInspector]
     public InventoryComp PlayerInventory;
@@ -33,6 +34,8 @@ public class PlayerController : MonoBehaviour
     public Camera PlayerCamera;
     public Transform CameraTransform;
 
+    public PhotonView PlayerPhotonView;
+
     private void Awake()
     {
         PlayerCamera.gameObject.transform.SetParent(this.gameObject.transform);
@@ -42,6 +45,15 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        if (photonView.IsMine)
+        {
+            PlayerCamera.gameObject.SetActive(true);
+        }
+        else
+        {
+            PlayerCamera.gameObject.SetActive(false);
+        }
+
         PlayerInventory = GetComponent<InventoryComp>();
 
         // 인벤토리 사이즈

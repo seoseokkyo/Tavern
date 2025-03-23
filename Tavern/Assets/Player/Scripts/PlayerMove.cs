@@ -2,8 +2,9 @@ using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
+using Photon.Pun;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMove : MonoBehaviourPunCallbacks
 {
     public float moveSpeed;
     public Transform orientation;
@@ -32,6 +33,14 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        if (PhotonNetwork.IsConnected)
+        {
+            if (!photonView.IsMine)
+            {
+                return;
+            }
+        }
+
         // ModeController 에서 enable, disable 하는거에 따라 Update 함수 호출 제어
         if (!enabled) return;
 

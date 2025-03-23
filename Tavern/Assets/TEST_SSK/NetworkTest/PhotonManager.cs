@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
@@ -229,12 +230,17 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     void RequestInstantiatePlayer()
     {
-        Vector3 SpawnPos = new Vector3(960f, 540f, -1.38f);
+        //Vector3 SpawnPos = new Vector3(960f, 540f, -1.38f);
+        //
+        //SpawnPos.x += Random.Range(0, 5);
+        //SpawnPos.y += Random.Range(0, 5);
 
-        SpawnPos.x += Random.Range(0, 5);
-        SpawnPos.y += Random.Range(0, 5);
+        // 마음에는 안드는데 일단은
+        var StartPoint = GameObject.Find("StartPoint");
 
-        RequestInstantiate("Player", SpawnPos, Quaternion.identity);
+        PhotonNetwork.Instantiate("Player", StartPoint.transform.position, Quaternion.identity);
+
+        //RequestInstantiate("Player", StartPoint.transform.position, Quaternion.identity);
     }
 
     void RequestInstantiate(string prefabName, Vector3 position, Quaternion rotation)
