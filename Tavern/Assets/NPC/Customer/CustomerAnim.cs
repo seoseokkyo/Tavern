@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
@@ -26,17 +27,17 @@ public class CustomerAnim : MonoBehaviour
 
     void Update()
     {
-        if(isMoving == false)
-                return;
+        if (isMoving == false)
+            return;
 
         if (!arrived && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
-           if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
-           {
-               OnArrive();
-               arrived = true;
-               isMoving = false;
-           }
+            if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+            {
+                OnArrive();
+                arrived = true;
+                isMoving = false;
+            }
         }
     }
 
@@ -59,6 +60,16 @@ public class CustomerAnim : MonoBehaviour
         if (targetLoc != originLoc)
         {
             animator.SetBool("isSitting", true);
+            var TempTransforms = targetLoc.GetComponentsInChildren<Transform>();
+            foreach (var transform in TempTransforms)
+            {
+                if (transform.name == "SeatLocation")
+                {
+                    customer.gameObject.transform.position = transform.position;
+                    customer.gameObject.transform.rotation = transform.rotation;
+                }
+            }
+
             customer.Initialize();
             customer.DecideOrder();
         }
@@ -80,7 +91,7 @@ public class CustomerAnim : MonoBehaviour
     {
         isCorrect = correct;
         animator.SetBool("isChecking", true);
-        if(isCorrect)
+        if (isCorrect)
         {
             animator.SetBool("isCorrect", true);
         }
@@ -88,7 +99,7 @@ public class CustomerAnim : MonoBehaviour
         {
             animator.SetBool("isCorrect", false);
         }
-        
+
         StartCoroutine(ResetCondition());
     }
 
@@ -99,7 +110,7 @@ public class CustomerAnim : MonoBehaviour
 
     private System.Collections.IEnumerator ResetCondition()
     {
-        while(GetTime() < 1f)
+        while (GetTime() < 1f)
         {
             IncreaseTimer();
             yield return null;

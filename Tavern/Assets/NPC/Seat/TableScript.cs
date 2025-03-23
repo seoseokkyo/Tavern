@@ -13,7 +13,15 @@ public class TableScript : MonoBehaviour
 
     void Start()
     {
-        
+        // 이건 GetUsedToolItem함수 결과 확인용
+        ItemData usedTool = GetUsedToolItem(ERequiredTool.Bowl);
+        Debug.Log($"usedTool : {usedTool.itemName}");
+
+        usedTool = GetUsedToolItem(ERequiredTool.Plate);
+        Debug.Log($"usedTool : {usedTool.itemName}");
+
+        usedTool = GetUsedToolItem(ERequiredTool.Cup);
+        Debug.Log($"usedTool : {usedTool.itemName}");
     }
 
     void Update()
@@ -114,24 +122,7 @@ public class TableScript : MonoBehaviour
 
     private ItemData GetUsedToolItem(ERequiredTool type)
     {
-        ItemData temp = itemDatas.items[0];
-        for(int i = 0; i < itemDatas.items.Count; i++)
-        {
-            temp = itemDatas.items[i];
-            if(type == ERequiredTool.Plate && temp.itemName == "Plate")
-            {
-                return temp;
-            }
-            else if(type == ERequiredTool.Bowl && temp.itemName == "Bowl")
-            {
-                return temp;
-            }
-            else if(type == ERequiredTool.Cup && temp.itemName == "Cup")
-            {
-                return temp;
-            }
-        }
-
-        return temp;
+        // 요렇게 쓰시면 됩니다 ^^7
+        return ItemManager.Instance.GetItemDataByName(type.ToString());
     }
 }
