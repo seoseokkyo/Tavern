@@ -109,10 +109,6 @@ public class PlayerInteraction : MonoBehaviourPunCallbacks
             Ray ray = cam.ViewportPointToRay(Vector3.one / 2f);
             RaycastHit hit;
 
-            Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
-
-            //TavernGameManager.Instance.debugText += $"\n{ray.origin}";
-
             bool foundInteractable = false;
             if (Physics.Raycast(ray, out hit, interactionDistance))
             {
@@ -121,9 +117,6 @@ public class PlayerInteraction : MonoBehaviourPunCallbacks
                 if (interactable != null)
                 {
                     interactionText.text = interactable.GetInteractingDescription();
-
-                    TavernGameManager.Instance.debugText += $"\n{interactionText.text}";
-
                     HandleInteraction(interactable);
                     foundInteractable = true;
                     progressBarUI.SetActive(interactable.interactionType == Interactable.InteractionType.Hold);

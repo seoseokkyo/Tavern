@@ -5,15 +5,10 @@ using UnityEngine;
 public class WorldItem : Interactable
 {
     // Scene등에서 플레이어와 상호작용이 가능한 아이템의 형태
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-
     public ItemBase item;
 
     public MeshFilter WorldItemMeshFilter;
     public MeshRenderer WorldItemMesh;
-
-    // 나중에 메쉬 콜리더 사이즈 어떻게 할 지 생각해볼것
 
     public bool bRandSet = true;
     public bool bInit = false;
@@ -24,7 +19,7 @@ public class WorldItem : Interactable
     {
         if (!PhotonNetwork.OfflineMode && !PhotonNetwork.IsMasterClient)
         {
-            PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestInit;
+            RequestInit();
 
             return;
         }
@@ -85,41 +80,26 @@ public class WorldItem : Interactable
         }
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(item);
-            stream.SendNext(transform.localScale);
-        }
-        else
-        {
-            SetItem((ItemBase)stream.ReceiveNext());
-            transform.localScale = (Vector3)stream.ReceiveNext();
-        }
-    }
-
     public void RequestInit()
     {
-        //photonView.RequestOwnership();
         photonView.RPC("RequestItemData", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer);
 
-        Debug.Log($"Req_photonView ID : {photonView.InstantiationId}");
+        //Debug.Log($"Req_photonView ID : {photonView.InstantiationId}");
     }
 
     [PunRPC]
-    public void ReceiveItemData(ItemBase data)
+    public void ReceiveItemData(string ItemDataName)
     {
-        SetItem(data);
+        SetItem(ItemBase.ItemBaseCreator.CreateItemBase(ItemManager.Instance.GetItemDataByName(ItemDataName)));
 
-        Debug.Log($"Rec_photonView ID : {photonView.InstantiationId}");
+        //Debug.Log($"Rec_photonView ID : {photonView.InstantiationId}");
     }
 
     [PunRPC]
     public void RequestItemData(Player requester)
     {
-        photonView.RPC("ReceiveItemData", requester, item);
+        photonView.RPC("ReceiveItemData", requester, item.CurrentItemData.itemName);
 
-        Debug.Log($"Res_photonView ID : {photonView.InstantiationId}");
+        //Debug.Log($"Res_photonView ID : {photonView.InstantiationId}");
     }
 }
