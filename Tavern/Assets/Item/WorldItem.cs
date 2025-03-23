@@ -22,12 +22,12 @@ public class WorldItem : Interactable
 
     void Start()
     {
-        //if (!PhotonNetwork.OfflineMode && !PhotonNetwork.IsMasterClient)
-        //{
-        //    PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestInit;
+        if (!PhotonNetwork.OfflineMode && !PhotonNetwork.IsMasterClient)
+        {
+            PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestInit;
 
-        //    return;
-        //}
+            return;
+        }
 
         WorldItemMeshFilter = GetComponent<MeshFilter>();
         WorldItemMesh = GetComponent<MeshRenderer>();
@@ -49,7 +49,7 @@ public class WorldItem : Interactable
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public override string GetInteractingDescription() { return item.CurrentItemData.itemDescription; }
@@ -101,8 +101,8 @@ public class WorldItem : Interactable
 
     public void RequestInit()
     {
-        photonView.RequestOwnership();
-        photonView.RPC("RequestItemData", RpcTarget.MasterClient);
+        //photonView.RequestOwnership();
+        photonView.RPC("RequestItemData", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer);
 
         Debug.Log($"Req_photonView ID : {photonView.InstantiationId}");
     }
