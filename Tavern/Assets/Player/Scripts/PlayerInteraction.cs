@@ -7,10 +7,19 @@ public class PlayerInteraction : MonoBehaviour
     private PlayerController OwnerPlayerCon;
     public float interactionDistance = 2f;
 
+    [HideInInspector]
     public GameObject interactionCanvas;
+
+    [HideInInspector]
     public GameObject popUICanvas;
+
+    [HideInInspector]
     public GameObject progressBarUI;
+
+    [HideInInspector]
     public TextMeshProUGUI interactionText;
+
+    [HideInInspector]
     public UnityEngine.UI.Slider interactionProgress;
 
     private float maxHoldTime = 2f;
@@ -30,6 +39,29 @@ public class PlayerInteraction : MonoBehaviour
         {
             Debug.Log("Player Cam Not Init");
         }
+
+        var UIManager = GetComponentInParent<PlayerUIManager>();
+        interactionCanvas = UIManager.InteractCanvas;
+        popUICanvas = UIManager.popUICanvas;
+
+        int Count = interactionCanvas.transform.childCount;
+        for(int i = 0; i < Count; i++)
+        {
+            Transform ChildTransform = interactionCanvas.transform.GetChild(i);
+
+            if (ChildTransform.name == "HoldTimeProgressBar")
+            {
+                progressBarUI = ChildTransform.gameObject;
+            }
+            else if (ChildTransform.name == "Interaction Text")
+            {
+                interactionText = ChildTransform.GetComponent<TextMeshProUGUI>();
+            }
+        }
+
+        interactionProgress = progressBarUI.GetComponentInChildren<UnityEngine.UI.Slider>();
+
+        Debug.Log($"progressBarUI : {progressBarUI}, interactionText : {interactionText}, interactionProgress : {interactionProgress}");
     }
 
     void Update()

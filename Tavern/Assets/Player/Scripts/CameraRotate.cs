@@ -13,18 +13,7 @@ public class CameraRotate : MonoBehaviour
 
     private void Awake()
     {
-        var Transforms = GetComponentsInParent<Transform>();
-        foreach (var transform in Transforms)
-        {
-            if (transform.name == "CameraPos")
-            {
-                orientation = transform;
 
-                break;
-            }
-        }
-
-        playerRotation = gameObject.transform;
     }
 
     private void Start()

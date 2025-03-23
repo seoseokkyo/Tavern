@@ -6,12 +6,16 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [HideInInspector]
     public InventoryComp PlayerInventory;
 
     public InventoryUI PopupInventoryUI_Prefab;
     private InventoryUI PopupInventoryUI;
 
+    [HideInInspector]
     public Canvas PlayerCanvas;
+
+
     public GameObject selectedRecipe;
     public GameObject recipe;
     private SelectedRecipeUI selectedRecipeUI;
@@ -20,7 +24,10 @@ public class PlayerController : MonoBehaviour
     public InventoryUI QuickSlotUI_prefab;
     private InventoryUI QuickSlotUI;
 
+    [HideInInspector]
     public EquipmentItem CurrentEquipmentItem = null;
+
+    [HideInInspector]
     public TavernPlayer CurrentPlayer = null;
 
     public Camera PlayerCamera;

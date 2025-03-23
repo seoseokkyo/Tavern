@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class ModeController : MonoBehaviour
 {
-    public GameObject player;
+    //public GameObject player;
     public Camera mainCamera;
     private bool isUIMode = false;
 
@@ -13,9 +13,11 @@ public class ModeController : MonoBehaviour
 
     private void Awake()
     {
-        playerMoveScript = player.GetComponent<PlayerMove>();
-        cameraRotateScript = mainCamera.GetComponent<CameraRotate>();
-        playerinteractionScript = player.GetComponent<PlayerInteraction>();
+        var OwnerPlayerCon = GetComponentInParent<PlayerController>();
+
+        playerMoveScript = GetComponentInParent<PlayerMove>();
+        cameraRotateScript = OwnerPlayerCon.PlayerCamera.GetComponent<CameraRotate>();
+        playerinteractionScript = GetComponentInParent<PlayerInteraction>();
     }
 
     void Start()
@@ -31,25 +33,25 @@ public class ModeController : MonoBehaviour
 
     private void CheckData()
     {
-        if (player == null)
-        {
-            player = GameObject.FindWithTag("Player");
-            playerMoveScript = player.GetComponent<PlayerMove>();
-            playerinteractionScript = player.GetComponent<PlayerInteraction>();
-        }
-        if(mainCamera == null)
-        {
-            mainCamera = Camera.main;
-            cameraRotateScript = mainCamera.GetComponent<CameraRotate>();
-        }
-        if(playerMoveScript == null || playerinteractionScript == null || cameraRotateScript == null)
-        {
-            player = GameObject.FindWithTag("Player");
-            mainCamera = Camera.main;
-            playerMoveScript = player.GetComponent<PlayerMove>();
-            playerinteractionScript = player.GetComponent<PlayerInteraction>();
-            cameraRotateScript = mainCamera.GetComponent<CameraRotate>();
-        }
+        //if (player == null)
+        //{
+        //    player = GameObject.FindWithTag("Player");
+        //    playerMoveScript = player.GetComponent<PlayerMove>();
+        //    playerinteractionScript = player.GetComponent<PlayerInteraction>();
+        //}
+        //if(mainCamera == null)
+        //{
+        //    mainCamera = Camera.main;
+        //    cameraRotateScript = mainCamera.GetComponent<CameraRotate>();
+        //}
+        //if(playerMoveScript == null || playerinteractionScript == null || cameraRotateScript == null)
+        //{
+        //    player = GameObject.FindWithTag("Player");
+        //    mainCamera = Camera.main;
+        //    playerMoveScript = player.GetComponent<PlayerMove>();
+        //    playerinteractionScript = player.GetComponent<PlayerInteraction>();
+        //    cameraRotateScript = mainCamera.GetComponent<CameraRotate>();
+        //}
     }
 
     public void SetMode(bool uiMode)

@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 653570a140a7c334bad3f51fa86bf927
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - InteractCanvas: {fileID: 1119404005330925829, guid: 306013a9e110cc8458a902c508d154bb, type: 3}
+  - popUICanvas: {fileID: 6379061994163152653, guid: f9c42d842843ac24aaa696b1456991c4, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
