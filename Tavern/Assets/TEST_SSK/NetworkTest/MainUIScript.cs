@@ -4,6 +4,7 @@ using Photon.Realtime;
 using Steamworks;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainUIScript : MonoBehaviourPunCallbacks
 {
@@ -31,15 +32,36 @@ public class MainUIScript : MonoBehaviourPunCallbacks
 
     public string CurrentSelectedRoomName;
 
+    // Buttons
+    // Selection Panel's
+    public Button NewGamePlayButton;
+    public Button ContinueButton;
+    public Button SearchButton;
+
+    // NewGamePlay Panel's
+    public Button StartButton;
+
     public void Awake()
     {
         cachedRoomList = new Dictionary<string, RoomInfo>();
         roomListEntries = new Dictionary<string, GameObject>();
+
+        NewGamePlayButton.interactable = false;
+        ContinueButton.interactable = false;
+        SearchButton.interactable = false;
+
+        StartButton.interactable = false;
     }
 
     private void Start()
     {
         SetActivePanel(SelectionPanel.name);
+
+        NewGamePlayButton.interactable = false;
+        ContinueButton.interactable = false;
+        SearchButton.interactable = false;
+
+        StartButton.interactable = false;
     }
 
     private void Update()
@@ -74,6 +96,7 @@ public class MainUIScript : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.IsOpen = true;
         PhotonNetwork.CurrentRoom.IsVisible = true;
     }
+
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         Debug.LogError($"방 생성 실패. 오류 코드: {returnCode}, 메시지: {message}");
@@ -86,7 +109,7 @@ public class MainUIScript : MonoBehaviourPunCallbacks
         UpdateCachedRoomList(roomList);
         UpdateRoomListView();
 
-        Debug.Log($"PhotonNetwork.CountOfRooms:{PhotonNetwork.CountOfRooms}");        
+        Debug.Log($"PhotonNetwork.CountOfRooms:{PhotonNetwork.CountOfRooms}");
     }
 
     private void UpdateCachedRoomList(List<RoomInfo> roomList)
@@ -164,7 +187,7 @@ public class MainUIScript : MonoBehaviourPunCallbacks
             SteamUser.GetSteamID();
 
             bNeedCreateRoom = true;
-
+            StartButton.interactable = false;
         }
     }
 
@@ -195,6 +218,10 @@ public class MainUIScript : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.LoadLevel("tarvern");
             Debug.Log("OnJoinedRoom");
+        }
+        else
+        {
+            StartButton.interactable = true;
         }
     }
 
@@ -293,5 +320,12 @@ public class MainUIScript : MonoBehaviourPunCallbacks
         ContinuePanel.SetActive(activePanel.Equals(ContinuePanel.name));
         SearchRoomPanel.SetActive(activePanel.Equals(SearchRoomPanel.name));
         SettingPanel.SetActive(activePanel.Equals(SettingPanel.name));
+    }
+
+    public override void OnConnectedToMaster()
+    {
+        NewGamePlayButton.interactable = true;
+        ContinueButton.interactable = true;
+        SearchButton.interactable = true;
     }
 }
