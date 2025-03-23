@@ -60,6 +60,8 @@ public class CustomerAnim : MonoBehaviour
         if (targetLoc != originLoc)
         {
             animator.SetBool("isSitting", true);
+
+
             var TempTransforms = targetLoc.GetComponentsInChildren<Transform>();
             foreach (var transform in TempTransforms)
             {
@@ -67,6 +69,8 @@ public class CustomerAnim : MonoBehaviour
                 {
                     customer.gameObject.transform.position = transform.position;
                     customer.gameObject.transform.rotation = transform.rotation;
+
+                    break;
                 }
             }
 

@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    public Camera cam;
+    private Camera cam;
+    private PlayerController OwnerPlayerCon;
     public float interactionDistance = 2f;
 
     public GameObject interactionCanvas;
@@ -18,6 +19,17 @@ public class PlayerInteraction : MonoBehaviour
     public void SetActive(bool state)
     {
         deactive = state;
+    }
+
+    private void Awake()
+    {
+        OwnerPlayerCon = GetComponentInParent<PlayerController>();
+
+        cam = OwnerPlayerCon.PlayerCamera;
+        if(null == cam)
+        {
+            Debug.Log("Player Cam Not Init");
+        }
     }
 
     void Update()
@@ -62,10 +74,9 @@ public class PlayerInteraction : MonoBehaviour
 
     void HandleInteraction(Interactable interactable)
     {
-        PlayerController player = GetComponentInParent<PlayerController>();
-        if(player != null)
+        if(OwnerPlayerCon != null)
         {
-            interactable.interactPlayer = player;
+            interactable.interactPlayer = OwnerPlayerCon;
             switch (interactable.interactionType)
             {
                 case Interactable.InteractionType.Press:

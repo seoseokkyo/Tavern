@@ -11,16 +11,21 @@ public class ModeController : MonoBehaviour
     private CameraRotate cameraRotateScript;
     private PlayerInteraction playerinteractionScript;
 
-    void Start()
+    private void Awake()
     {
         playerMoveScript = player.GetComponent<PlayerMove>();
         cameraRotateScript = mainCamera.GetComponent<CameraRotate>();
         playerinteractionScript = player.GetComponent<PlayerInteraction>();
+    }
+
+    void Start()
+    {
         SetMode(false);  // game 모드용 인풋으로 시작
     }
 
     void Update()
     {
+
 
     }
 

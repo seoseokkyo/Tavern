@@ -23,6 +23,16 @@ public class PlayerController : MonoBehaviour
     public EquipmentItem CurrentEquipmentItem = null;
     public TavernPlayer CurrentPlayer = null;
 
+    public Camera PlayerCamera;
+    public Transform CameraTransform;
+
+    private void Awake()
+    {
+        PlayerCamera.gameObject.transform.SetParent(this.gameObject.transform);
+        PlayerCamera.transform.localPosition = CameraTransform.transform.localPosition;
+        PlayerCamera.transform.localRotation = CameraTransform.transform.localRotation;
+    }
+
     void Start()
     {
         PlayerInventory = GetComponent<InventoryComp>();
@@ -57,7 +67,7 @@ public class PlayerController : MonoBehaviour
         recipeUI.playerController = this;
 
         CurrentPlayer = GetComponentInParent<TavernPlayer>();
-        if(null == CurrentPlayer)
+        if (null == CurrentPlayer)
         {
             Debug.Log("CurrentPlayer Is Null");
         }

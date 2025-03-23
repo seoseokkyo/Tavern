@@ -11,6 +11,22 @@ public class CameraRotate : MonoBehaviour
     float xRotation;
     float yRotation;
 
+    private void Awake()
+    {
+        var Transforms = GetComponentsInParent<Transform>();
+        foreach (var transform in Transforms)
+        {
+            if (transform.name == "CameraPos")
+            {
+                orientation = transform;
+
+                break;
+            }
+        }
+
+        playerRotation = gameObject.transform;
+    }
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
