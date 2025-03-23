@@ -1,11 +1,13 @@
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 
-public class PlayerInteraction : MonoBehaviour
+public class PlayerInteraction : MonoBehaviourPunCallbacks
 {
     private Camera cam;
     private PlayerController OwnerPlayerCon;
     public float interactionDistance = 2f;
+    private PlayerUIManager UIManager;
 
     [HideInInspector]
     public GameObject interactionCanvas;
@@ -35,19 +37,31 @@ public class PlayerInteraction : MonoBehaviour
         OwnerPlayerCon = GetComponentInParent<PlayerController>();
 
         cam = OwnerPlayerCon.PlayerCamera;
-        if(null == cam)
+        if (null == cam)
         {
             Debug.Log("Player Cam Not Init");
         }
 
-        var UIManager = GetComponentInParent<PlayerUIManager>();
+        UIManager = GetComponentInParent<PlayerUIManager>();
+
+        UIManager.OnPlayerUIInitEnd += PlayerInteractionUIInit;
+    }
+
+    private void Start()
+    {
+        
+    }
+
+    public void PlayerInteractionUIInit()
+    {
         interactionCanvas = UIManager.InteractCanvas;
         popUICanvas = UIManager.popUICanvas;
 
-        int Count = interactionCanvas.transform.childCount;
-        for(int i = 0; i < Count; i++)
+        var InteractUIPanel = interactionCanvas.transform.Find("InteractCanvasPanel");
+        int Count = InteractUIPanel.childCount;
+        for (int i = 0; i < Count; i++)
         {
-            Transform ChildTransform = interactionCanvas.transform.GetChild(i);
+            Transform ChildTransform = InteractUIPanel.GetChild(i);
 
             if (ChildTransform.name == "HoldTimeProgressBar")
             {
@@ -82,10 +96,22 @@ public class PlayerInteraction : MonoBehaviour
 
     private void CheckInteractable()
     {
-        if(cam)
+        if (PhotonNetwork.IsConnected)
+        {
+            if (!photonView.IsMine)
+            {
+                return;
+            }
+        }
+
+        if (cam)
         {
             Ray ray = cam.ViewportPointToRay(Vector3.one / 2f);
             RaycastHit hit;
+
+            Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
+
+            //TavernGameManager.Instance.debugText += $"\n{ray.origin}";
 
             bool foundInteractable = false;
             if (Physics.Raycast(ray, out hit, interactionDistance))
@@ -95,6 +121,9 @@ public class PlayerInteraction : MonoBehaviour
                 if (interactable != null)
                 {
                     interactionText.text = interactable.GetInteractingDescription();
+
+                    TavernGameManager.Instance.debugText += $"\n{interactionText.text}";
+
                     HandleInteraction(interactable);
                     foundInteractable = true;
                     progressBarUI.SetActive(interactable.interactionType == Interactable.InteractionType.Hold);
@@ -106,13 +135,13 @@ public class PlayerInteraction : MonoBehaviour
 
     void HandleInteraction(Interactable interactable)
     {
-        if(OwnerPlayerCon != null)
+        if (OwnerPlayerCon != null)
         {
             interactable.interactPlayer = OwnerPlayerCon;
             switch (interactable.interactionType)
             {
                 case Interactable.InteractionType.Press:
-                    if(UnityEngine.Input.GetButtonDown("Interact"))
+                    if (UnityEngine.Input.GetButtonDown("Interact"))
                     {
                         interactable.Interact();
                     }

@@ -477,7 +477,7 @@ GameObject:
   - component: {fileID: 7960688566220752581}
   - component: {fileID: 211247770618133189}
   - component: {fileID: 3865750665951605319}
-  - component: {fileID: 2028033579384931429}
+  - component: {fileID: 8802623366825500547}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -765,7 +765,6 @@ MonoBehaviour:
   PlayerInventory: {fileID: 0}
   PopupInventoryUI_Prefab: {fileID: 3434213305987472323, guid: d43a0a1bfaa83be46aa579d5c98f6163, type: 3}
   PlayerCanvas: {fileID: 0}
-  selectedRecipe: {fileID: 0}
   recipe: {fileID: 1346495968770374396, guid: 98689606a9c1dd043b69ac9bdcf6735b, type: 3}
   QuickSlotUI_prefab: {fileID: 5248130043337331258, guid: 1ada21c56a300d244bc84bb92dc8c3be, type: 3}
   CurrentPlayer: {fileID: 0}
@@ -835,7 +834,7 @@ MonoBehaviour:
   maxHP: 100
   currentHP: 0
   moveSpeed: 10
---- !u!114 &2028033579384931429
+--- !u!114 &8802623366825500547
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -847,8 +846,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 653570a140a7c334bad3f51fa86bf927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InteractCanvas: {fileID: 1119404005330925829, guid: 306013a9e110cc8458a902c508d154bb, type: 3}
-  popUICanvas: {fileID: 6379061994163152653, guid: f9c42d842843ac24aaa696b1456991c4, type: 3}
+  InteractCanvas_Prefab: {fileID: 1119404005330925829, guid: 306013a9e110cc8458a902c508d154bb, type: 3}
+  popUICanvas_Prefab: {fileID: 6379061994163152653, guid: f9c42d842843ac24aaa696b1456991c4, type: 3}
+  selectedRecipe_Prefab: {fileID: 5998582446757619427, guid: f47dabaf811fdb8459022529bdade40f, type: 3}
+  InteractCanvas: {fileID: 0}
+  popUICanvas: {fileID: 0}
+  selectedRecipe: {fileID: 0}
 --- !u!1 &999734432400192511
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using NUnit.Framework.Interfaces;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -56,7 +57,10 @@ public class ItemManager : MonoBehaviour
 
     public WorldItem ItemSpawn(ItemBase SpawnItem, Vector3 SpawnPos, Quaternion SpawnRotation)
     {
-        WorldItem SpawnWorldItem = Instantiate(itemPrefab, SpawnPos, SpawnRotation);
+        //WorldItem SpawnWorldItem = Instantiate(itemPrefab, SpawnPos, SpawnRotation);
+        var WorldItemGameObj = PhotonNetwork.Instantiate("WorldItem", SpawnPos, SpawnRotation);
+        WorldItem SpawnWorldItem = WorldItemGameObj.GetComponent<WorldItem>();
+
         SpawnWorldItem.bRandSet = false;
         SpawnWorldItem.InitItemName = SpawnItem.CurrentItemData.itemName;
 

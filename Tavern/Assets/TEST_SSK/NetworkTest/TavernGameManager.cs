@@ -7,13 +7,13 @@ public class TavernGameManager : MonoBehaviourPunCallbacks
 
     public Vector3 SpawnPos = new Vector3();
 
-    private string debugText = "";
+    public string debugText = "";
 
     //<< Single
     protected static bool t_EverInitialized = false;
 
     protected static TavernGameManager t_instance;
-    protected static TavernGameManager Instance
+    public static TavernGameManager Instance
     {
         get
         {

@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public Canvas PlayerCanvas;
 
 
-    public GameObject selectedRecipe;
+
     public GameObject recipe;
     private SelectedRecipeUI selectedRecipeUI;
     private RecipeUI recipeUI;
@@ -38,6 +38,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        // 플레이어의 캔버스 생성
+        GameObject PlayerCanvasObj = new GameObject("PlayerCanvas");
+        PlayerCanvas = PlayerCanvasObj.AddComponent<Canvas>();
+        PlayerCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+
         PlayerCamera.gameObject.transform.SetParent(this.gameObject.transform);
         PlayerCamera.transform.localPosition = CameraTransform.transform.localPosition;
         PlayerCamera.transform.localRotation = CameraTransform.transform.localRotation;
@@ -59,11 +64,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         // 인벤토리 사이즈
         PlayerInventory.InventoryInitialize(50);
 
-        // 플레이어의 캔버스 생성
-        GameObject PlayerCanvasObj = new GameObject("PlayerCanvas");
-        PlayerCanvas = PlayerCanvasObj.AddComponent<Canvas>();
-        PlayerCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-
         // 팝업 형태로 출력되는 인벤토리 UI
         PopupInventoryUI = Instantiate(PopupInventoryUI_Prefab);
         PopupInventoryUI.transform.SetParent(PlayerCanvas.transform, false);
@@ -80,8 +80,17 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         QuickSlotUI.transform.SetParent(PlayerCanvas.transform, false); // Canvas의 자식으로 설정 (worldPositionStays = false)
 
-        selectedRecipeUI = selectedRecipe.GetComponent<SelectedRecipeUI>();
-        selectedRecipeUI.GetInventoryFromController(this);
+        var UIManager = GetComponentInParent<PlayerUIManager>();
+        if (null != UIManager && null != UIManager.selectedRecipe)
+        {
+            selectedRecipeUI = UIManager.selectedRecipe.GetComponent<SelectedRecipeUI>();
+            selectedRecipeUI.GetInventoryFromController(this);
+        }
+        else
+        {
+            Debug.Log("UIManager Is Null");
+        }
+
         recipeUI = recipe.GetComponent<RecipeUI>();
         recipeUI.playerController = this;
 
@@ -90,6 +99,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             Debug.Log("CurrentPlayer Is Null");
         }
+
+        //GetComponentInParent<PlayerInteraction>().PlayerInteractionUIInit();
     }
 
     void Update()
