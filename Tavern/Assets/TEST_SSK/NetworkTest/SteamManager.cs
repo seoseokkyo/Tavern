@@ -13,7 +13,6 @@ using UnityEngine;
 #if !DISABLESTEAMWORKS
 using System.Collections;
 using Steamworks;
-using Photon.Pun;
 #endif
 
 //

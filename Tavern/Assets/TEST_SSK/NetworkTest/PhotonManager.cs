@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
@@ -18,6 +18,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public OnJoinedRoomEnd OnJoinedRoomEndDelegate;
 
     public List<GameObject> prefabsToCache;
+
+    public PlayerController CurrentLocalPlayer;
 
     //<< Single
     protected static bool p_EverInitialized = false;
@@ -108,6 +110,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         // Photon Init
         PhotonNetwork.LocalPlayer.NickName = SteamFriends.GetPersonaName();
+
+        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "hk";
+        PhotonNetwork.PhotonServerSettings.DevRegion = "hk";
+
         PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.EnableCloseConnection = true;
@@ -149,6 +155,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void LoadMainMenu()
     {
+        if (null != CurrentLocalPlayer && CurrentLocalPlayer.photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(CurrentLocalPlayer.gameObject);
+        }
+
         PhotonNetwork.LoadLevel("MainMenuScene");
     }
 
@@ -230,37 +241,17 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     void RequestInstantiatePlayer()
     {
-        //Vector3 SpawnPos = new Vector3(960f, 540f, -1.38f);
-        //
-        //SpawnPos.x += Random.Range(0, 5);
-        //SpawnPos.y += Random.Range(0, 5);
+        if (CurrentLocalPlayer != null)
+        {
+            PhotonNetwork.Destroy(CurrentLocalPlayer.gameObject);
+        }
 
         // 마음에는 안드는데 일단은
         var StartPoint = GameObject.Find("StartPoint");
 
-        PhotonNetwork.Instantiate("Player", StartPoint.transform.position, Quaternion.identity);
+        var PlayerObj = PhotonNetwork.Instantiate("Player", StartPoint.transform.position, Quaternion.identity);
 
-        //RequestInstantiate("Player", StartPoint.transform.position, Quaternion.identity);
-    }
-
-    void RequestInstantiate(string prefabName, Vector3 position, Quaternion rotation)
-    {
-        Debug.Log("[Client] Requesting Instantiate from Server...");
-        photonView.RequestOwnership();
-
-        photonView.RPC("InstantiateOnMaster", RpcTarget.MasterClient, prefabName, position, rotation);
-    }
-
-    [PunRPC]
-    void InstantiateOnMaster(string prefabName, Vector3 position, Quaternion rotation)
-    {
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            return;
-        }
-
-        Debug.Log($"[Server] Instantiating {prefabName} at {position}");
-        PhotonNetwork.Instantiate(prefabName, position, rotation);
+        CurrentLocalPlayer = PlayerObj.GetComponent<PlayerController>();
     }
 
     public override void OnDisconnected(DisconnectCause cause)

@@ -59,12 +59,13 @@ public class ItemManager : MonoBehaviour
     {
         //WorldItem SpawnWorldItem = Instantiate(itemPrefab, SpawnPos, SpawnRotation);
         var WorldItemGameObj = PhotonNetwork.Instantiate("WorldItem", SpawnPos, SpawnRotation);
+
         WorldItem SpawnWorldItem = WorldItemGameObj.GetComponent<WorldItem>();
-
-        SpawnWorldItem.bRandSet = false;
+        SpawnWorldItem.SetItem(SpawnItem);
         SpawnWorldItem.InitItemName = SpawnItem.CurrentItemData.itemName;
-
         SpawnWorldItem.transform.localScale = new Vector3(10f, 10f, 10f);
+
+        SpawnWorldItem.ClientToAllItemDataSync();
 
         return SpawnWorldItem;
     }
@@ -101,7 +102,7 @@ public class ItemManager : MonoBehaviour
 
     public ItemData GetItemDataByName(string ItemName)
     {
-        if(!ItemsDictionary.ContainsKey(ItemName))
+        if (!ItemsDictionary.ContainsKey(ItemName))
         {
             ItemData EmptyItemData = new ItemData();
             return EmptyItemData;

@@ -1,9 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using Unity.VisualScripting;
-using TMPro;
 
 public class CreateTool : Interactable
 {
@@ -62,8 +57,6 @@ public class CreateTool : Interactable
         Interacting.SetActive(false);
     }
 
-
-    // Update is called once per frame
     void Update()
     {
         if (bTimerOn)
@@ -125,12 +118,6 @@ public class CreateTool : Interactable
 
     void ConditionCheck()
     {
-        // 선택한 레시피에 필요한 재료 확인
-        // 인벤토리 내에 해당 재료들이 있는지 확인
-        // 재료가 충분히 있으면 요구량만큼 소모 후 결과물 생성
-
-        //bool bCheck = ToolInventory.ConsumeItem("Cheese", 5);
-
         if (false == CheckProductSlotEmpty() || bTimerOn)
         {
             return;

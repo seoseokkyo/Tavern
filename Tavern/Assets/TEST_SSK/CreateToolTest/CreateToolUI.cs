@@ -1,9 +1,7 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using System;
 
 public class CreateToolUI : MonoBehaviour
 {
@@ -38,12 +36,6 @@ public class CreateToolUI : MonoBehaviour
 
         foreach(var targetName in CreateList)
         {
-            //var targetData = ItemManager.Instance.GetRecipeDataByName(targetName);
-            //if(targetData.CreateItemType != ToolType)
-            //{
-            //    continue;
-            //}
-
             var temp = new TMP_Dropdown.OptionData();
             temp.text = targetName;
             temp.image = ItemManager.Instance.GetItemSpriteByName(targetName);
@@ -80,12 +72,6 @@ public class CreateToolUI : MonoBehaviour
         }
     }
 
-
-    void Update()
-    {
-
-    }
-
     void ClearList()
     {
         int iCount = ImageContentTransform.childCount;
@@ -114,17 +100,6 @@ public class CreateToolUI : MonoBehaviour
         {
             Destroy(itemInfoUI.gameObject);
         }
-
-        //iCount = ItemViewList.Count;
-        //for (int i = iCount - 1; i >= 0; i--)
-        //{
-        //    var ItemUITemp = ItemViewList[i];
-
-        //    if (ItemUITemp != null && ItemUITemp != ItemDrag.beingDraggedIcon)
-        //    {
-        //        Destroy(ItemUITemp.gameObject);
-        //    }
-        //}
     }
 
     public void RefreshItemView(string TargetItemName)

@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Realtime;
+using Unity.Properties;
 
 public abstract class Interactable : MonoBehaviourPunCallbacks
-{
+{ 
     public enum InteractionType
     {
         Press,

@@ -50,49 +50,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        if (photonView.IsMine)
-        {
-            PlayerCamera.gameObject.SetActive(true);
-        }
-        else
-        {
-            PlayerCamera.gameObject.SetActive(false);
-        }
-
         PlayerInventory = GetComponent<InventoryComp>();
-
-        // 인벤토리 사이즈
         PlayerInventory.InventoryInitialize(50);
-
-        // 팝업 형태로 출력되는 인벤토리 UI
-        PopupInventoryUI = Instantiate(PopupInventoryUI_Prefab);
-        PopupInventoryUI.transform.SetParent(PlayerCanvas.transform, false);
-
-        PopupInventoryUI.SetOwnerInventory(PlayerInventory, 50, 10);
-
-        PopupInventoryUI.gameObject.SetActive(false);
-        PopupInventoryUI.enabled = false;
-
-        // 퀵슬롯 인벤토리 UI
-        QuickSlotUI = Instantiate(QuickSlotUI_prefab);
-
-        QuickSlotUI.SetOwnerInventory(PlayerInventory);
-
-        QuickSlotUI.transform.SetParent(PlayerCanvas.transform, false); // Canvas의 자식으로 설정 (worldPositionStays = false)
-
-        var UIManager = GetComponentInParent<PlayerUIManager>();
-        if (null != UIManager && null != UIManager.selectedRecipe)
-        {
-            selectedRecipeUI = UIManager.selectedRecipe.GetComponent<SelectedRecipeUI>();
-            selectedRecipeUI.GetInventoryFromController(this);
-        }
-        else
-        {
-            Debug.Log("UIManager Is Null");
-        }
-
-        recipeUI = recipe.GetComponent<RecipeUI>();
-        recipeUI.playerController = this;
 
         CurrentPlayer = GetComponentInParent<TavernPlayer>();
         if (null == CurrentPlayer)
@@ -100,11 +59,54 @@ public class PlayerController : MonoBehaviourPunCallbacks
             Debug.Log("CurrentPlayer Is Null");
         }
 
-        //GetComponentInParent<PlayerInteraction>().PlayerInteractionUIInit();
+        if (photonView.IsMine)
+        {
+            PlayerCamera.gameObject.SetActive(true);
+
+            // 퀵슬롯 인벤토리 UI
+            QuickSlotUI = Instantiate(QuickSlotUI_prefab);
+
+            QuickSlotUI.SetOwnerInventory(PlayerInventory);
+
+            QuickSlotUI.transform.SetParent(PlayerCanvas.transform, false); // Canvas의 자식으로 설정 (worldPositionStays = false)
+
+            // 팝업 형태로 출력되는 인벤토리 UI
+            PopupInventoryUI = Instantiate(PopupInventoryUI_Prefab);
+            PopupInventoryUI.transform.SetParent(PlayerCanvas.transform, false);
+
+            PopupInventoryUI.SetOwnerInventory(PlayerInventory, 50, 10);
+
+            PopupInventoryUI.gameObject.SetActive(false);
+            PopupInventoryUI.enabled = false;
+
+            var UIManager = GetComponentInParent<PlayerUIManager>();
+            if (null != UIManager && null != UIManager.selectedRecipe)
+            {
+                selectedRecipeUI = UIManager.selectedRecipe.GetComponent<SelectedRecipeUI>();
+                selectedRecipeUI.GetInventoryFromController(this);
+            }
+            else
+            {
+                Debug.Log("UIManager Is Null");
+            }
+
+            recipeUI = recipe.GetComponent<RecipeUI>();
+            recipeUI.playerController = this;
+        }
+        else
+        {
+            PlayerCamera.gameObject.SetActive(false);
+            Destroy(PlayerCamera);
+        }
     }
 
     void Update()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+
         if (UnityEngine.Input.GetButtonDown("DropItem"))
         {
             // 인벤토리에서 아이템을 빼오는 코드

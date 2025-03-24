@@ -62,6 +62,9 @@ public class MainUIScript : MonoBehaviourPunCallbacks
         SearchButton.interactable = false;
 
         StartButton.interactable = false;
+
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;
     }
 
     private void Update()

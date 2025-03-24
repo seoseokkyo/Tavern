@@ -73,8 +73,6 @@ MonoBehaviour:
     OwnerInventory: {fileID: 0}
   WorldItemMeshFilter: {fileID: 7265264429631978663}
   WorldItemMesh: {fileID: 419610879075113455}
-  bRandSet: 1
-  bInit: 0
   InitItemName: 
 --- !u!33 &7265264429631978663
 MeshFilter:

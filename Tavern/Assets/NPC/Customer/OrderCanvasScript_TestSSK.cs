@@ -15,7 +15,7 @@ public class OrderCanvasScript_TestSSK : MonoBehaviour
 
     void Start()
     {
-        TargetCon = FindFirstObjectByType<PlayerController>();
+        TargetCon = PhotonManager.Instance.CurrentLocalPlayer;
 
        // InitRandMenu();
     }

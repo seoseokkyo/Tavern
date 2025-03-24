@@ -1,9 +1,7 @@
 using Photon.Pun;
 using Photon.Realtime;
-using System.Net.NetworkInformation;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ConnectionStatusPanel : MonoBehaviour
 {

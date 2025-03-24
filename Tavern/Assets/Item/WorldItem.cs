@@ -10,35 +10,27 @@ public class WorldItem : Interactable
     public MeshFilter WorldItemMeshFilter;
     public MeshRenderer WorldItemMesh;
 
-    public bool bRandSet = true;
-    public bool bInit = false;
-
-    public string InitItemName;
+    public string InitItemName = "";
 
     void Start()
     {
-        if (!PhotonNetwork.OfflineMode && !PhotonNetwork.IsMasterClient)
-        {
-            RequestInit();
-
-            return;
-        }
-
         WorldItemMeshFilter = GetComponent<MeshFilter>();
         WorldItemMesh = GetComponent<MeshRenderer>();
 
-        if (bRandSet)
-        {
-            item.RandDataSet();
+        //if (InitItemName == "")
+        //{
+        //    RequestServerData();
+        //}
+        //else
+        //{
+        //    item = ItemBase.ItemBaseCreator.CreateItemBase(ItemManager.Instance.GetItemDataByName(InitItemName));
+        //    SetItem(item);
+        //}
 
-            item = ItemManager.Instance.CastItemType(item);
-        }
-        else
+        if (!PhotonNetwork.IsMasterClient)
         {
-            item = ItemBase.ItemBaseCreator.CreateItemBase(ItemManager.Instance.GetItemDataByName(InitItemName));
+            RequestServerData();
         }
-
-        SetItem(item);
     }
 
     // Update is called once per frame
@@ -53,11 +45,13 @@ public class WorldItem : Interactable
     {
         if (interactPlayer)
         {
+            Debug.Log($"itemCount : {item.CurrentItemData.itemCount}");
+
             if (interactPlayer.PlayerInventory.AddItem(ref item))
             {
                 item = null;
 
-                PhotonNetwork.Destroy(gameObject);
+                RequestDestroy();
             }
         }
     }
@@ -65,6 +59,7 @@ public class WorldItem : Interactable
     public void SetItem(ItemBase inputItem)
     {
         item = inputItem;
+        InitItemName = inputItem.CurrentItemData.itemName;
 
         if (item.CurrentItemData.ItemPrefab)
         {
@@ -80,26 +75,57 @@ public class WorldItem : Interactable
         }
     }
 
-    public void RequestInit()
+    public void RequestServerData()
     {
-        photonView.RPC("RequestItemData", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer);
-
-        //Debug.Log($"Req_photonView ID : {photonView.InstantiationId}");
+        photonView.RPC("ClientToServerRequestItemData", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer);
     }
 
     [PunRPC]
-    public void ReceiveItemData(string ItemDataName)
+    public void ServerToClientReceiveItemData(string ItemDataName, int CurrentItemCount)
     {
         SetItem(ItemBase.ItemBaseCreator.CreateItemBase(ItemManager.Instance.GetItemDataByName(ItemDataName)));
 
-        //Debug.Log($"Rec_photonView ID : {photonView.InstantiationId}");
+        item.CurrentItemData.itemCount = CurrentItemCount;
+
+        Debug.Log($"ServerToClientReceiveItemData_CurrentItemCount : {CurrentItemCount}");
     }
 
     [PunRPC]
-    public void RequestItemData(Player requester)
+    public void ClientToServerRequestItemData(Player requester)
     {
-        photonView.RPC("ReceiveItemData", requester, item.CurrentItemData.itemName);
+        photonView.RPC("ServerToClientReceiveItemData", requester, item.CurrentItemData.itemName, item.CurrentItemData.itemCount);
 
-        //Debug.Log($"Res_photonView ID : {photonView.InstantiationId}");
+        Debug.Log($"ClientToServerRequestItemData_CurrentItemCount : {item.CurrentItemData.itemCount}");
+    }
+
+    public void RequestDestroy()
+    {
+        photonView.RPC("DestroyFromServer", photonView.Owner);
+    }
+
+    [PunRPC]
+    public void DestroyFromServer()
+    {
+        PhotonNetwork.Destroy(gameObject);
+    }
+
+    public void ClientToAllItemDataSync()
+    {
+        photonView.RPC("ClientToAllRequestItemDataSync", RpcTarget.All, item.CurrentItemData.itemName, item.CurrentItemData.itemCount);
+    }
+
+    [PunRPC]
+    public void ClientToAllRequestItemDataSync(string ItemDataName, int CurrentItemCount)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RequestOwnership();
+        }
+
+        SetItem(ItemBase.ItemBaseCreator.CreateItemBase(ItemManager.Instance.GetItemDataByName(ItemDataName)));
+
+        item.CurrentItemData.itemCount = CurrentItemCount;
+
+        Debug.Log($"ClientToAllRequestItemDataSync_CurrentItemCount : {item.CurrentItemData.itemCount}");
     }
 }
