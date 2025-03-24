@@ -5,10 +5,16 @@ using UnityEngine;
 public class WorldItem : Interactable
 {
     // Scene등에서 플레이어와 상호작용이 가능한 아이템의 형태
+    [HideInInspector]
     public ItemBase item;
 
+    [HideInInspector]
     public MeshFilter WorldItemMeshFilter;
+
+    [HideInInspector]
     public MeshRenderer WorldItemMesh;
+
+    public bool bEditorSetted = false;
 
     public string InitItemName = "";
 
@@ -17,19 +23,13 @@ public class WorldItem : Interactable
         WorldItemMeshFilter = GetComponent<MeshFilter>();
         WorldItemMesh = GetComponent<MeshRenderer>();
 
-        //if (InitItemName == "")
-        //{
-        //    RequestServerData();
-        //}
-        //else
-        //{
-        //    item = ItemBase.ItemBaseCreator.CreateItemBase(ItemManager.Instance.GetItemDataByName(InitItemName));
-        //    SetItem(item);
-        //}
-
-        if (!PhotonNetwork.IsMasterClient)
+        if (!PhotonNetwork.IsMasterClient && !bEditorSetted && "" == InitItemName)
         {
             RequestServerData();
+        }
+        else if (bEditorSetted)
+        {
+            SetItem(ItemBase.ItemBaseCreator.CreateItemBase(ItemManager.Instance.GetItemDataByName(InitItemName)));
         }
     }
 

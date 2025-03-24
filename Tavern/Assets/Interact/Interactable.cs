@@ -13,6 +13,7 @@ public abstract class Interactable : MonoBehaviourPunCallbacks
         UIPop,
     }
 
+    [HideInInspector]
     public PlayerController interactPlayer;
 
     float holdTime;

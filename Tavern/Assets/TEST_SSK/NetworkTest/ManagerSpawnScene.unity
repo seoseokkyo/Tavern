@@ -255,6 +255,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7029c7d1259eefa4ca2ac35592ada32c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &772806830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 772806832}
+  - component: {fileID: 772806831}
+  m_Layer: 0
+  m_Name: SteamManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &772806831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772806830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 681dd578c4b1aa84991186ed34181eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &772806832
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772806830}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -144.3271, y: 0.44128653, z: -23.399239}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1606769556
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +309,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1606769557}
   - component: {fileID: 1606769560}
-  - component: {fileID: 1606769561}
   - component: {fileID: 1606769562}
   m_Layer: 0
   m_Name: NetworkManager
@@ -311,18 +354,6 @@ MonoBehaviour:
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &1606769561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1606769556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 681dd578c4b1aa84991186ed34181eec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1606769562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,9 +366,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a77c41a35d3eb43ad025dadf6839e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bPhotonRpcReady: 0
   prefabsToCache:
   - {fileID: 996853540725516794, guid: 425cb006f2a67644aa19e6025a98f86f, type: 3}
   - {fileID: 8602148699992709797, guid: 6ec0c99469ac4624b9fe866978b5f080, type: 3}
+  CurrentLocalPlayer: {fileID: 0}
 --- !u!1 &1720598941
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,6 +440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PhotonManager: {fileID: 1606769562}
   SpawnPos: {x: 0, y: 0, z: 0}
+  debugText: 
 --- !u!1 &2065902096
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,3 +547,4 @@ SceneRoots:
   - {fileID: 1606769557}
   - {fileID: 1720598942}
   - {fileID: 508264924}
+  - {fileID: 772806832}

@@ -1,9 +1,11 @@
 using Photon.Pun;
+using Steamworks;
 using System;
 using System.Threading;
 using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
@@ -41,6 +43,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         // 플레이어의 캔버스 생성
         GameObject PlayerCanvasObj = new GameObject("PlayerCanvas");
         PlayerCanvas = PlayerCanvasObj.AddComponent<Canvas>();
+
+        PlayerCanvasObj.transform.SetParent(transform);
         PlayerCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
         PlayerCamera.gameObject.transform.SetParent(this.gameObject.transform);
@@ -215,6 +219,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
             QuickSlotUI.SetSlotOutline(9);
         }
 
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+        }
+
         // Item Use
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(PlayerCanvas.transform.root);
     }
 }

@@ -18,12 +18,16 @@ public class ItemDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         beingDraggedIcon = gameObject;
 
+        var Temp = beingDraggedIcon.transform.root;
+        var Temp2 = Temp.GetComponentInParent<PlayerController>();
+
         startPosition = transform.position;
         startParent = transform.parent;
 
         GetComponent<CanvasGroup>().blocksRaycasts = false;
 
         Player = PhotonManager.Instance.CurrentLocalPlayer;
+        Debug.Log($"OnBeginDrag_CurrentLocalPlayer : {Player}");
 
         onDragParent = Player.PlayerCanvas.transform;
 
@@ -62,7 +66,7 @@ public class ItemDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
             Vector3 direction = worldPosition - Player.transform.position;
             float distance = direction.magnitude;
-            float maxDistance = 10f;
+            float maxDistance = 100f;
 
             Vector3 targetPosition = (distance > maxDistance)
                 ? Player.transform.position + direction.normalized * maxDistance

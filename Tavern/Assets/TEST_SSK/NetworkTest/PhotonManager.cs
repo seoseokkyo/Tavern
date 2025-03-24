@@ -10,16 +10,16 @@ using UnityEngine.SceneManagement;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
-    bool bSteamInit = false;
-    bool bPhotonInit = false;
-    bool bPhotonRpcReady = false;
+    [HideInInspector]
+    public bool bPhotonRpcReady = false;
 
     public delegate void OnJoinedRoomEnd();
     public OnJoinedRoomEnd OnJoinedRoomEndDelegate;
 
     public List<GameObject> prefabsToCache;
 
-    public PlayerController CurrentLocalPlayer;
+    [HideInInspector]
+    public PlayerController CurrentLocalPlayer = null;
 
     //<< Single
     protected static bool p_EverInitialized = false;
@@ -51,6 +51,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void Awake()
     {
+        if (p_EverInitialized)
+        {
+            Debug.Log("Tried to Initialize the PhotonManager twice in one session!");
+            throw new System.Exception("Tried to Initialize the PhotonManager twice in one session!");
+        }
+
         if (p_instance != null)
         {
             Destroy(gameObject);
@@ -58,10 +64,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
         p_instance = this;
 
-        if (p_EverInitialized)
-        {
-            throw new System.Exception("Tried to Initialize the PhotonManager twice in one session!");
-        }
 
         DontDestroyOnLoad(gameObject);
 
@@ -81,29 +83,25 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        if (p_instance != FindFirstObjectByType<PhotonManager>())
+        {
+            p_instance = FindFirstObjectByType<PhotonManager>();
+        }
+
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        if (false == SteamAPI.Init())
-        {
-            bSteamInit = false;
-        }
-        else
+        if (SteamAPI.IsSteamRunning())
         {
             PhotonInit();
-
-            bSteamInit = true;
         }
     }
 
     void Update()
     {
-        if (!PhotonNetwork.IsConnected)
-        {
-            Debug.Log("PhotonNetwork.IsConnected == FALSE | Retrying");
-
-            bPhotonInit = PhotonNetwork.ConnectUsingSettings();
-            Debug.Log($"Retrying Result == {bPhotonInit}");
-        }
+        //if (!PhotonNetwork.IsConnected)
+        //{
+        //    PhotonNetwork.ConnectUsingSettings();
+        //}
     }
 
     void PhotonInit()
@@ -239,11 +237,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
     }
 
+    int Count = 0;
+
     void RequestInstantiatePlayer()
     {
+        Count++;
+
         if (CurrentLocalPlayer != null)
         {
+            Debug.Log($"Destroy_CurrentLocalPlayer : {CurrentLocalPlayer}, Call Count :{Count}");
+
             PhotonNetwork.Destroy(CurrentLocalPlayer.gameObject);
+            CurrentLocalPlayer = null;
         }
 
         // 마음에는 안드는데 일단은
@@ -252,6 +257,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         var PlayerObj = PhotonNetwork.Instantiate("Player", StartPoint.transform.position, Quaternion.identity);
 
         CurrentLocalPlayer = PlayerObj.GetComponent<PlayerController>();
+
+        Debug.Log($"PhotomManager_CurrentLocalPlayer : {CurrentLocalPlayer}, Call Count :{Count}");
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -261,5 +268,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonInit();
 
         Debug.Log("OnDisconnected");
+    }
+
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.LoadLevel("MainMenuScene");
     }
 }
