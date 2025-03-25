@@ -1,13 +1,32 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class TavernGameManager : MonoBehaviourPunCallbacks
+public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     public PhotonManager PhotonManager;
 
     public Vector3 SpawnPos = new Vector3();
 
     public string debugText = "";
+
+
+    // Sync Variables
+    [SerializeField]
+    private bool _TavernOpen = false;
+
+    public bool TavernOpen
+    {
+        get { return _TavernOpen; }
+        set { photonView.RPC("SetTavernOpenFlag", RpcTarget.MasterClient, value); }
+    }
+
+    [PunRPC]
+    public void SetTavernOpenFlag(bool bOpen)
+    {
+        _TavernOpen = bOpen;
+    }
+    //<<
+
 
     //<< Single
     protected static bool t_EverInitialized = false;
@@ -73,12 +92,26 @@ public class TavernGameManager : MonoBehaviourPunCallbacks
     private void FixedUpdate()
     {
         debugText = $"PhotonNetwork.InRoom : {PhotonNetwork.InRoom}\n" + $"PhotonNetwork.InLobby : {PhotonNetwork.InLobby}\n" + $"PhotonNetwork.IsMasterClient : {PhotonNetwork.IsMasterClient}\n" + $"PhotonNetwork.IsConnected : {PhotonNetwork.IsConnected}\n" + $"PhotonNetwork.IsConnectedAndReady : {PhotonNetwork.IsConnectedAndReady}\n";
+
+        debugText += $"\nTavernOpen : {TavernOpen}";
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        
+    }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(_TavernOpen);
+        }
+        else
+        {
+            _TavernOpen = (bool)stream.ReceiveNext();
+        }
     }
 }

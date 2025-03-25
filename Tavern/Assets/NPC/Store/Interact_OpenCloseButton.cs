@@ -43,6 +43,8 @@ public class Interact_OpenCloseButton : Interactable
             isOpend = false;
             ChangeColor(isOpend);
         }
+
+        TavernGameManager.Instance.TavernOpen = isOpend;
     }
 
     private void ChangeColor( bool opend)

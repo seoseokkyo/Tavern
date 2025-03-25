@@ -4,7 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Unity.Properties;
 
-public abstract class Interactable : MonoBehaviourPunCallbacks
+public abstract class Interactable : MonoBehaviourPun
 { 
     public enum InteractionType
     {

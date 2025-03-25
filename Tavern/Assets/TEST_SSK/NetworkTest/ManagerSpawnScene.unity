@@ -419,10 +419,11 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 2
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 1720598945}
   sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -441,6 +442,7 @@ MonoBehaviour:
   PhotonManager: {fileID: 1606769562}
   SpawnPos: {x: 0, y: 0, z: 0}
   debugText: 
+  _TavernOpen: 0
 --- !u!1 &2065902096
 GameObject:
   m_ObjectHideFlags: 0
