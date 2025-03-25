@@ -23,7 +23,8 @@ public class Interact_OpenCloseButton : Interactable
 
     void Start()
     {
-        
+        var renderer = GetComponent<Renderer>();
+        material = renderer.material;
     }
 
     void Update()
