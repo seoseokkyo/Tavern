@@ -315,7 +315,7 @@ MonoBehaviour:
         strValue1: 
         strValue2: 
         strValue3: 
-    fOptionValue1: 0
+    fOptionValue1: 20
     fOptionValue2: 0
   - itemName: Breads
     itemDescription: Not Bad
@@ -332,7 +332,7 @@ MonoBehaviour:
     AttachLocation: {x: 0, y: 0, z: 0}
     AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
-    fOptionValue1: 0
+    fOptionValue1: 10
     fOptionValue2: 0
   - itemName: Vegetable Soup
     itemDescription: Better to eat
@@ -349,7 +349,7 @@ MonoBehaviour:
     AttachLocation: {x: 0, y: 0, z: 0}
     AttachRotation: {x: 0, y: 0, z: 0, w: 0}
     ItemFunctionList: []
-    fOptionValue1: 0
+    fOptionValue1: 50
     fOptionValue2: 0
   - itemName: RawChicken
     itemDescription: Coocooduldledoo

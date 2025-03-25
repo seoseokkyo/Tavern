@@ -152,36 +152,46 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha1) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad1))
         {
             Debug.Log("You Pressed \"1?\"");
-            PlayerInventory.UseItemByIndex(this, 0);
-            QuickSlotUI.SetSlotOutline(0);
+            //PlayerInventory.UseItemByIndex(this, 0);
+            //QuickSlotUI.SetSlotOutline(0);
+
+            TavernGameManager.Instance.ClientToServerUseItem("Chickens", 3);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha2) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad2))
         {
             Debug.Log("You Pressed \"2?\"");
-            PlayerInventory.UseItemByIndex(this, 1);
-            QuickSlotUI.SetSlotOutline(1);
+            //PlayerInventory.UseItemByIndex(this, 1);
+            //QuickSlotUI.SetSlotOutline(1);
+
+            TavernGameManager.Instance.ClientToServerUseItem("Breads", 2);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha3) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad3))
         {
             Debug.Log("You Pressed \"3?\"");
-            PlayerInventory.UseItemByIndex(this, 2);
-            QuickSlotUI.SetSlotOutline(2);
+            //PlayerInventory.UseItemByIndex(this, 2);
+            //QuickSlotUI.SetSlotOutline(2);
+
+            TavernGameManager.Instance.ClientToServerUseItem("Vegetable Soup", 2);            
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha4) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad4))
         {
             Debug.Log("You Pressed \"4?\"");
-            PlayerInventory.UseItemByIndex(this, 3);
-            QuickSlotUI.SetSlotOutline(3);
+            //PlayerInventory.UseItemByIndex(this, 3);
+            //QuickSlotUI.SetSlotOutline(3);
+
+            TavernGameManager.Instance.TestFunction_PassedTimeToLimit();
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha5) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad5))
         {
             Debug.Log("You Pressed \"5?\"");
-            PlayerInventory.UseItemByIndex(this, 4);
-            QuickSlotUI.SetSlotOutline(4);
+            //PlayerInventory.UseItemByIndex(this, 4);
+            //QuickSlotUI.SetSlotOutline(4);
+
+            TavernGameManager.Instance.UserCheckedDailyResult();
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha6) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad6))

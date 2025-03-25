@@ -75,7 +75,7 @@ public class PlayerInteraction : MonoBehaviourPunCallbacks
 
         interactionProgress = progressBarUI.GetComponentInChildren<UnityEngine.UI.Slider>();
 
-        Debug.Log($"progressBarUI : {progressBarUI}, interactionText : {interactionText}, interactionProgress : {interactionProgress}");
+        //Debug.Log($"progressBarUI : {progressBarUI}, interactionText : {interactionText}, interactionProgress : {interactionProgress}");
     }
 
     void Update()

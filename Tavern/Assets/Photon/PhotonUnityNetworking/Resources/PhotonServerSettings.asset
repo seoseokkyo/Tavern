@@ -60,6 +60,14 @@ MonoBehaviour:
   - DestroyFromOwner
   - ClientToAllRequestItemDataSync
   - SetTavernOpenFlag
+  - AccumulateGold
+  - UsedItem
+  - ReceiveDailyTotalResult
+  - ClientToServerReqSyncResultData
+  - ServerToClientSyncDailyResultData
+  - ClientToServerSyncDailyResultData
+  - ReqSyncResultData
+  - ReceiveDailyTotalResults
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

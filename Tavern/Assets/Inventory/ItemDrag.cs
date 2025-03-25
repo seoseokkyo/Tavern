@@ -26,7 +26,7 @@ public class ItemDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         GetComponent<CanvasGroup>().blocksRaycasts = false;
 
-        Player = PhotonManager.Instance.CurrentLocalPlayer;
+        Player = TavernGameManager.Instance.CurrentLocalPlayer;
         Debug.Log($"OnBeginDrag_CurrentLocalPlayer : {Player}");
 
         onDragParent = Player.PlayerCanvas.transform;

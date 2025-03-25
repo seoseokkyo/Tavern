@@ -15,7 +15,7 @@ public class OrderCanvasScript_TestSSK : MonoBehaviour
 
     void Start()
     {
-        TargetCon = PhotonManager.Instance.CurrentLocalPlayer;
+        TargetCon = TavernGameManager.Instance.CurrentLocalPlayer;
 
        // InitRandMenu();
     }

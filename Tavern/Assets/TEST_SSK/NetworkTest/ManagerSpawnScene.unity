@@ -370,6 +370,7 @@ MonoBehaviour:
   prefabsToCache:
   - {fileID: 996853540725516794, guid: 425cb006f2a67644aa19e6025a98f86f, type: 3}
   - {fileID: 8602148699992709797, guid: 6ec0c99469ac4624b9fe866978b5f080, type: 3}
+  - {fileID: 3082134206536418945, guid: a804a1800e7f9a643864123cba3ccb6c, type: 3}
   CurrentLocalPlayer: {fileID: 0}
 --- !u!1 &1720598941
 GameObject:
@@ -442,7 +443,12 @@ MonoBehaviour:
   PhotonManager: {fileID: 1606769562}
   SpawnPos: {x: 0, y: 0, z: 0}
   debugText: 
+  MinutePerDay: 10
+  CurrentState: 0
   _TavernOpen: 0
+  CommonUseGold: 0
+  PassedTime: 0
+  PassedDay: 0
 --- !u!1 &2065902096
 GameObject:
   m_ObjectHideFlags: 0

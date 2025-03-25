@@ -45,7 +45,7 @@ public class WorldItem : Interactable
     {
         if (interactPlayer)
         {
-            Debug.Log($"itemCount : {item.CurrentItemData.itemCount}");
+            //Debug.Log($"itemCount : {item.CurrentItemData.itemCount}");
 
             if (interactPlayer.PlayerInventory.AddItem(ref item))
             {
@@ -87,7 +87,7 @@ public class WorldItem : Interactable
 
         item.CurrentItemData.itemCount = CurrentItemCount;
 
-        Debug.Log($"ServerToClientReceiveItemData_CurrentItemCount : {CurrentItemCount}");
+        //Debug.Log($"ServerToClientReceiveItemData_CurrentItemCount : {CurrentItemCount}");
     }
 
     [PunRPC]
@@ -95,7 +95,7 @@ public class WorldItem : Interactable
     {
         photonView.RPC("ServerToClientReceiveItemData", requester, item.CurrentItemData.itemName, item.CurrentItemData.itemCount);
 
-        Debug.Log($"ClientToServerRequestItemData_CurrentItemCount : {item.CurrentItemData.itemCount}");
+        //Debug.Log($"ClientToServerRequestItemData_CurrentItemCount : {item.CurrentItemData.itemCount}");
     }
 
     public void RequestDestroy()
@@ -126,6 +126,6 @@ public class WorldItem : Interactable
 
         item.CurrentItemData.itemCount = CurrentItemCount;
 
-        Debug.Log($"ClientToAllRequestItemDataSync_CurrentItemCount : {item.CurrentItemData.itemCount}");
+        //Debug.Log($"ClientToAllRequestItemDataSync_CurrentItemCount : {item.CurrentItemData.itemCount}");
     }
 }

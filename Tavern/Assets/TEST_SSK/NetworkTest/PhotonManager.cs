@@ -18,9 +18,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public List<GameObject> prefabsToCache;
 
-    [HideInInspector]
-    public PlayerController CurrentLocalPlayer = null;
-
     //<< Single
     protected static bool p_EverInitialized = false;
 
@@ -83,12 +80,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        if (p_instance != FindFirstObjectByType<PhotonManager>())
-        {
-            p_instance = FindFirstObjectByType<PhotonManager>();
-        }
 
-        SceneManager.sceneLoaded += OnSceneLoaded;
 
         if (SteamAPI.IsSteamRunning())
         {
@@ -98,10 +90,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        //if (!PhotonNetwork.IsConnected)
-        //{
-        //    PhotonNetwork.ConnectUsingSettings();
-        //}
+
     }
 
     void PhotonInit()
@@ -153,11 +142,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void LoadMainMenu()
     {
-        if (null != CurrentLocalPlayer && CurrentLocalPlayer.photonView.IsMine)
-        {
-            PhotonNetwork.Destroy(CurrentLocalPlayer.gameObject);
-        }
-
         PhotonNetwork.LoadLevel("MainMenuScene");
     }
 
@@ -220,45 +204,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 OnJoinedRoomEndDelegate();
             }
         }
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name != "MainMenuScene" && scene.name != "ManagerSpawnScene")
-        {
-            if (bPhotonRpcReady)
-            {
-                RequestInstantiatePlayer();
-            }
-            else
-            {
-                OnJoinedRoomEndDelegate += RequestInstantiatePlayer;
-            }
-        }
-    }
-
-    int Count = 0;
-
-    void RequestInstantiatePlayer()
-    {
-        Count++;
-
-        if (CurrentLocalPlayer != null)
-        {
-            Debug.Log($"Destroy_CurrentLocalPlayer : {CurrentLocalPlayer}, Call Count :{Count}");
-
-            PhotonNetwork.Destroy(CurrentLocalPlayer.gameObject);
-            CurrentLocalPlayer = null;
-        }
-
-        // 마음에는 안드는데 일단은
-        var StartPoint = GameObject.Find("StartPoint");
-
-        var PlayerObj = PhotonNetwork.Instantiate("Player", StartPoint.transform.position, Quaternion.identity);
-
-        CurrentLocalPlayer = PlayerObj.GetComponent<PlayerController>();
-
-        Debug.Log($"PhotomManager_CurrentLocalPlayer : {CurrentLocalPlayer}, Call Count :{Count}");
     }
 
     public override void OnDisconnected(DisconnectCause cause)
