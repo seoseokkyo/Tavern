@@ -23,13 +23,13 @@ public class WorldItem : Interactable
         WorldItemMeshFilter = GetComponent<MeshFilter>();
         WorldItemMesh = GetComponent<MeshRenderer>();
 
-        if (!PhotonNetwork.IsMasterClient && !bEditorSetted && "" == InitItemName)
+        if (bEditorSetted)
+        {
+            SetItem(ItemBase.ItemBaseCreator.CreateItemBase(ItemManager.Instance.GetItemDataByName(InitItemName))); 
+        }
+        else if (!PhotonNetwork.IsMasterClient && string.IsNullOrEmpty(InitItemName))
         {
             RequestServerData();
-        }
-        else if (bEditorSetted)
-        {
-            SetItem(ItemBase.ItemBaseCreator.CreateItemBase(ItemManager.Instance.GetItemDataByName(InitItemName)));
         }
     }
 
