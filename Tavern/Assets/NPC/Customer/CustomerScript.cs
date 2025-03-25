@@ -213,9 +213,10 @@ public class CustomerScript : Interactable, IPunObservable
             }
         }
         */
+        ItemData target = orderItems.Find(item => item.itemID == food);
 
-        orderItems.RemoveAll(item => item.itemID == food);
-        orderUI.RemoveOrderUI(orderItems.Find(item => item.itemID == food));
+        orderItems.Remove(target);
+        orderUI.RemoveOrderUI(target);
     }
     public void Leave()
     {

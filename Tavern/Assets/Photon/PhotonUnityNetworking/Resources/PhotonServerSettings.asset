@@ -75,7 +75,17 @@ MonoBehaviour:
   - OnArriveRPC
   - CheckRPC
   - EatRPC
->>>>>>> Stashed changes
+  - LeaveRPC
+  - MoveToLocationRPC
+  - MoveToSeat
+  - OnArriveRPC
+  - ReleaseSeatRPC
+  - RemoveFoodRPC
+  - RemoveOrder
+  - SetFoodRPC
+  - SetSeatOccupied
+  - SyncOrder
+  - SyncMenuList
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

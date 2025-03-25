@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,6 +44,12 @@ public class FaDMenuUI : MonoBehaviour
         {
             savedMenuList = menuManagerScript.GetMenuList();
             menuManagerScript.menuList = savedMenuList;
+
+            if(Photon.Pun.PhotonNetwork.IsMasterClient)
+            {
+                menuManagerScript.SetMenu(savedMenuList);
+            }
+
             if(modeController != null & clickEventTestScript != null)
             {
                 modeController.SetMode(false);
