@@ -1,11 +1,14 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class CustomerScript : Interactable
+public class CustomerScript : Interactable, IPunObservable
 {
     public GameObject selfObj;
     private CustomerAnim animScript;
+    
 
     List<ItemData> orderItems = new List<ItemData>();
     public GameObject menuObj;
@@ -26,6 +29,12 @@ public class CustomerScript : Interactable
     private Interact_OpenCloseButton openCloseButton;
 
     bool isVisited = false;
+
+    private PhotonView photonView;
+
+    private void Awake()
+    {
+    }
 
     public override string GetInteractingDescription()
     {
@@ -57,6 +66,7 @@ public class CustomerScript : Interactable
 
     void Start()
     {
+        photonView = GetComponent<PhotonView>();
         menuManager = GameObject.FindWithTag("MenuManager").GetComponent<MenuManager>();
         animScript = GetComponent<CustomerAnim>();
         openCloseButton = GameObject.FindWithTag("Store").GetComponent<Interact_OpenCloseButton>();
@@ -76,13 +86,16 @@ public class CustomerScript : Interactable
 
     void checkTable()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
+
         table = TableManager.instance.FindRandomAvailableTable();
         if(table != null)
         {
             seat = table.GetAvailableSeat();
             if (seat != null)
             {
-                animScript.MoveToLocation(seat.chair.transform);
+                int tableID = TableManager.instance.GetTableID(table);
+                photonView.RPC("MoveToSeat", RpcTarget.All, tableID, seat.seatID);
                 isOrdered = true;
             }
             else
@@ -93,6 +106,17 @@ public class CustomerScript : Interactable
         else
         {
             Debug.Log("No Table!");
+        }
+    }
+
+    [PunRPC]
+    void MoveToSeat(int table, int seat)
+    {
+        TableScript targetTable = TableManager.instance.GetTableByID(table);
+        SeatData targetSeat = targetTable.GetSeatByID(seat);
+        if (targetSeat != null)
+        {
+            animScript.MoveToLocation(targetSeat.chair.transform);
         }
     }
 
@@ -123,33 +147,51 @@ public class CustomerScript : Interactable
 
     public void DecideOrder()
      {
+        if (!PhotonNetwork.IsMasterClient) return;
+
         orderItems.Clear();
 
         List<ItemData> menu = GetMenuFromManager();
         if(menu != null)
         {
-            int maxOrderCount = Random.Range(1, 2);
-            while (true)
+            int maxOrderCount = Random.Range(1, 3);
+            List<string> itemNames = new List<string>();
+            while (maxOrderCount > 0)
             {
                 int random = Random.Range(0, menu.Count);
                 ItemData temp = menu[random];
                 orderItems.Add(temp);
+                itemNames.Add(temp.itemName);
                 orderUI.SetOrderUI(orderItems);
                 maxOrderCount--;
-
-                if (maxOrderCount == 0)
-                    break;
             }
+
+            photonView.RPC("SyncOrder", RpcTarget.Others, itemNames.ToArray());
+
+        }
+    }
+
+    [PunRPC]
+    void SyncOrder(string[] orderIDs)
+    {
+        orderItems.Clear();
+
+        foreach(string item in orderIDs)
+        {
+            ItemData cur = ItemManager.Instance.GetItemDataByName(item);
+            orderItems.Add(cur);
         }
     }
 
     public bool CheckOrder(ItemData food)
     {
+        if (!PhotonNetwork.IsMasterClient) return false;
+
         foreach(ItemData cur in orderItems)
         {
             if(cur.itemID == food.itemID)
             {
-                RemoveOrder(cur);
+                photonView.RPC("RemoveOrder", RpcTarget.All, cur.itemID);
                 table.SetFood(food, seat);
                 return true;
             }
@@ -157,8 +199,10 @@ public class CustomerScript : Interactable
         return false;
     }
 
-    public void RemoveOrder(ItemData food)
+    [PunRPC]
+    public void RemoveOrder(int food)
     {
+        /*
         foreach (ItemData cur in orderItems)
         {
             if (cur.itemID == food.itemID)
@@ -168,8 +212,20 @@ public class CustomerScript : Interactable
                 break;
             }
         }
+        */
+
+        orderItems.RemoveAll(item => item.itemID == food);
+        orderUI.RemoveOrderUI(orderItems.Find(item => item.itemID == food));
     }
     public void Leave()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        photonView.RPC("LeaveRPC", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void LeaveRPC()
     {
         animScript.Leave();
         table.ReleaseSeat(seat);
@@ -202,4 +258,18 @@ public class CustomerScript : Interactable
     private void ResetTimer() => time = 0f;
     private float GetTime() => time;
     private void IncreaseTimer() => time += Time.deltaTime;
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if(stream.IsWriting)
+        {
+            stream.SendNext(findSeat);
+            stream.SendNext(isOrdered);
+        }
+        else
+        {
+            findSeat = (bool)stream.ReceiveNext();
+            isOrdered = (bool)stream.ReceiveNext();
+        }
+    }
 }

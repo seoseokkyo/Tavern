@@ -643,8 +643,10 @@ MonoBehaviour:
   drinkMenuUI: {fileID: 5843820515273111036, guid: 77c32fc40c355c347aaba9245a677a72, type: 3}
   drinkMenuContentTransform: {fileID: 185004791508520608}
   menuManager: {fileID: 5480123380258955732, guid: 969e09a18fd45c54a983181cc36bc407, type: 3}
+  menuManagerScript: {fileID: 0}
   SetMenuButton: {fileID: 309039175902424787}
-  ownerObject: {fileID: 5422214384727210769, guid: fc714ddd559e04548b1026f636b63470, type: 3}
+  modeController: {fileID: 0}
+  clickEventTestScript: {fileID: 0}
 --- !u!114 &2388863226506407356
 MonoBehaviour:
   m_ObjectHideFlags: 0

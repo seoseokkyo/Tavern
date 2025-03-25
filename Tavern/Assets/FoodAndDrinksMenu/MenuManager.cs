@@ -1,14 +1,19 @@
 using NUnit.Framework;
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MenuManager : MonoBehaviour
+public class MenuManager : MonoBehaviourPun
 {
+    public static MenuManager Instance;
     public List<ItemData> menuList = new List<ItemData>();
-    
+
+    private void Awake()
+    {
+    }
+
     void Start()
     {
-        //ClearMenuList();
     }
 
     void Update()

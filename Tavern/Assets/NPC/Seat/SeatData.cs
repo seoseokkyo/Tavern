@@ -3,6 +3,8 @@ using UnityEngine;
 [System.Serializable]
 public class SeatData 
 {
+    public int seatID;
+
     public GameObject chair;
     
     public Transform foodPositionLeft;

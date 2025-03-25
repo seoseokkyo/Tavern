@@ -1,3 +1,4 @@
+using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -18,8 +19,16 @@ public class CustomerAnim : MonoBehaviour
 
     float timer = 0;
 
+    private PhotonView photonView;
+
+    private void Awake()
+    {
+
+    }
+
     void Start()
     {
+        photonView = GetComponent<PhotonView>();
         customer = GetComponent<CustomerScript>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
@@ -27,28 +36,85 @@ public class CustomerAnim : MonoBehaviour
 
     void Update()
     {
-        if (isMoving == false)
-            return;
+        if (!photonView.IsMine || !isMoving) return;
 
         if (!arrived && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
             if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
             {
+                photonView.RPC("OnArriveRPC", RpcTarget.All);
+                /*
                 OnArrive();
                 arrived = true;
                 isMoving = false;
+                */
             }
         }
     }
 
     public void MoveToLocation(Transform loc)
     {
+
+        if(PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("MoveToLocationRPC", RpcTarget.All, loc.position);
+        }
+        /*
         targetLoc = loc;
         agent.SetDestination(loc.position);
         animator.SetBool("isMove", true);
         arrived = false;
         isMoving = true;
+        */
     }
+
+    [PunRPC]
+    void MoveToLocationRPC(Vector3 pos)
+    {
+        targetLoc.position = pos;
+
+        agent.isStopped = false;
+        agent.SetDestination(pos);
+
+        animator.SetBool("isMove", true);
+        arrived = false;
+        isMoving = true;
+    }
+
+    [PunRPC]
+    void OnArriveRPC()
+    {
+        agent.isStopped = true;
+        animator.SetBool("isMove", false);
+
+        transform.position = targetLoc.position;
+
+        if (targetLoc != originLoc)
+        {
+            animator.SetBool("isSitting", true);
+
+            var TempTransforms = targetLoc.GetComponentsInChildren<Transform>();
+            foreach (var transform in TempTransforms)
+            {
+                if (transform.name == "SeatLocation")
+                {
+                    customer.transform.position = transform.position;
+                    customer.transform.rotation = transform.rotation;
+                    break;
+                }
+            }
+
+            if (photonView.IsMine)
+            {
+                customer.Initialize();
+                customer.DecideOrder();
+            }
+        }
+
+        arrived = true;
+        isMoving = false;
+    }
+
 
     void OnArrive()
     {
@@ -81,6 +147,11 @@ public class CustomerAnim : MonoBehaviour
 
     public void Leave()
     {
+        if(PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("LeaveRPC", RpcTarget.All, originLoc.position);
+        }
+        /*
         agent.isStopped = false;
         StartCoroutine(LeaveTimer());
         targetLoc = originLoc;
@@ -89,10 +160,28 @@ public class CustomerAnim : MonoBehaviour
 
         arrived = false;
         isMoving = true;
+        */
+    }
+
+    [PunRPC]
+    void LeaveRPC(Vector3 pos)
+    {
+        agent.isStopped = false;
+        targetLoc.position = pos;
+
+        agent.SetDestination(pos);
+        animator.SetBool("isMove", true);
+
+        arrived = false;
+        isMoving = true;
+
+        StartCoroutine(LeaveTimer());
     }
 
     public void Check(bool correct)
     {
+        photonView.RPC("CheckRPC", RpcTarget.All, correct);
+        /*
         isCorrect = correct;
         animator.SetBool("isChecking", true);
         if (isCorrect)
@@ -105,11 +194,28 @@ public class CustomerAnim : MonoBehaviour
         }
 
         StartCoroutine(ResetCondition());
+        */
+    }
+
+    [PunRPC]
+    void CheckRPC(bool correct)
+    {
+        isCorrect = correct;
+        animator.SetBool("isChecking", true);
+        animator.SetBool("isCorrect", correct);
+
+        StartCoroutine(ResetCondition());
     }
 
     public void Eat()
     {
-        //animator.SetBool("isChecking", false);
+        photonView.RPC("EatRPC", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void EatRPC()
+    {
+        // 먹는 애니메이션 예정
     }
 
     private System.Collections.IEnumerator ResetCondition()

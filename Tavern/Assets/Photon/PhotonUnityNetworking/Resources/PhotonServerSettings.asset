@@ -48,6 +48,34 @@ MonoBehaviour:
   - ReceiveData
   - RequestItemData
   - ReceiveItemData
+<<<<<<< Updated upstream
+=======
+  - RequestDestroy
+  - DestroyFromServer
+  - RequestItemDataSync
+  - ClientRequestItemDataSync
+  - ClientToServerItemDataSync
+  - ServerToClientRequestItemData
+  - ClientToServerRequestItemData
+  - ServerToClientReceiveItemData
+  - ClientToServerRequestItemDataSync
+  - DestroyFromOwner
+  - ClientToAllRequestItemDataSync
+  - SetTavernOpenFlag
+  - MoveToSeat
+  - SyncOrder
+  - RemoveOrder
+  - LeaveRPC
+  - SetSeatOccupied
+  - ReleaseSeatRPC
+  - SetFoodRPC
+  - RemoveFoodRPC
+  - MoveToLocationRPC
+  - OnArrive
+  - OnArriveRPC
+  - CheckRPC
+  - EatRPC
+>>>>>>> Stashed changes
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

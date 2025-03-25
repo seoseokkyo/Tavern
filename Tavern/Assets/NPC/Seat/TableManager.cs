@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
-public class TableManager : MonoBehaviour
+public class TableManager : MonoBehaviourPunCallbacks
 {
     public static TableManager instance;
     private List<TableScript> tables = new List<TableScript>();
+
+    private Dictionary<int, TableScript> tableDict = new Dictionary<int, TableScript>();
 
     private void Awake()
     {
@@ -15,11 +18,27 @@ public class TableManager : MonoBehaviour
     void Start()
     {
         tables.AddRange(FindObjectsOfType<TableScript>());
+        for(int i = 0; i < tables.Count; i++)
+        {
+            tableDict[i] = tables[i];
+            tables[i].tableID = i;
+        }
     }
 
-    void Update()
+    public int GetTableID(TableScript table)
     {
-        
+        foreach(var pair in tableDict)
+        {
+            if (pair.Value == table) return pair.Key;
+        }
+
+        return -1;
+    }
+
+    public TableScript GetTableByID(int id)
+    {
+        if(tableDict.ContainsKey(id)) return tableDict[id];
+        return null;
     }
 
     public TableScript FindRandomAvailableTable()
