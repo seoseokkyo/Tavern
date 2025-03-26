@@ -66,9 +66,11 @@ public class MainUIScript : MonoBehaviourPunCallbacks
         UnityEngine.Cursor.lockState = CursorLockMode.None;
         UnityEngine.Cursor.visible = true;
 
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
 
-        PhotonNetwork.LeaveRoom();
-        
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.EnableCloseConnection = true;
     }

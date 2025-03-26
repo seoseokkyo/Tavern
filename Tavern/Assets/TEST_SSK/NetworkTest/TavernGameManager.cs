@@ -228,11 +228,14 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
             }
             else
             {
+                PhotonManager.Instance.OnJoinedRoomEndDelegate -= RequestInstantiatePlayer;
                 PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestInstantiatePlayer;
+                PhotonManager.Instance.OnJoinedRoomEndDelegate -= RequestInstantiateResultManager;
                 PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestInstantiateResultManager;
 
                 if (!PhotonNetwork.LocalPlayer.IsMasterClient)
                 {
+                    PhotonManager.Instance.OnJoinedRoomEndDelegate -= RequestDailyResultData;
                     PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestDailyResultData;
                 }
             }

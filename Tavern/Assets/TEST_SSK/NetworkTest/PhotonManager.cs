@@ -80,8 +80,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-
-
         if (SteamAPI.IsSteamRunning())
         {
             PhotonInit();
