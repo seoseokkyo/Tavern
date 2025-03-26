@@ -1,5 +1,7 @@
+using NUnit.Framework;
 using Photon.Pun;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class MenuManager : MonoBehaviourPun
 {
@@ -18,6 +20,7 @@ public class MenuManager : MonoBehaviourPun
 
     void Update()
     {
+
 
     }
 
@@ -58,9 +61,10 @@ public class MenuManager : MonoBehaviourPun
     public void RemoveMenu(ItemData item)
     {
         if (menuList.Contains(item))
-        {
-            menuList.Remove(item);
-        }
+            if (menuList.Contains(item))
+            {
+                menuList.Remove(item);
+            }
     }
 
     public List<ItemData> GetMenuList()

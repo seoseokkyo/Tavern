@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine.XR;
 
-
 public class TableScript : MonoBehaviourPunCallbacks
 {
     public int tableID;
@@ -16,7 +15,7 @@ public class TableScript : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        for(int i = 0; i < seats.Count; i++)
+        for (int i = 0; i < seats.Count; i++)
         {
             seats[i].seatID = i;
         }
@@ -31,10 +30,9 @@ public class TableScript : MonoBehaviourPunCallbacks
         usedTool = GetUsedToolItem(ERequiredTool.Cup);
         Debug.Log($"usedTool : {usedTool.itemName}");
     }
-
     public bool HasAvailableSeat()
     {
-        foreach(SeatData seat in seats)
+        foreach (SeatData seat in seats)
         {
             if (!seat.isSitting)
                 return true;
@@ -44,7 +42,7 @@ public class TableScript : MonoBehaviourPunCallbacks
 
     public SeatData GetSeatByID(int id)
     {
-        foreach(SeatData seat in seats)
+        foreach (SeatData seat in seats)
         {
             if (seat.seatID == id) return seat;
         }
@@ -67,9 +65,9 @@ public class TableScript : MonoBehaviourPunCallbacks
     [PunRPC]
     void SetSeatOccupied(int id)
     {
-        foreach(SeatData seat in seats)
+        foreach (SeatData seat in seats)
         {
-            if(seat.seatID == id)
+            if (seat.seatID == id)
             {
                 seat.isSitting = true;
                 break;
@@ -79,7 +77,7 @@ public class TableScript : MonoBehaviourPunCallbacks
 
     public void ReleaseSeat(SeatData seat)
     {
-        if(seat != null)
+        if (seat != null)
         {
             photonView.RPC("ReleaseSeatRPC", RpcTarget.All, seat.seatID);
             seat.isSitting = false;
@@ -91,9 +89,9 @@ public class TableScript : MonoBehaviourPunCallbacks
     [PunRPC]
     void ReleaseSeatRPC(int id)
     {
-        foreach(SeatData seat in seats)
+        foreach (SeatData seat in seats)
         {
-            if(seat.seatID == id)
+            if (seat.seatID == id)
             {
                 seat.isSitting = false;
                 break;
@@ -108,22 +106,22 @@ public class TableScript : MonoBehaviourPunCallbacks
         {
             photonView.RPC("SetFoodRPC", RpcTarget.All, seat.seatID, food.itemName);
             /*
-            var CreatedItemBase = ItemBase.ItemBaseCreator.CreateItemBase(food);
-            WorldItem WorldItemTemp = ItemManager.Instance.ItemSpawn(CreatedItemBase, seat.foodPositionLeft.position, Quaternion.identity);
-            if(seat.foodLeft == null)
-            {
-                WorldItemTemp.transform.SetParent(seat.foodPositionLeft);
-                WorldItemTemp.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-                WorldItemTemp.transform.localScale = Vector3.one;
-                seat.foodLeft = WorldItemTemp;
-            }
-            else if(seat.foodLeft != null)
-            {
-                WorldItemTemp.transform.SetParent(seat.foodPositionRight);
-                WorldItemTemp.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-                WorldItemTemp.transform.localScale = Vector3.one;
-                seat.foodRight = WorldItemTemp;
-            }
+           var CreatedItemBase = ItemBase.ItemBaseCreator.CreateItemBase(food);
+           WorldItem WorldItemTemp = ItemManager.Instance.ItemSpawn(CreatedItemBase, seat.foodPositionLeft.position, Quaternion.identity);
+           if(seat.foodLeft == null)
+           {
+               WorldItemTemp.transform.SetParent(seat.foodPositionLeft);
+               WorldItemTemp.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+               WorldItemTemp.transform.localScale = Vector3.one;
+               seat.foodLeft = WorldItemTemp;
+           }
+           else if(seat.foodLeft != null)
+           {
+               WorldItemTemp.transform.SetParent(seat.foodPositionRight);
+               WorldItemTemp.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+               WorldItemTemp.transform.localScale = Vector3.one;
+               seat.foodRight = WorldItemTemp;
+           }
             */
         }
     }
@@ -136,7 +134,7 @@ public class TableScript : MonoBehaviourPunCallbacks
 
         var createdItemBase = ItemBase.ItemBaseCreator.CreateItemBase(food);
         WorldItem worldItem = ItemManager.Instance.ItemSpawn(createdItemBase, seat.foodPositionLeft.position, Quaternion.identity);
-        if(seat.foodLeft == null)
+        if (seat.foodLeft == null)
         {
             worldItem.transform.SetParent(seat.foodPositionLeft);
             seat.foodLeft = worldItem;
@@ -155,42 +153,42 @@ public class TableScript : MonoBehaviourPunCallbacks
     public void RemoveFood(SeatData seat)
     {
         /*
-        if(seat.foodLeft != null)
-        {
+       if(seat.foodLeft != null)
+       {
             
-            ItemData temp = seat.foodLeft.item.CurrentItemData;
-            ItemData usedTool = GetUsedToolItem(temp.requireToolType);
-            var CreatedItemBase = ItemBase.ItemBaseCreator.CreateItemBase(usedTool);
-            WorldItem WorldItemTemp = ItemManager.Instance.ItemSpawn(CreatedItemBase, seat.foodPositionLeft.position, Quaternion.identity); 
+           ItemData temp = seat.foodLeft.item.CurrentItemData;
+           ItemData usedTool = GetUsedToolItem(temp.requireToolType);
+           var CreatedItemBase = ItemBase.ItemBaseCreator.CreateItemBase(usedTool);
+           WorldItem WorldItemTemp = ItemManager.Instance.ItemSpawn(CreatedItemBase, seat.foodPositionLeft.position, Quaternion.identity); 
 
-            WorldItemTemp.transform.SetParent(seat.foodPositionLeft);
-            WorldItemTemp.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-            WorldItemTemp.transform.localScale = Vector3.one;
+           WorldItemTemp.transform.SetParent(seat.foodPositionLeft);
+           WorldItemTemp.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+           WorldItemTemp.transform.localScale = Vector3.one;
 
-            Destroy(seat.foodLeft.gameObject);
-            seat.foodLeft = null;
-            seat.foodLeft = WorldItemTemp;
-        }
+           Destroy(seat.foodLeft.gameObject);
+           seat.foodLeft = null;
+           seat.foodLeft = WorldItemTemp;
+       }
 
-        if (seat.foodRight != null)
-        {
+       if (seat.foodRight != null)
+       {
             
-            ItemData temp = seat.foodRight.item.CurrentItemData;
-            ItemData usedTool = GetUsedToolItem(temp.requireToolType);
-            var CreatedItemBase = ItemBase.ItemBaseCreator.CreateItemBase(usedTool);
-            WorldItem WorldItemTemp = ItemManager.Instance.ItemSpawn(CreatedItemBase, seat.foodPositionRight.position, Quaternion.identity); Destroy(seat.foodLeft);
+           ItemData temp = seat.foodRight.item.CurrentItemData;
+           ItemData usedTool = GetUsedToolItem(temp.requireToolType);
+           var CreatedItemBase = ItemBase.ItemBaseCreator.CreateItemBase(usedTool);
+           WorldItem WorldItemTemp = ItemManager.Instance.ItemSpawn(CreatedItemBase, seat.foodPositionRight.position, Quaternion.identity); Destroy(seat.foodLeft);
              
 
-            WorldItemTemp.transform.SetParent(seat.foodPositionLeft);
-            WorldItemTemp.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-            WorldItemTemp.transform.localScale = Vector3.one;
+           WorldItemTemp.transform.SetParent(seat.foodPositionLeft);
+           WorldItemTemp.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+           WorldItemTemp.transform.localScale = Vector3.one;
 
-            Destroy(seat.foodRight.gameObject);
-            seat.foodRight = null;
-            seat.foodRight = WorldItemTemp;
-        }
+           Destroy(seat.foodRight.gameObject);
+           seat.foodRight = null;
+           seat.foodRight = WorldItemTemp;
+       }
          */
-        if(seat != null)
+        if (seat != null)
         {
             photonView.RPC("RemoveFoodRPC", RpcTarget.All, seat.seatID);
         }

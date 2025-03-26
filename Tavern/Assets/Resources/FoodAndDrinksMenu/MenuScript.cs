@@ -8,7 +8,7 @@ public class MenuScript : Interactable
 
     protected ModeController modeController;
     protected ClickEventTest clickEventTestScript;
-    
+
     private GameObject interacting;
     public GameObject instantInteractUI;
     public FaDMenuUI menuUI;
@@ -17,6 +17,7 @@ public class MenuScript : Interactable
     {
         interacting = Instantiate(instantInteractUI);
         menuUI = interacting.GetComponent<FaDMenuUI>();
+        menuUI.InitUI();
         menuUI.enabled = true;
         menuUI.modeController = modeController;
         menuUI.clickEventTestScript = clickEventTestScript;
@@ -41,7 +42,7 @@ public class MenuScript : Interactable
         }
 
         menuUI.SetMenuList();
-        if(menuUI.modeController == null || menuUI.clickEventTestScript == null)
+        if (menuUI.modeController == null || menuUI.clickEventTestScript == null)
         {
             menuUI.modeController = modeController;
             menuUI.clickEventTestScript = clickEventTestScript;

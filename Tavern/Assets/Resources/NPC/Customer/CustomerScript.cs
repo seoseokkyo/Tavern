@@ -8,7 +8,7 @@ public class CustomerScript : Interactable, IPunObservable
 {
     public GameObject selfObj;
     private CustomerAnim animScript;
-    
+
 
     List<ItemData> orderItems = new List<ItemData>();
     public GameObject menuObj;
@@ -34,6 +34,15 @@ public class CustomerScript : Interactable, IPunObservable
 
     private void Awake()
     {
+        photonView = GetComponent<PhotonView>();
+
+    }
+
+    void Spawn()
+    {
+        GameObject obj = PhotonNetwork.Instantiate("Customer1", startLoc.position, Quaternion.identity);
+        CustomerScript customer= obj.GetComponent<CustomerScript>();
+        customer.startLoc = startLoc;
     }
 
     public override string GetInteractingDescription()
@@ -43,7 +52,7 @@ public class CustomerScript : Interactable, IPunObservable
 
     public override void Interact()
     {
-        if(interactPlayer != null && interactPlayer.CurrentEquipmentItem != null)
+        if (interactPlayer != null && interactPlayer.CurrentEquipmentItem != null)
         {
             ItemBase equip = interactPlayer.CurrentEquipmentItem;
             if (CheckOrder(equip.CurrentItemData))
@@ -74,7 +83,7 @@ public class CustomerScript : Interactable, IPunObservable
 
     void Update()
     {
-        if(openCloseButton.isOpend == true)
+        if (openCloseButton.isOpend == true)
         {
             if (!isVisited)
             {
@@ -89,7 +98,7 @@ public class CustomerScript : Interactable, IPunObservable
         if (!PhotonNetwork.IsMasterClient) return;
 
         table = TableManager.instance.FindRandomAvailableTable();
-        if(table != null)
+        if (table != null)
         {
             seat = table.GetAvailableSeat();
             if (seat != null)
@@ -127,9 +136,9 @@ public class CustomerScript : Interactable, IPunObservable
         {
             orderItems.Clear();
         }
-        
+
         orderUI = orderUIObject.GetComponent<OrderCanvasScript_TestSSK>();
-        if(orderUI != null)
+        if (orderUI != null)
         {
             orderUI.enabled = true;
         }
@@ -137,7 +146,7 @@ public class CustomerScript : Interactable, IPunObservable
 
     private List<ItemData> GetMenuFromManager()
     {
-        if(menuManager != null)
+        if (menuManager != null)
         {
             return menuManager.GetMenuList();
         }
@@ -146,13 +155,13 @@ public class CustomerScript : Interactable, IPunObservable
     }
 
     public void DecideOrder()
-     {
+    {
         if (!PhotonNetwork.IsMasterClient) return;
 
         orderItems.Clear();
 
         List<ItemData> menu = GetMenuFromManager();
-        if(menu != null)
+        if (menu != null)
         {
             int maxOrderCount = Random.Range(1, 3);
             List<string> itemNames = new List<string>();
@@ -176,7 +185,7 @@ public class CustomerScript : Interactable, IPunObservable
     {
         orderItems.Clear();
 
-        foreach(string item in orderIDs)
+        foreach (string item in orderIDs)
         {
             ItemData cur = ItemManager.Instance.GetItemDataByName(item);
             orderItems.Add(cur);
@@ -187,9 +196,9 @@ public class CustomerScript : Interactable, IPunObservable
     {
         if (!PhotonNetwork.IsMasterClient) return false;
 
-        foreach(ItemData cur in orderItems)
+        foreach (ItemData cur in orderItems)
         {
-            if(cur.itemID == food.itemID)
+            if (cur.itemID == food.itemID)
             {
                 photonView.RPC("RemoveOrder", RpcTarget.All, cur.itemID);
                 table.SetFood(food, seat);
@@ -203,18 +212,20 @@ public class CustomerScript : Interactable, IPunObservable
     public void RemoveOrder(int food)
     {
         /*
-        foreach (ItemData cur in orderItems)
-        {
-            if (cur.itemID == food.itemID)
-            {
-                orderItems.Remove(cur);
-                orderUI.RemoveOrderUI(cur);
-                break;
-            }
-        }
-        */
+               foreach (ItemData cur in orderItems)
+               {
+                   if (cur.itemID == food.itemID)
+                   {
+                       orderItems.Remove(cur);
+                       orderUI.RemoveOrderUI(cur);
+                       break;
+                   }
+               }
+               */
         ItemData target = orderItems.Find(item => item.itemID == food);
 
+        orderItems.RemoveAll(item => item.itemID == food);
+        orderUI.RemoveOrderUI(orderItems.Find(item => item.itemID == food));
         orderItems.Remove(target);
         orderUI.RemoveOrderUI(target);
     }
@@ -234,7 +245,7 @@ public class CustomerScript : Interactable, IPunObservable
 
     private System.Collections.IEnumerator FindTableTimer()
     {
-        while(GetTime() < 3f)
+        while (GetTime() < 3f)
         {
             IncreaseTimer();
             yield return null;
@@ -262,7 +273,7 @@ public class CustomerScript : Interactable, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if(stream.IsWriting)
+        if (stream.IsWriting)
         {
             stream.SendNext(findSeat);
             stream.SendNext(isOrdered);

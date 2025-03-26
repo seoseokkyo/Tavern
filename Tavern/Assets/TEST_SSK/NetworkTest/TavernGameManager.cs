@@ -47,6 +47,20 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
     public void SetTavernOpenFlag(bool bOpen)
     {
         _TavernOpen = bOpen;
+        
+        if(bOpen && PhotonNetwork.IsMasterClient)
+        {
+            SpawnCustomer();
+        }
+    }
+
+    void SpawnCustomer()
+    {
+        Transform startLoc = GameObject.Find("npcLoc").transform;
+        GameObject customerObj = PhotonNetwork.Instantiate("NPC/Customer/Customer1", startLoc.position, Quaternion.identity);
+        customerObj.transform.localScale = Vector3.one * 10;
+        CustomerScript customer = customerObj.GetComponent<CustomerScript>();
+        customer.startLoc = startLoc;
     }
 
     [SerializeField]

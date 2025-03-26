@@ -18,7 +18,7 @@ public class TableManager : MonoBehaviourPunCallbacks
     void Start()
     {
         tables.AddRange(FindObjectsOfType<TableScript>());
-        for(int i = 0; i < tables.Count; i++)
+        for (int i = 0; i < tables.Count; i++)
         {
             tableDict[i] = tables[i];
             tables[i].tableID = i;
@@ -27,7 +27,7 @@ public class TableManager : MonoBehaviourPunCallbacks
 
     public int GetTableID(TableScript table)
     {
-        foreach(var pair in tableDict)
+        foreach (var pair in tableDict)
         {
             if (pair.Value == table) return pair.Key;
         }
@@ -37,16 +37,17 @@ public class TableManager : MonoBehaviourPunCallbacks
 
     public TableScript GetTableByID(int id)
     {
-        if(tableDict.ContainsKey(id)) return tableDict[id];
+
+        if (tableDict.ContainsKey(id)) return tableDict[id];
         return null;
     }
 
     public TableScript FindRandomAvailableTable()
     {
         List<TableScript> availables = new List<TableScript>();
-        foreach(var table in tables)
+        foreach (var table in tables)
         {
-            if(table.HasAvailableSeat())
+            if (table.HasAvailableSeat())
             {
                 availables.Add(table);
             }

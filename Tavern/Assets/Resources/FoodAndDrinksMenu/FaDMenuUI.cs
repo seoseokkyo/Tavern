@@ -28,14 +28,21 @@ public class FaDMenuUI : MonoBehaviour
 
     void Start()
     {
-        menuManagerScript = GameObject.FindWithTag("MenuManager").GetComponent<MenuManager>();
-        foodViewList.Clear();
-        drinkViewList.Clear();
-        SetMenuButton.onClick.AddListener(OnSetMenuButtonClick);
+
     }
     void Update()
     {
 
+    }
+
+    public void InitUI()
+    {
+        menuManagerScript = GameObject.FindWithTag("MenuManager").GetComponent<MenuManager>();
+        foodViewList.Clear();
+        drinkViewList.Clear();
+
+        if(SetMenuButton != null)
+            SetMenuButton.onClick.AddListener(OnSetMenuButtonClick);
     }
 
     void OnSetMenuButtonClick()
@@ -45,16 +52,16 @@ public class FaDMenuUI : MonoBehaviour
             savedMenuList = menuManagerScript.GetMenuList();
             menuManagerScript.menuList = savedMenuList;
 
-            if(Photon.Pun.PhotonNetwork.IsMasterClient)
-            {
-                menuManagerScript.SetMenu(savedMenuList);
-            }
-
-            if(modeController != null & clickEventTestScript != null)
+            if (modeController != null & clickEventTestScript != null)
             {
                 modeController.SetMode(false);
                 clickEventTestScript.SetUIActivated(false);
                 clickEventTestScript.popUI.SetActive(false);
+            }
+
+            if (Photon.Pun.PhotonNetwork.IsMasterClient)
+            {
+                menuManagerScript.SetMenu(savedMenuList);
             }
         }
     }
@@ -78,13 +85,13 @@ public class FaDMenuUI : MonoBehaviour
         if (menuManagerScript != null)
         {
             // foodS
-            for(int i = 0; i < foodMenuContentTransform.childCount; i++)
+            for (int i = 0; i < foodMenuContentTransform.childCount; i++)
             {
                 var temp = foodMenuContentTransform.GetChild(i);
-                if(temp != null)
+                if (temp != null)
                 {
                     var tempUI = temp.GetComponent<MenuPanelUI>();
-                    if(tempUI != null)
+                    if (tempUI != null)
                     {
                         tempUI.menuManagerScript = menuManagerScript;
                     }
@@ -111,21 +118,21 @@ public class FaDMenuUI : MonoBehaviour
     private void SetSavedMenuList()
     {
         GetSavedMenuFromManager();
-        if(savedMenuList.Count == 0)
-           return;
+        if (savedMenuList.Count == 0)
+            return;
 
         // foods
-        for(int i = 0; i < foodMenuContentTransform.childCount; i++)
+        for (int i = 0; i < foodMenuContentTransform.childCount; i++)
         {
             var temp = foodMenuContentTransform.GetChild(i);
-            if(temp != null)
+            if (temp != null)
             {
                 var item = temp.GetComponent<MenuPanelUI>();
                 ItemData itemData = item.GetCurrentItem();
                 for (int j = 0; j < savedMenuList.Count; j++)
                 {
                     var menuTemp = savedMenuList[j];
-                    if(itemData.itemName == menuTemp.itemName)
+                    if (itemData.itemName == menuTemp.itemName)
                     {
                         item.SetIsSelectedBefore();
                         break;
@@ -158,7 +165,7 @@ public class FaDMenuUI : MonoBehaviour
     {
         // food
         int fCount = foodMenuContentTransform.childCount;
-        for(int i = fCount - 1; i >= 0; i--)
+        for (int i = fCount - 1; i >= 0; i--)
         {
             var temp = foodMenuContentTransform.GetChild(i);
             if (temp != null)
@@ -203,15 +210,15 @@ public class FaDMenuUI : MonoBehaviour
 
     private void SetFoodList()
     {
-        foreach(CreateRecipe item in itemDatas.createRecipes)
+        foreach (CreateRecipe item in itemDatas.createRecipes)
         {
-            if(item.CreateItemData.CreateItemType == CreateItemType.Cooking)
+            if (item.CreateItemData.CreateItemType == CreateItemType.Cooking)
             {
                 string name = item.CreateItemData.ItemName;
                 GameObject prefab = Instantiate(foodMenuUI);
                 prefab.transform.SetParent(foodMenuContentTransform, false);
                 MenuPanelUI tempMenuUI = prefab.GetComponent<MenuPanelUI>();
-                if(tempMenuUI != null)
+                if (tempMenuUI != null)
                 {
                     tempMenuUI.SetMenuInfo(name);
                     tempMenuUI.isSelected = false;
