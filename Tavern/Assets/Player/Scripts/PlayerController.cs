@@ -1,9 +1,11 @@
 using Photon.Pun;
+using Steamworks;
 using System;
 using System.Threading;
 using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
@@ -41,6 +43,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         // 플레이어의 캔버스 생성
         GameObject PlayerCanvasObj = new GameObject("PlayerCanvas");
         PlayerCanvas = PlayerCanvasObj.AddComponent<Canvas>();
+
+        PlayerCanvasObj.transform.SetParent(transform);
         PlayerCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
         PlayerCamera.gameObject.transform.SetParent(this.gameObject.transform);
@@ -50,49 +54,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        if (photonView.IsMine)
-        {
-            PlayerCamera.gameObject.SetActive(true);
-        }
-        else
-        {
-            PlayerCamera.gameObject.SetActive(false);
-        }
-
         PlayerInventory = GetComponent<InventoryComp>();
-
-        // 인벤토리 사이즈
         PlayerInventory.InventoryInitialize(50);
-
-        // 팝업 형태로 출력되는 인벤토리 UI
-        PopupInventoryUI = Instantiate(PopupInventoryUI_Prefab);
-        PopupInventoryUI.transform.SetParent(PlayerCanvas.transform, false);
-
-        PopupInventoryUI.SetOwnerInventory(PlayerInventory, 50, 10);
-
-        PopupInventoryUI.gameObject.SetActive(false);
-        PopupInventoryUI.enabled = false;
-
-        // 퀵슬롯 인벤토리 UI
-        QuickSlotUI = Instantiate(QuickSlotUI_prefab);
-
-        QuickSlotUI.SetOwnerInventory(PlayerInventory);
-
-        QuickSlotUI.transform.SetParent(PlayerCanvas.transform, false); // Canvas의 자식으로 설정 (worldPositionStays = false)
-
-        var UIManager = GetComponentInParent<PlayerUIManager>();
-        if (null != UIManager && null != UIManager.selectedRecipe)
-        {
-            selectedRecipeUI = UIManager.selectedRecipe.GetComponent<SelectedRecipeUI>();
-            selectedRecipeUI.GetInventoryFromController(this);
-        }
-        else
-        {
-            Debug.Log("UIManager Is Null");
-        }
-
-        recipeUI = recipe.GetComponent<RecipeUI>();
-        recipeUI.playerController = this;
 
         CurrentPlayer = GetComponentInParent<TavernPlayer>();
         if (null == CurrentPlayer)
@@ -100,11 +63,54 @@ public class PlayerController : MonoBehaviourPunCallbacks
             Debug.Log("CurrentPlayer Is Null");
         }
 
-        //GetComponentInParent<PlayerInteraction>().PlayerInteractionUIInit();
+        if (photonView.IsMine)
+        {
+            PlayerCamera.gameObject.SetActive(true);
+
+            // 퀵슬롯 인벤토리 UI
+            QuickSlotUI = Instantiate(QuickSlotUI_prefab);
+
+            QuickSlotUI.SetOwnerInventory(PlayerInventory);
+
+            QuickSlotUI.transform.SetParent(PlayerCanvas.transform, false); // Canvas의 자식으로 설정 (worldPositionStays = false)
+
+            // 팝업 형태로 출력되는 인벤토리 UI
+            PopupInventoryUI = Instantiate(PopupInventoryUI_Prefab);
+            PopupInventoryUI.transform.SetParent(PlayerCanvas.transform, false);
+
+            PopupInventoryUI.SetOwnerInventory(PlayerInventory, 50, 10);
+
+            PopupInventoryUI.gameObject.SetActive(false);
+            PopupInventoryUI.enabled = false;
+
+            var UIManager = GetComponentInParent<PlayerUIManager>();
+            if (null != UIManager && null != UIManager.selectedRecipe)
+            {
+                selectedRecipeUI = UIManager.selectedRecipe.GetComponent<SelectedRecipeUI>();
+                selectedRecipeUI.GetInventoryFromController(this);
+            }
+            else
+            {
+                Debug.Log("UIManager Is Null");
+            }
+
+            recipeUI = recipe.GetComponent<RecipeUI>();
+            recipeUI.playerController = this;
+        }
+        else
+        {
+            PlayerCamera.gameObject.SetActive(false);
+            Destroy(PlayerCamera);
+        }
     }
 
     void Update()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+
         if (UnityEngine.Input.GetButtonDown("DropItem"))
         {
             // 인벤토리에서 아이템을 빼오는 코드
@@ -146,36 +152,46 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha1) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad1))
         {
             Debug.Log("You Pressed \"1?\"");
-            PlayerInventory.UseItemByIndex(this, 0);
-            QuickSlotUI.SetSlotOutline(0);
+            //PlayerInventory.UseItemByIndex(this, 0);
+            //QuickSlotUI.SetSlotOutline(0);
+
+            TavernGameManager.Instance.ClientToServerUseItem("Chickens", 3);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha2) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad2))
         {
             Debug.Log("You Pressed \"2?\"");
-            PlayerInventory.UseItemByIndex(this, 1);
-            QuickSlotUI.SetSlotOutline(1);
+            //PlayerInventory.UseItemByIndex(this, 1);
+            //QuickSlotUI.SetSlotOutline(1);
+
+            TavernGameManager.Instance.ClientToServerUseItem("Breads", 2);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha3) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad3))
         {
             Debug.Log("You Pressed \"3?\"");
-            PlayerInventory.UseItemByIndex(this, 2);
-            QuickSlotUI.SetSlotOutline(2);
+            //PlayerInventory.UseItemByIndex(this, 2);
+            //QuickSlotUI.SetSlotOutline(2);
+
+            TavernGameManager.Instance.ClientToServerUseItem("Vegetable Soup", 2);            
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha4) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad4))
         {
             Debug.Log("You Pressed \"4?\"");
-            PlayerInventory.UseItemByIndex(this, 3);
-            QuickSlotUI.SetSlotOutline(3);
+            //PlayerInventory.UseItemByIndex(this, 3);
+            //QuickSlotUI.SetSlotOutline(3);
+
+            TavernGameManager.Instance.TestFunction_PassedTimeToLimit();
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha5) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad5))
         {
             Debug.Log("You Pressed \"5?\"");
-            PlayerInventory.UseItemByIndex(this, 4);
-            QuickSlotUI.SetSlotOutline(4);
+            //PlayerInventory.UseItemByIndex(this, 4);
+            //QuickSlotUI.SetSlotOutline(4);
+
+            TavernGameManager.Instance.UserCheckedDailyResult();
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha6) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad6))
@@ -213,6 +229,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
             QuickSlotUI.SetSlotOutline(9);
         }
 
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+        }
+
         // Item Use
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(PlayerCanvas.transform.root);
     }
 }

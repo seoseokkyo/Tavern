@@ -6,13 +6,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
-    bool bSteamInit = false;
-    bool bPhotonInit = false;
-    bool bPhotonRpcReady = false;
+    [HideInInspector]
+    public bool bPhotonRpcReady = false;
 
     public delegate void OnJoinedRoomEnd();
     public OnJoinedRoomEnd OnJoinedRoomEndDelegate;
@@ -49,6 +48,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public void Awake()
     {
+        if (p_EverInitialized)
+        {
+            Debug.Log("Tried to Initialize the PhotonManager twice in one session!");
+            throw new System.Exception("Tried to Initialize the PhotonManager twice in one session!");
+        }
+
         if (p_instance != null)
         {
             Destroy(gameObject);
@@ -56,10 +61,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
         p_instance = this;
 
-        if (p_EverInitialized)
-        {
-            throw new System.Exception("Tried to Initialize the PhotonManager twice in one session!");
-        }
 
         DontDestroyOnLoad(gameObject);
 
@@ -79,35 +80,27 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
 
-        if (false == SteamAPI.Init())
-        {
-            bSteamInit = false;
-        }
-        else
+
+        if (SteamAPI.IsSteamRunning())
         {
             PhotonInit();
-
-            bSteamInit = true;
         }
     }
 
     void Update()
     {
-        if (!PhotonNetwork.IsConnected)
-        {
-            Debug.Log("PhotonNetwork.IsConnected == FALSE | Retrying");
 
-            bPhotonInit = PhotonNetwork.ConnectUsingSettings();
-            Debug.Log($"Retrying Result == {bPhotonInit}");
-        }
     }
 
     void PhotonInit()
     {
         // Photon Init
         PhotonNetwork.LocalPlayer.NickName = SteamFriends.GetPersonaName();
+
+        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "hk";
+        PhotonNetwork.PhotonServerSettings.DevRegion = "hk";
+
         PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.EnableCloseConnection = true;
@@ -213,56 +206,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name != "MainMenuScene" && scene.name != "ManagerSpawnScene")
-        {
-            if (bPhotonRpcReady)
-            {
-                RequestInstantiatePlayer();
-            }
-            else
-            {
-                OnJoinedRoomEndDelegate += RequestInstantiatePlayer;
-            }
-        }
-    }
-
-    void RequestInstantiatePlayer()
-    {
-        //Vector3 SpawnPos = new Vector3(960f, 540f, -1.38f);
-        //
-        //SpawnPos.x += Random.Range(0, 5);
-        //SpawnPos.y += Random.Range(0, 5);
-
-        // 마음에는 안드는데 일단은
-        var StartPoint = GameObject.Find("StartPoint");
-
-        PhotonNetwork.Instantiate("Player", StartPoint.transform.position, Quaternion.identity);
-
-        //RequestInstantiate("Player", StartPoint.transform.position, Quaternion.identity);
-    }
-
-    void RequestInstantiate(string prefabName, Vector3 position, Quaternion rotation)
-    {
-        Debug.Log("[Client] Requesting Instantiate from Server...");
-        photonView.RequestOwnership();
-
-        photonView.RPC("InstantiateOnMaster", RpcTarget.MasterClient, prefabName, position, rotation);
-    }
-
-    [PunRPC]
-    void InstantiateOnMaster(string prefabName, Vector3 position, Quaternion rotation)
-    {
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            return;
-        }
-
-        Debug.Log($"[Server] Instantiating {prefabName} at {position}");
-        PhotonNetwork.Instantiate(prefabName, position, rotation);
-    }
-
     public override void OnDisconnected(DisconnectCause cause)
     {
         PhotonNetwork.Disconnect();
@@ -270,5 +213,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonInit();
 
         Debug.Log("OnDisconnected");
+    }
+
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.LoadLevel("MainMenuScene");
     }
 }

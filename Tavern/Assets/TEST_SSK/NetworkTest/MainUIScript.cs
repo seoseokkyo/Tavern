@@ -62,16 +62,25 @@ public class MainUIScript : MonoBehaviourPunCallbacks
         SearchButton.interactable = false;
 
         StartButton.interactable = false;
+
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;
+
+
+        PhotonNetwork.LeaveRoom();
+        
+        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.EnableCloseConnection = true;
     }
 
     private void Update()
     {
-        if (PhotonNetwork.NetworkClientState == ClientState.JoinedLobby && bNeedCreateRoom && SteamAPI.Init())
+        if (PhotonNetwork.NetworkClientState == ClientState.JoinedLobby && bNeedCreateRoom && SteamAPI.IsSteamRunning())
         {
             bNeedCreateRoom = false;
 
-            string roomName = SteamUser.GetSteamID().ToString();
-            roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1000, 10000) : roomName;
+            //string roomName = SteamUser.GetSteamID().ToString();
+            //roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1000, 10000) : roomName;
 
             byte maxPlayers = 4;
 
@@ -84,7 +93,7 @@ public class MainUIScript : MonoBehaviourPunCallbacks
 
             options.CustomRoomPropertiesForLobby = new string[] { "HostName", "ViewRoomName" };
 
-            bool bCheck = PhotonNetwork.CreateRoom(roomName, options, null);
+            bool bCheck = PhotonNetwork.CreateRoom(SteamUser.GetSteamID().ToString(), options, null);
             Debug.Log($"PhotonNetwork.CreateRoom : {bCheck}");
         }
     }
@@ -178,13 +187,7 @@ public class MainUIScript : MonoBehaviourPunCallbacks
             }
 
             // 여기는 Scene Travel이후 실행
-            SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePublic, 4);
-
-            // 이게 현재 Player의 Steam닉네임
-            SteamFriends.GetPersonaName();
-
-            // 이건 현재 Player의 Steam고유아이디
-            SteamUser.GetSteamID();
+            //SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePublic, 4);
 
             bNeedCreateRoom = true;
             StartButton.interactable = false;

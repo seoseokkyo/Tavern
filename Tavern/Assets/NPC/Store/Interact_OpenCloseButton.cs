@@ -23,26 +23,18 @@ public class Interact_OpenCloseButton : Interactable
 
     void Start()
     {
-        
+        var renderer = GetComponent<Renderer>();
+        material = renderer.material;
     }
 
     void Update()
     {
-        
+        StateChanged(TavernGameManager.Instance.TavernOpen);
     }
 
     private void SetStore()
     {
-        if(!isOpend)
-        {
-            isOpend = true;
-            ChangeColor(isOpend);
-        }
-        else
-        {
-            isOpend = false;
-            ChangeColor(isOpend);
-        }
+        TavernGameManager.Instance.TavernOpen ^= true;
     }
 
     private void ChangeColor( bool opend)
@@ -54,6 +46,15 @@ public class Interact_OpenCloseButton : Interactable
         else
         {
             material.color = Color.blue;
+        }
+    }
+
+    private void StateChanged(bool bState)
+    {
+        if (bState != isOpend)
+        {
+            ChangeColor(bState);
+            isOpend = bState;
         }
     }
 }

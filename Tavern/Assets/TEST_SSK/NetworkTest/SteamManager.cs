@@ -13,7 +13,6 @@ using UnityEngine;
 #if !DISABLESTEAMWORKS
 using System.Collections;
 using Steamworks;
-using Photon.Pun;
 #endif
 
 //
@@ -141,10 +140,6 @@ public class SteamManager : MonoBehaviour
         }
 
         s_EverInitialized = true;
-
-
-
-        Debug.Log("AwakeFinished");
     }
 
     // This should only ever get called on first load and after an Assembly reload, You should never Disable the Steamworks Manager yourself.
@@ -210,29 +205,29 @@ public class SteamManager : MonoBehaviour
 #endif // !DISABLESTEAMWORKS
 
 
-    public struct RoomInfoStruct
-    {
-        public int roomNumber;
-        public string roomName;
-        public string roomID;
-        public string hostName;
+    //public struct RoomInfoStruct
+    //{
+    //    public int roomNumber;
+    //    public string roomName;
+    //    public string roomID;
+    //    public string hostName;
 
-        public int currentUserNum;
-        public int roomUserLimit;
+    //    public int currentUserNum;
+    //    public int roomUserLimit;
 
-        public Transform parentTransform;
+    //    public Transform parentTransform;
 
-        public RoomInfoStruct(int roomNumber, string roomName, string roomID, string hostName, int currentUserNum, int roomUserLimit, Transform parentTransform)
-        {
-            this.roomNumber = roomNumber;
-            this.roomName = roomName;
-            this.roomID = roomID;
-            this.hostName = hostName;
-            this.currentUserNum = currentUserNum;
-            this.roomUserLimit = roomUserLimit;
-            this.parentTransform = parentTransform;
-        }
-    };
+    //    public RoomInfoStruct(int roomNumber, string roomName, string roomID, string hostName, int currentUserNum, int roomUserLimit, Transform parentTransform)
+    //    {
+    //        this.roomNumber = roomNumber;
+    //        this.roomName = roomName;
+    //        this.roomID = roomID;
+    //        this.hostName = hostName;
+    //        this.currentUserNum = currentUserNum;
+    //        this.roomUserLimit = roomUserLimit;
+    //        this.parentTransform = parentTransform;
+    //    }
+    //};
 
 
 }

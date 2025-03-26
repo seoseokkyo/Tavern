@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Realtime;
+using Unity.Properties;
 
-public abstract class Interactable : MonoBehaviourPunCallbacks
-{
+public abstract class Interactable : MonoBehaviourPun
+{ 
     public enum InteractionType
     {
         Press,
@@ -11,6 +13,7 @@ public abstract class Interactable : MonoBehaviourPunCallbacks
         UIPop,
     }
 
+    [HideInInspector]
     public PlayerController interactPlayer;
 
     float holdTime;

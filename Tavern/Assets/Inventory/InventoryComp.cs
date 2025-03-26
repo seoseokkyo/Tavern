@@ -86,8 +86,6 @@ public class InventoryComp : MonoBehaviour
             }
         }
 
-        //CheckInventory();
-
         OnChanged();
 
         return bCheck;

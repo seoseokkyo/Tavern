@@ -1,7 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
-using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 using Photon.Pun;
 
 public class PlayerMove : MonoBehaviourPunCallbacks

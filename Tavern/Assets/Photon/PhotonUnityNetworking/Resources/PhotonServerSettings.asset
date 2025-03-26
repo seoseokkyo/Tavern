@@ -19,7 +19,7 @@ MonoBehaviour:
     AppIdVoice: 
     AppVersion: 
     UseNameServer: 1
-    FixedRegion: 
+    FixedRegion: hk
     Server: 
     Port: 0
     ProxyServer: 
@@ -48,8 +48,6 @@ MonoBehaviour:
   - ReceiveData
   - RequestItemData
   - ReceiveItemData
-<<<<<<< Updated upstream
-=======
   - RequestDestroy
   - DestroyFromServer
   - RequestItemDataSync
@@ -86,6 +84,14 @@ MonoBehaviour:
   - SetSeatOccupied
   - SyncOrder
   - SyncMenuList
+  - AccumulateGold
+  - UsedItem
+  - ReceiveDailyTotalResult
+  - ClientToServerReqSyncResultData
+  - ServerToClientSyncDailyResultData
+  - ClientToServerSyncDailyResultData
+  - ReqSyncResultData
+  - ReceiveDailyTotalResults
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
