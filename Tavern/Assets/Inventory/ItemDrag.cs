@@ -81,7 +81,7 @@ public class ItemDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             tempItem.CurrentItemBase.OwnerInventory.PopItem(tempSlot.SlotIndex);
         }
 
-        Player.PlayerInventory.OnChanged();
+        //Player.PlayerInventory.OnChanged();
     }
 
     private Vector3 GetMouseWorldPosition()

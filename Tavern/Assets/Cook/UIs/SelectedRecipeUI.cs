@@ -73,7 +73,7 @@ public class SelectedRecipeUI : MonoBehaviour
         if(pc != null)
         {
             controller = pc;
-            inventory = controller.PlayerInventory;
+            //inventory = controller.PlayerInventory;
             cookButton.onClick.AddListener(OnClickCookButton);
         }
     }

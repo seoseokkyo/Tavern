@@ -65,6 +65,6 @@ public class RecipeUI : MonoBehaviour
 
     private void OnClickRecipe()
     {
-        selectedRecipeUI.OnSelect(resultItemData.itemName, playerController.PlayerInventory);
+        //selectedRecipeUI.OnSelect(resultItemData.itemName, playerController.PlayerInventory);
     }
 }

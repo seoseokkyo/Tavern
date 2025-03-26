@@ -25,6 +25,6 @@ public class CookingCanvasScipt : MonoBehaviour
         recipeListUI = GetComponentInChildren<CookingUI>();
 
         recipeListUI.SetRecipeList();
-        selectedRecipeUI.OnSelect("WaterMelon", pc.PlayerInventory);
+        //selectedRecipeUI.OnSelect("WaterMelon", pc.PlayerInventory);
     }
 }

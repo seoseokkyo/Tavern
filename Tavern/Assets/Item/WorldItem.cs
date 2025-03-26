@@ -47,12 +47,12 @@ public class WorldItem : Interactable
         {
             //Debug.Log($"itemCount : {item.CurrentItemData.itemCount}");
 
-            if (interactPlayer.PlayerInventory.AddItem(ref item))
-            {
-                item = null;
-
-                RequestDestroy();
-            }
+            //if (interactPlayer.PlayerInventory.AddItem(ref item))
+            //{
+            //    item = null;
+            //
+            //    RequestDestroy();
+            //}
         }
     }
 

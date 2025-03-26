@@ -101,7 +101,7 @@ public class ItemFunctions : MonoBehaviour
 
         var CreatedItemBase = ItemBase.ItemBaseCreator.CreateItemBase(CreatedItemData);
 
-        FunctionArgs.arg1.PlayerInventory.AddItem(ref CreatedItemBase);
+        //FunctionArgs.arg1.PlayerInventory.AddItem(ref CreatedItemBase);
     }
 
     void ConsumeItem(ItemFunctionArgs FunctionArgs)
