@@ -371,7 +371,7 @@ MonoBehaviour:
   - {fileID: 996853540725516794, guid: 425cb006f2a67644aa19e6025a98f86f, type: 3}
   - {fileID: 8602148699992709797, guid: 6ec0c99469ac4624b9fe866978b5f080, type: 3}
   - {fileID: 3082134206536418945, guid: a804a1800e7f9a643864123cba3ccb6c, type: 3}
-  CurrentLocalPlayer: {fileID: 0}
+  - {fileID: 2129419611706311001, guid: 518017e8c5a5484408bacc4b19e92e17, type: 3}
 --- !u!1 &1720598941
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,7 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c47cd477dc3fcf47ae4b01277f424f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PhotonManager: {fileID: 1606769562}
+  CurrentLocalPlayer: {fileID: 0}
   SpawnPos: {x: 0, y: 0, z: 0}
   debugText: 
   MinutePerDay: 10
