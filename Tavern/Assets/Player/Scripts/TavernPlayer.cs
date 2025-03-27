@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class TavernPlayer : MonoBehaviour
 {
@@ -13,7 +14,9 @@ public class TavernPlayer : MonoBehaviour
     public delegate void OnRightHandItemChanged(ItemBase itemBase);
     public OnRightHandItemChanged OnChanged;
     Transform RightHandSlot;
-    WorldItem RightHandItem;
+
+    [HideInInspector]
+    public WorldItem RightHandItem;
 
     Animator PlayerAnimator;
 
@@ -81,15 +84,22 @@ public class TavernPlayer : MonoBehaviour
         // 기존 아이템 제거
         if (RightHandItem != null)
         {
-            if (itemBase == null || RightHandItem.item.CurrentItemData.itemName != itemBase.CurrentItemData.itemName)
-            {
-                Destroy(RightHandItem.gameObject);
-                RightHandItem = null;
-            }
-            else
-            {
-                return;
-            }
+            RightHandItem.transform.parent = null;
+
+            var ItemCollider = RightHandItem.GetComponent<Collider>().enabled = true;
+
+            RightHandItem.ItemRigidbody.isKinematic = false;
+            RightHandItem.ItemRigidbody.useGravity = false;
+
+            Ray ray = new Ray(RightHandItem.transform.position, new Vector3(0, -1, 0));
+            Physics.Raycast(ray, out RaycastHit hit, 10);
+
+            Vector3 NewPosition = RightHandItem.transform.position;
+            NewPosition.y = hit.point.y;
+
+            RightHandItem.transform.SetPositionAndRotation(NewPosition, Quaternion.identity);
+
+            RightHandItem = null;
         }
 
         if (itemBase != null)
@@ -101,6 +111,22 @@ public class TavernPlayer : MonoBehaviour
             RightHandItem.transform.localScale = new Vector3(1, 1, 1);
 
             RightHandItem.GetComponent<Collider>().enabled = false;
+        }
+    }
+
+    public void ItemDetachFromRightHand()
+    {
+        if(null != RightHandItem)
+        {
+            RightHandItem.transform.parent = null;
+            
+            var ItemCollider = RightHandItem.GetComponent<Collider>().enabled = true;
+
+            RightHandItem.ItemRigidbody.isKinematic = true;
+            RightHandItem.ItemRigidbody.useGravity = true;
+            RightHandItem.ItemRigidbody.AddForce(transform.root.forward * 300000f);
+            
+            RightHandItem = null;
         }
     }
 }

@@ -39,7 +39,7 @@ public class ItemSpawner : MonoBehaviour
                 if (GroundCheck(CurrentSpawnPos, out hit))
                 {
                     CurrentSpawnPos.y = hit.point.y;
-                    CurrentSpawnPos.y += 0.2f;
+                    CurrentSpawnPos.y += 0.5f;
                 }
                 else
                 {

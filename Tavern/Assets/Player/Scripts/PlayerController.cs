@@ -17,7 +17,22 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private RecipeUI recipeUI;
 
     [HideInInspector]
-    public EquipmentItem CurrentEquipmentItem = null;
+    public ItemBase CurrentEquipmentItem
+    {
+        get
+        {
+            if (null != CurrentPlayer)
+            {
+                return CurrentPlayer.RightHandItem != null ? CurrentPlayer.RightHandItem.item : null;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+    }
 
     [HideInInspector]
     public TavernPlayer CurrentPlayer = null;
@@ -81,7 +96,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
             return;
         }
 
-        // 뭔가 방법을 찾아야 한다.....
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha1) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad1))
         {
             TavernGameManager.Instance.ClientToServerUseItem("Chickens", 3);
@@ -94,7 +108,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha3) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad3))
         {
-            TavernGameManager.Instance.ClientToServerUseItem("Vegetable Soup", 2);            
+            TavernGameManager.Instance.ClientToServerUseItem("Vegetable Soup", 2);
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha4) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad4))
@@ -128,7 +142,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Alpha0) || UnityEngine.Input.GetKeyDown(KeyCode.Keypad0))
         {
-
+            CurrentPlayer.ItemDetachFromRightHand();
         }
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Escape))

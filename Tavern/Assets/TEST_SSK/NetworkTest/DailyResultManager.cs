@@ -95,9 +95,13 @@ public class DailyResultManager : MonoBehaviourPun
 
     public void CalculateResult(int Day)
     {
-        DailyTotalResult TodayTotal = new DailyTotalResult();
+        if(GetDailyTotalResultAt(Day, out DailyTotalResult Result))
+        {
+            // 이미 계산한 일자인 경우
+            return;
+        }
 
-        TodayTotal.ResultDay = Day;
+        Result.ResultDay = Day;
 
         var UsedItemList = CurrentBusinessUsedItem.Keys;
 
@@ -107,13 +111,13 @@ public class DailyResultManager : MonoBehaviourPun
 
             int UsedItemNum = CurrentBusinessUsedItem[item];
 
-            TodayTotal.UsedItemSpecifications.Add(new UsedItemSpecification(item, UsedItemNum));
+            Result.UsedItemSpecifications.Add(new UsedItemSpecification(item, UsedItemNum));
 
-            TodayTotal.UsedItemPrice += UsedItemData.fOptionValue1 * UsedItemNum;
+            Result.UsedItemPrice += UsedItemData.fOptionValue1 * UsedItemNum;
         }
 
-        DailyTotalResults.Add(TodayTotal);
-        SendDailyTotalResult(TodayTotal);
+        DailyTotalResults.Add(Result);
+        SendDailyTotalResult(Result);
     }
 
     public bool GetDailyTotalResultAt(int Day, out DailyTotalResult Result)

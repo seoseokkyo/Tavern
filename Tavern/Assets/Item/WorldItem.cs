@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WorldItem : Interactable
 {
-    // Sceneµî¿¡¼­ ÇÃ·¹ÀÌ¾î¿Í »óÈ£ÀÛ¿ëÀÌ °¡´ÉÇÑ ¾ÆÀÌÅÛÀÇ ÇüÅÂ
+    // Sceneï¿½î¿¡ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½È£ï¿½Û¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [HideInInspector]
     public ItemBase item;
 
@@ -18,10 +18,16 @@ public class WorldItem : Interactable
 
     public string InitItemName = "";
 
+    [HideInInspector]
+    public Rigidbody ItemRigidbody;
+
     void Start()
     {
         WorldItemMeshFilter = GetComponent<MeshFilter>();
         WorldItemMesh = GetComponent<MeshRenderer>();
+
+        ItemRigidbody = GetComponent<Rigidbody>();
+        ItemRigidbody.isKinematic = false;
 
         if (bEditorSetted)
         {
@@ -36,7 +42,11 @@ public class WorldItem : Interactable
     // Update is called once per frame
     void Update()
     {
-
+        if (ItemRigidbody.isKinematic && ItemRigidbody.linearVelocity.magnitude < 0.1f)
+        {
+            ItemRigidbody.useGravity = false;
+            ItemRigidbody.isKinematic = false;
+        }
     }
 
     public override string GetInteractingDescription() { return item.CurrentItemData.itemDescription; }
@@ -53,6 +63,12 @@ public class WorldItem : Interactable
             //
             //    RequestDestroy();
             //}
+
+            interactPlayer.CurrentPlayer.ItemAttachToRightHand(item);
+
+            item = null;
+
+            RequestDestroy();
         }
     }
 
@@ -128,4 +144,6 @@ public class WorldItem : Interactable
 
         //Debug.Log($"ClientToAllRequestItemDataSync_CurrentItemCount : {item.CurrentItemData.itemCount}");
     }
+
+
 }

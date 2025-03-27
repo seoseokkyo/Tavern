@@ -762,11 +762,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eabcb7658db3194795d114cf1ec845a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerInventory: {fileID: 0}
-  PopupInventoryUI_Prefab: {fileID: 3434213305987472323, guid: d43a0a1bfaa83be46aa579d5c98f6163, type: 3}
   PlayerCanvas: {fileID: 0}
   recipe: {fileID: 1346495968770374396, guid: 98689606a9c1dd043b69ac9bdcf6735b, type: 3}
-  QuickSlotUI_prefab: {fileID: 5248130043337331258, guid: 1ada21c56a300d244bc84bb92dc8c3be, type: 3}
   CurrentPlayer: {fileID: 0}
   PlayerCamera: {fileID: 6974980025354981918}
   CameraTransform: {fileID: 42470194907795370}
@@ -834,6 +831,7 @@ MonoBehaviour:
   maxHP: 100
   currentHP: 0
   moveSpeed: 10
+  RightHandItem: {fileID: 0}
 --- !u!114 &8802623366825500547
 MonoBehaviour:
   m_ObjectHideFlags: 0

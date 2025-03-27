@@ -22,8 +22,6 @@ public class EquipmentItem : ItemBase
 
         if (playerController.CurrentEquipmentItem != this)
         {
-            playerController.CurrentEquipmentItem = this;
-
             Debug.Log($"You Grab This : {CurrentItemData.itemName}");
         }
         else

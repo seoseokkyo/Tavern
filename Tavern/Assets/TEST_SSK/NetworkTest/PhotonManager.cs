@@ -1,6 +1,7 @@
 using Photon.Pun;
 using Photon.Realtime;
 using Steamworks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -80,10 +81,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        if (SteamAPI.IsSteamRunning())
-        {
-            PhotonInit();
-        }
+        PhotonInit();
     }
 
     void Update()
@@ -93,8 +91,20 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     void PhotonInit()
     {
+        if (!SteamAPI.IsSteamRunning())
+        {
+            return;
+        }
+
         // Photon Init
-        PhotonNetwork.LocalPlayer.NickName = SteamFriends.GetPersonaName();
+        try
+        {
+            PhotonNetwork.LocalPlayer.NickName = SteamFriends.GetPersonaName();
+        }
+        catch(Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
 
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "hk";
         PhotonNetwork.PhotonServerSettings.DevRegion = "hk";
@@ -206,11 +216,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        PhotonNetwork.Disconnect();
+        if(cause != DisconnectCause.ApplicationQuit)
+        {
+            PhotonNetwork.Disconnect();
 
-        PhotonInit();
+            PhotonInit();
 
-        Debug.Log("OnDisconnected");
+            Debug.Log("OnDisconnected");
+        }
     }
 
     public override void OnLeftRoom()
