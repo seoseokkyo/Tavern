@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WorldItem : Interactable
 {
-    // Scene��� �÷��̾�� ��ȣ�ۿ��� ������ �������� ����
     [HideInInspector]
     public ItemBase item;
 
@@ -64,11 +63,11 @@ public class WorldItem : Interactable
             //    RequestDestroy();
             //}
 
-            interactPlayer.CurrentPlayer.ItemAttachToRightHand(item);
+            interactPlayer.CurrentPlayer.ItemAttachToRightHand(this);
 
-            item = null;
+            //item = null;
 
-            RequestDestroy();
+            //RequestDestroy();
         }
     }
 

@@ -1,5 +1,6 @@
+using Photon.Pun;
 using UnityEngine;
-using UnityEngine.UIElements;
+
 
 public class TavernPlayer : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class TavernPlayer : MonoBehaviour
     [SerializeField] protected float currentHP;
     [SerializeField] protected float moveSpeed;
 
-    public delegate void OnRightHandItemChanged(ItemBase itemBase);
+    public delegate void OnRightHandItemChanged(WorldItem itemBase);
     public OnRightHandItemChanged OnChanged;
     Transform RightHandSlot;
 
@@ -19,6 +20,8 @@ public class TavernPlayer : MonoBehaviour
     public WorldItem RightHandItem;
 
     Animator PlayerAnimator;
+
+    private PhotonView PV;
 
     public void OnUpdatePlayerStat(float _maxHP, float _currentHP, float _moveSpeed)
     {
@@ -30,7 +33,7 @@ public class TavernPlayer : MonoBehaviour
 
     void Start()
     {
-
+        PV = GetComponentInParent<PhotonView>();
     }
 
     void Update()
@@ -73,7 +76,7 @@ public class TavernPlayer : MonoBehaviour
         }
     }
 
-    public void ItemAttachToRightHand(ItemBase itemBase)
+    public void ItemAttachToRightHand(WorldItem Item)
     {
         if (RightHandSlot == null)
         {
@@ -83,6 +86,36 @@ public class TavernPlayer : MonoBehaviour
 
         // 기존 아이템 제거
         if (RightHandItem != null)
+        {
+            PV.RPC("SendToAllItemParentChange", RpcTarget.All, Item.photonView.ViewID, false);
+        }
+
+        if (Item != null)
+        {
+            //RightHandItem = ItemManager.Instance.ItemSpawn(itemBase, Vector3.zero, Quaternion.identity);
+
+            PV.RPC("SendToAllItemParentChange", RpcTarget.All, Item.photonView.ViewID, true);
+        }
+    }
+
+    [PunRPC]
+    public void SendToAllItemParentChange(int ItemViewID, bool bGrab)
+    {
+        var TargetView = PhotonView.Find(ItemViewID);
+        var NetItem = TargetView.gameObject.GetComponent<WorldItem>();
+
+        if (bGrab)
+        {
+            RightHandItem = NetItem;
+            RightHandItem.transform.SetParent(RightHandSlot, false);
+
+            RightHandItem.transform.localPosition = RightHandItem.item.CurrentItemData.AttachLocation;
+            RightHandItem.transform.localRotation = RightHandItem.item.CurrentItemData.AttachRotation;
+            RightHandItem.transform.localScale = new Vector3(1, 1, 1);
+
+            RightHandItem.GetComponent<Collider>().enabled = false;
+        }
+        else
         {
             RightHandItem.transform.parent = null;
 
@@ -101,32 +134,13 @@ public class TavernPlayer : MonoBehaviour
 
             RightHandItem = null;
         }
-
-        if (itemBase != null)
-        {
-            RightHandItem = ItemManager.Instance.ItemSpawn(itemBase, Vector3.zero, Quaternion.identity);
-            RightHandItem.transform.SetParent(RightHandSlot, false);
-            RightHandItem.transform.localPosition = itemBase.CurrentItemData.AttachLocation;
-            RightHandItem.transform.localRotation = itemBase.CurrentItemData.AttachRotation;
-            RightHandItem.transform.localScale = new Vector3(1, 1, 1);
-
-            RightHandItem.GetComponent<Collider>().enabled = false;
-        }
     }
 
     public void ItemDetachFromRightHand()
     {
-        if(null != RightHandItem)
+        if (null != RightHandItem)
         {
-            RightHandItem.transform.parent = null;
-            
-            var ItemCollider = RightHandItem.GetComponent<Collider>().enabled = true;
-
-            RightHandItem.ItemRigidbody.isKinematic = true;
-            RightHandItem.ItemRigidbody.useGravity = true;
-            RightHandItem.ItemRigidbody.AddForce(transform.root.forward * 300000f);
-            
-            RightHandItem = null;
+            PV.RPC("SendToAllItemParentChange", RpcTarget.All, RightHandItem.photonView.ViewID, false);
         }
     }
 }

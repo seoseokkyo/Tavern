@@ -68,6 +68,7 @@ MonoBehaviour:
   - ClientToServerSyncDailyResultData
   - ReqSyncResultData
   - ReceiveDailyTotalResults
+  - SendToAllItemParentChange
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
