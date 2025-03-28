@@ -1,10 +1,5 @@
 using Photon.Pun;
-using Steamworks;
-using System;
-using System.Threading;
-using TMPro.Examples;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviourPunCallbacks
@@ -147,7 +142,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+            if(photonView.IsMine)
+            {
+                PhotonNetwork.LeaveRoom();                
+            }
         }
 
         // Item Use

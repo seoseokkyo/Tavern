@@ -4,8 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
-    private PhotonManager PhotonManager;
-
     [HideInInspector]
     public PlayerController CurrentLocalPlayer = null;
 
@@ -77,7 +75,18 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (t_instance == null)
             {
-                return new GameObject("TavernGameManager").AddComponent<TavernGameManager>();
+                var CreatedCheck = FindFirstObjectByType<TavernGameManager>();
+
+                if (null != CreatedCheck)
+                {
+                    t_instance = CreatedCheck;
+
+                    return t_instance;
+                }
+                else
+                {
+                    return new GameObject("TavernGameManager").AddComponent<TavernGameManager>();
+                }
             }
             else
             {
@@ -109,8 +118,6 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             throw new System.Exception("Tried to Initialize the TavernGameManager twice in one session!");
         }
-
-        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
@@ -118,32 +125,20 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
         SecondsPerDay = MinutePerDay * 60;
         StartTime = Time.time;
 
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
-        if (PhotonManager.Instance.bPhotonRpcReady)
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
+            RequestDailyResultData();
             RequestInstantiatePlayer();
-            RequestInstantiateResultManager();
-
-            if (!PhotonNetwork.LocalPlayer.IsMasterClient)
-            {
-                RequestDailyResultData();
-            }
         }
         else
         {
+            PhotonManager.Instance.OnJoinedRoomEndDelegate -= RequestDailyResultData;
+            PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestDailyResultData;
             PhotonManager.Instance.OnJoinedRoomEndDelegate -= RequestInstantiatePlayer;
             PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestInstantiatePlayer;
             PhotonManager.Instance.OnJoinedRoomEndDelegate -= RequestInstantiateResultManager;
             PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestInstantiateResultManager;
-
-            if (!PhotonNetwork.LocalPlayer.IsMasterClient)
-            {
-                PhotonManager.Instance.OnJoinedRoomEndDelegate -= RequestDailyResultData;
-                PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestDailyResultData;
-            }
         }
-
         // 호스트의 공통데이터 받아올것(GameDataInitialize)
 
         if (PhotonNetwork.IsMasterClient)
@@ -245,41 +240,7 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
-        if (scene.name != "MainMenuScene" && scene.name != "ManagerSpawnScene")
-        {
-            if (PhotonManager.Instance.bPhotonRpcReady)
-            {
-                RequestInstantiatePlayer();
-                RequestInstantiateResultManager();
 
-                if (!PhotonNetwork.LocalPlayer.IsMasterClient)
-                {
-                    RequestDailyResultData();
-                }
-            }
-            else
-            {
-                PhotonManager.Instance.OnJoinedRoomEndDelegate -= RequestInstantiatePlayer;
-                PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestInstantiatePlayer;
-                PhotonManager.Instance.OnJoinedRoomEndDelegate -= RequestInstantiateResultManager;
-                PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestInstantiateResultManager;
-
-                if (!PhotonNetwork.LocalPlayer.IsMasterClient)
-                {
-                    PhotonManager.Instance.OnJoinedRoomEndDelegate -= RequestDailyResultData;
-                    PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestDailyResultData;
-                }
-            }
-
-            // 호스트의 공통데이터 받아올것(GameDataInitialize)
-
-            if (PhotonNetwork.IsMasterClient)
-            {
-                PassedDay = 0;
-                PassedTime = 0;
-                CommonUseGold = 0;
-            }
-        }
     }
 
     public override void OnJoinedRoom()

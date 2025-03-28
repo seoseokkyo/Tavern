@@ -82,6 +82,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         PhotonInit();
+
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void Update()
@@ -91,17 +94,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     void PhotonInit()
     {
-        if (!SteamAPI.IsSteamRunning())
-        {
-            return;
-        }
-
         // Photon Init
         try
         {
             PhotonNetwork.LocalPlayer.NickName = SteamFriends.GetPersonaName();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Debug.Log(ex.Message);
 
@@ -156,6 +154,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void LoadMainMenu()
     {
+        PhotonNetwork.LeaveRoom();
         PhotonNetwork.LoadLevel("MainMenuScene");
     }
 
@@ -222,7 +221,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        if(cause != DisconnectCause.ApplicationQuit)
+        if (cause != DisconnectCause.ApplicationQuit)
         {
             PhotonNetwork.Disconnect();
 
@@ -234,6 +233,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
-        PhotonNetwork.LoadLevel("MainMenuScene");
+        SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+    }
+
+    public void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
+    {
+
     }
 }

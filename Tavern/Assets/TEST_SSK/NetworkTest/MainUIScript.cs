@@ -221,8 +221,8 @@ public class MainUIScript : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("tarvern");
-            Debug.Log("OnJoinedRoom");
+            //PhotonNetwork.LoadLevel("tarvern");
+            //Debug.Log("OnJoinedRoom");
         }
         else
         {
