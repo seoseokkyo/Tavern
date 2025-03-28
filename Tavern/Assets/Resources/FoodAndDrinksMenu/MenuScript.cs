@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -33,9 +33,13 @@ public class MenuScript : Interactable
         player = interactPlayer.gameObject;
         menuUI.player = interactPlayer.gameObject;
 
+        if(menuUI.menuManager == null)
+        {
+            menuUI.InitUI();
+        }
+
         TempInitFunction();
 
-        // interacting.transform.SetParent(interactPlayer.PlayerCanvas.transform, false);
         if (interacting.activeSelf == false)
         {
             interacting.SetActive(true);

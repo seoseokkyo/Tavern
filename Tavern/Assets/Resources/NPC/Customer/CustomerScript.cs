@@ -132,15 +132,13 @@ public class CustomerScript : Interactable, IPunObservable
     public void Initialize()
     {
         menuManager = GameObject.FindWithTag("MenuManager").GetComponent<MenuManager>();
-        if (menuManager != null)
-        {
-            orderItems.Clear();
-        }
+        orderItems.Clear();
 
         orderUI = orderUIObject.GetComponent<OrderCanvasScript_TestSSK>();
         if (orderUI != null)
         {
             orderUI.enabled = true;
+            orderUIObject.SetActive(true);
         }
     }
 
@@ -171,24 +169,48 @@ public class CustomerScript : Interactable, IPunObservable
                 ItemData temp = menu[random];
                 orderItems.Add(temp);
                 itemNames.Add(temp.itemName);
-                orderUI.SetOrderUI(orderItems);
                 maxOrderCount--;
             }
 
-            photonView.RPC("SyncOrder", RpcTarget.Others, itemNames.ToArray());
+            if(itemNames.Count > 1)
+            {
+                photonView.RPC("SyncOrder_Double", RpcTarget.AllBuffered, itemNames.ToArray());
+            }
+            else 
+            {
+                string name = itemNames[0];
+                photonView.RPC("SyncOrder_Double", RpcTarget.AllBuffered, name);
+            }
 
         }
     }
 
     [PunRPC]
-    void SyncOrder(string[] orderIDs)
+    void SyncOrder_Single(string orderIDs)
     {
         orderItems.Clear();
+        ItemData cur = ItemManager.Instance.GetItemDataByName(orderIDs);
+        orderItems.Add(cur);
 
+        if (orderUI != null)
+        {
+            orderUI.SetOrderUI(orderItems);
+        }
+    }
+
+    [PunRPC]
+    void SyncOrder_Double(string[] orderIDs)
+    {
+        orderItems.Clear();
         foreach (string item in orderIDs)
         {
             ItemData cur = ItemManager.Instance.GetItemDataByName(item);
             orderItems.Add(cur);
+        }
+
+        if (orderUI != null)
+        {
+            orderUI.SetOrderUI(orderItems);
         }
     }
 
@@ -211,17 +233,6 @@ public class CustomerScript : Interactable, IPunObservable
     [PunRPC]
     public void RemoveOrder(int food)
     {
-        /*
-               foreach (ItemData cur in orderItems)
-               {
-                   if (cur.itemID == food.itemID)
-                   {
-                       orderItems.Remove(cur);
-                       orderUI.RemoveOrderUI(cur);
-                       break;
-                   }
-               }
-               */
         ItemData target = orderItems.Find(item => item.itemID == food);
 
         orderItems.RemoveAll(item => item.itemID == food);

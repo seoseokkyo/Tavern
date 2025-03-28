@@ -1,4 +1,4 @@
-using Photon.Pun;
+﻿using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,36 +35,58 @@ public class FaDMenuUI : MonoBehaviour
 
     }
 
+    private void OnDestroy()
+    {
+        if(menuManagerScript != null)
+        {
+            menuManagerScript.OnMenuUpdated -= RefreshUI;
+        }
+    }
+
     public void InitUI()
     {
-        menuManagerScript = GameObject.FindWithTag("MenuManager").GetComponent<MenuManager>();
+        menuManager = GameObject.FindWithTag("MenuManager");
+        menuManagerScript = menuManager.GetComponent<MenuManager>();
+
         foodViewList.Clear();
         drinkViewList.Clear();
 
-        if(SetMenuButton != null)
+        if (SetMenuButton != null)
+        {
             SetMenuButton.onClick.AddListener(OnSetMenuButtonClick);
+        }
+
+        menuManagerScript.OnMenuUpdated += RefreshUI;
+    }
+    
+    private void RefreshUI()
+    {
+        SetSavedMenuList();
     }
 
     void OnSetMenuButtonClick()
     {
-        if (menuManagerScript != null)
+        if (menuManagerScript == null)
         {
-            savedMenuList = menuManagerScript.GetMenuList();
-            menuManagerScript.menuList = savedMenuList;
-
-            if (modeController != null & clickEventTestScript != null)
-            {
-                modeController.SetMode(false);
-                clickEventTestScript.SetUIActivated(false);
-                clickEventTestScript.popUI.SetActive(false);
-            }
-
-            if (Photon.Pun.PhotonNetwork.IsMasterClient)
-            {
-                menuManagerScript.SetMenu(savedMenuList);
-            }
+            menuManagerScript = GameObject.FindWithTag("MenuManager").GetComponent<MenuManager>();
         }
+
+        var view = menuManagerScript.GetComponent<PhotonView>();
+
+        savedMenuList = menuManagerScript.GetMenuList();
+        menuManagerScript.menuList = savedMenuList;
+
+        // 모드 종료 처리
+        if (modeController != null && clickEventTestScript != null)
+        {
+            modeController.SetMode(false);
+            clickEventTestScript.SetUIActivated(false);
+            clickEventTestScript.popUI.SetActive(false);
+        }
+
+        menuManagerScript.SetMenu(savedMenuList);
     }
+
 
     public void SetMenuList()
     {

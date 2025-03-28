@@ -21,9 +21,13 @@ public class ClickEventTest : MonoBehaviour
     {
         exitButton.onClick.AddListener(OnClickButton);
 
-        if (null != player)
+        if (player != null)
         {
-            modeController = player.GetComponent<ModeController>();
+            var view = player.GetComponent<Photon.Pun.PhotonView>();
+            if (view != null && view.IsMine)
+            {
+                modeController = player.GetComponent<ModeController>();
+            }
         }
 
         if (!bTestFlag)

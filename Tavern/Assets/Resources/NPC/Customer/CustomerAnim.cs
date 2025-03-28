@@ -51,11 +51,6 @@ public class CustomerAnim : MonoBehaviour
             if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
             {
                 photonView.RPC("OnArriveRPC", RpcTarget.All);
-                /*
-               OnArrive();
-               arrived = true;
-               isMoving = false;
-                */
             }
         }
     }
@@ -68,13 +63,6 @@ public class CustomerAnim : MonoBehaviour
         {
             photonView.RPC("MoveToLocationRPC", RpcTarget.All, loc.position);
         }
-        /*
-       targetLoc = loc;
-       agent.SetDestination(loc.position);
-       animator.SetBool("isMove", true);
-       arrived = false;
-       isMoving = true;
-        */
     }
 
     [PunRPC]

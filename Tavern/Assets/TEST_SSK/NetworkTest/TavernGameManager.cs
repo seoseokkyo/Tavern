@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using System;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -53,14 +54,49 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
             SpawnCustomer();
         }
     }
+    public override void OnJoinedRoom()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SpawnMenuManager();
+        }
+    }
+
+    void SpawnMenuManager()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+
+        if (GameObject.FindWithTag("MenuManager") == null)
+        {
+            GameObject menuManager = PhotonNetwork.Instantiate("MenuManager", Vector3.zero, Quaternion.identity);
+            menuManager.tag = "MenuManager";
+            DontDestroyOnLoad(menuManager);
+        }
+    }
 
     void SpawnCustomer()
     {
         Transform startLoc = GameObject.Find("npcLoc").transform;
         GameObject customerObj = PhotonNetwork.Instantiate("Customer1", startLoc.position, Quaternion.identity);
         customerObj.transform.localScale = Vector3.one * 10;
+
+        photonView.RPC("SetCustomerScale", RpcTarget.AllBuffered, customerObj.GetComponent<PhotonView>().ViewID);
+
         CustomerScript customer = customerObj.GetComponent<CustomerScript>();
         customer.startLoc = startLoc;
+    }
+
+    [PunRPC]
+    void SetCustomerScale(int viewID)
+    {
+        PhotonView view = PhotonView.Find(viewID);
+        if (view != null)
+        {
+            view.transform.localScale = Vector3.one * 10;
+        }
     }
 
     [SerializeField]
@@ -135,6 +171,17 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
         StartTime = Time.time;
 
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        if (GameObject.Find("LogMarker") == null)
+        {
+            GameObject log = Resources.Load<GameObject>("LogMaker/LogMarker");
+            if(log != null)
+            {
+                GameObject logInstance = Instantiate(log);
+                DontDestroyOnLoad(logInstance);
+                log.active = true;
+            }
+        }
     }
 
     private void OnGUI()

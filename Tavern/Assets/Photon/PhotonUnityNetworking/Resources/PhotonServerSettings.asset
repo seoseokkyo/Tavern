@@ -92,6 +92,12 @@ MonoBehaviour:
   - ClientToServerSyncDailyResultData
   - ReqSyncResultData
   - ReceiveDailyTotalResults
+  - SetCustomerScale
+  - SyncMenuList_Multiple
+  - SyncMenuList_Single
+  - SyncMenuList_None
+  - SyncOrder_Double
+  - SyncOrder_Single
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
