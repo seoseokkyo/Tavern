@@ -1,7 +1,5 @@
 using UnityEngine;
-using System.Collections.Generic;
 using Photon.Pun;
-using System;
 using UnityEngine.SceneManagement;
 
 public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
@@ -121,6 +119,39 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
         StartTime = Time.time;
 
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        if (PhotonManager.Instance.bPhotonRpcReady)
+        {
+            RequestInstantiatePlayer();
+            RequestInstantiateResultManager();
+
+            if (!PhotonNetwork.LocalPlayer.IsMasterClient)
+            {
+                RequestDailyResultData();
+            }
+        }
+        else
+        {
+            PhotonManager.Instance.OnJoinedRoomEndDelegate -= RequestInstantiatePlayer;
+            PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestInstantiatePlayer;
+            PhotonManager.Instance.OnJoinedRoomEndDelegate -= RequestInstantiateResultManager;
+            PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestInstantiateResultManager;
+
+            if (!PhotonNetwork.LocalPlayer.IsMasterClient)
+            {
+                PhotonManager.Instance.OnJoinedRoomEndDelegate -= RequestDailyResultData;
+                PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestDailyResultData;
+            }
+        }
+
+        // 호스트의 공통데이터 받아올것(GameDataInitialize)
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PassedDay = 0;
+            PassedTime = 0;
+            CommonUseGold = 0;
+        }
     }
 
     private void OnGUI()
@@ -212,7 +243,7 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
         CurrentState = EWorkState.Init;
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
         if (scene.name != "MainMenuScene" && scene.name != "ManagerSpawnScene")
         {
@@ -249,6 +280,11 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
                 CommonUseGold = 0;
             }
         }
+    }
+
+    public override void OnJoinedRoom()
+    {
+ 
     }
 
     void RequestDailyResultData()

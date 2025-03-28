@@ -8,5 +8,5 @@ public class PlayerListItem : MonoBehaviour
     public void Init(string PlayerName)
     {
         this.PlayerName.text = PlayerName;
-}
+    }
 }
