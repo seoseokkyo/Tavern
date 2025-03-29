@@ -109,7 +109,7 @@ public class CustomerAnim : MonoBehaviour
             if (photonView.IsMine)
             {
                 customer.Initialize();
-                customer.DecideOrder();
+                customer.StartCoroutine(customer.WaitForInteraction());
             }
         }
 
@@ -142,7 +142,8 @@ public class CustomerAnim : MonoBehaviour
             }
 
             customer.Initialize();
-            customer.DecideOrder();
+            customer.StartCoroutine(customer.WaitForInteraction());
+            customer.SetStateText("Wating for Response");
         }
     }
 

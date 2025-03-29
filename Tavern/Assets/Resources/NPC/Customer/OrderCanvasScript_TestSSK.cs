@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class OrderCanvasScript_TestSSK : MonoBehaviour
@@ -8,6 +9,9 @@ public class OrderCanvasScript_TestSSK : MonoBehaviour
     public ItemDatas itemdatas;
     public ItemUI ItemUI_Prefab;
     private List<ItemUI> ItemUIList = new List<ItemUI>();
+
+    public TextMeshProUGUI stateText;
+    public UnityEngine.UI.Slider timerSlider;
 
     private PlayerController TargetCon;
 

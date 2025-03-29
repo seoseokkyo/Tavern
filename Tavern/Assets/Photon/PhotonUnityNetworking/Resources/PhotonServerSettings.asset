@@ -99,6 +99,14 @@ MonoBehaviour:
   - SyncOrder_Double
   - SyncOrder_Single
   - InitializeRPC
+  - OnInteractionFailed
+  - OnInteractionSuccess
+  - HideWaitingUI
+  - UpdateCustomerText
+  - UpdateWaitingSlider
+  - OnInteractedRPC
+  - OnServingFailed
+  - OnServingSuccess
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
