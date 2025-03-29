@@ -131,14 +131,18 @@ public class CustomerScript : Interactable, IPunObservable
 
     public void Initialize()
     {
-        menuManager = GameObject.FindWithTag("MenuManager").GetComponent<MenuManager>();
-        orderItems.Clear();
+        photonView.RPC("InitializeRPC", RpcTarget.AllBuffered);
+    }
 
-        orderUI = orderUIObject.GetComponent<OrderCanvasScript_TestSSK>();
+    [PunRPC]
+    void InitializeRPC()
+    {
+        menuManager = GameObject.FindWithTag("MenuManager")?.GetComponent<MenuManager>();
+        orderUI = orderUIObject?.GetComponent<OrderCanvasScript_TestSSK>();
+
         if (orderUI != null)
         {
             orderUI.enabled = true;
-            orderUIObject.SetActive(true);
         }
     }
 
@@ -179,7 +183,7 @@ public class CustomerScript : Interactable, IPunObservable
             else 
             {
                 string name = itemNames[0];
-                photonView.RPC("SyncOrder_Double", RpcTarget.AllBuffered, name);
+                photonView.RPC("SyncOrder_Single", RpcTarget.AllBuffered, name);
             }
 
         }
@@ -189,6 +193,7 @@ public class CustomerScript : Interactable, IPunObservable
     void SyncOrder_Single(string orderIDs)
     {
         orderItems.Clear();
+
         ItemData cur = ItemManager.Instance.GetItemDataByName(orderIDs);
         orderItems.Add(cur);
 
