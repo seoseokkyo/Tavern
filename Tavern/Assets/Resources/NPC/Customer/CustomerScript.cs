@@ -78,9 +78,6 @@ public class CustomerScript : Interactable, IPunObservable
                 if (orderItems.Count == 0)
                 {
                     getOrdered = true;
-                    photonView.RPC("HideWaitingUI", RpcTarget.AllBuffered);
-                    ResetTimer();
-                    StartCoroutine(LeaveTimer());
                 }
             }
             else
@@ -129,7 +126,6 @@ public class CustomerScript : Interactable, IPunObservable
             {
                 int tableID = TableManager.instance.GetTableID(table);
                 photonView.RPC("MoveToSeat", RpcTarget.AllBuffered, tableID, seat.seatID);
-                photonView.RPC("UpdateCustomerText", RpcTarget.AllBuffered, "Moving to Table");
             }
             else
             {
@@ -145,6 +141,7 @@ public class CustomerScript : Interactable, IPunObservable
     [PunRPC]
     void MoveToSeat(int table, int seat)
     {
+        SetStateText("Moving to Table");
         TableScript targetTable = TableManager.instance.GetTableByID(table);
         SeatData targetSeat = targetTable.GetSeatByID(seat);
         if (targetSeat != null)
@@ -160,7 +157,8 @@ public class CustomerScript : Interactable, IPunObservable
 
     public IEnumerator WaitForInteraction()
     {
-       
+        photonView.RPC("ShowWaitingUI", RpcTarget.AllBuffered);
+
         waitingForInteraction = true;
         interacted = false;
 
@@ -191,6 +189,8 @@ public class CustomerScript : Interactable, IPunObservable
 
     public IEnumerator WaitForServe()
     {
+        photonView.RPC("ShowWaitingUI", RpcTarget.AllBuffered);
+
         isOrdered = true;
         getOrdered = false;
 
@@ -198,6 +198,16 @@ public class CustomerScript : Interactable, IPunObservable
 
         while (waitTimer < waitServeLimit)
         {
+            if(getOrdered)
+            {
+                ResetTimer();
+                photonView.RPC("HideWaitingUI", RpcTarget.AllBuffered);
+                SetStateText("Thanks! bye");
+                StartCoroutine(LeaveTimer());
+
+                yield break;
+            }
+
             waitTimer += Time.deltaTime;
 
             float ratio = waitTimer / waitServeLimit;
@@ -222,13 +232,17 @@ public class CustomerScript : Interactable, IPunObservable
     [PunRPC]
     void OnInteractionSuccess()
     {
-        StartCoroutine(WaitForServe());
+        if(photonView.IsMine && PhotonNetwork.IsMasterClient)
+        {
+            DecideOrder();
+        }
     }
 
     [PunRPC]
     void OnServingSuccess()
     {
         // 별점, 가격 측정
+
     }
 
     [PunRPC]
@@ -251,6 +265,13 @@ public class CustomerScript : Interactable, IPunObservable
     {
         if (waitingTimerSlider != null)
             waitingTimerSlider.gameObject.SetActive(false);
+    }
+
+    [PunRPC]
+    void ShowWaitingUI()
+    {
+        if (waitingTimerSlider != null)
+            waitingTimerSlider.gameObject.SetActive(true);
     }
 
     [PunRPC]
@@ -284,25 +305,30 @@ public class CustomerScript : Interactable, IPunObservable
         if (orderUI != null)
         {
             orderUI.enabled = true;
-        }
 
-        waitingTimerSlider = orderUI.GetComponentInChildren<Slider>(true);
-        if(waitingTimerSlider != null)
-        {
-            waitingTimerSlider.maxValue = 1f;
-            waitingTimerSlider.value = 0f;
-            waitingTimerSlider.gameObject.SetActive(true);
-        }
-        else
-        {
-            Debug.Log("Slider is NULL");
-        }
+            waitingTimerSlider = orderUI.waitingTimerSlider;
+            customerStateText = orderUI.customerStateText;
 
-        customerStateText = orderUI.GetComponentInChildren<TextMeshProUGUI>(true);
-        if(customerStateText != null)
-        {
-            customerStateText.text = "";
-            customerStateText.gameObject.SetActive(true);
+            if (waitingTimerSlider != null)
+            {
+                waitingTimerSlider.maxValue = 1f;
+                waitingTimerSlider.value = 0f;
+                waitingTimerSlider.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("WatingTimerSlider is NULL");
+            }
+
+            if (customerStateText != null)
+            {
+                customerStateText.text = "";
+                customerStateText.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("customerStateText is NULL");
+            }
         }
     }
 
@@ -338,12 +364,13 @@ public class CustomerScript : Interactable, IPunObservable
 
             if(itemNames.Count > 1)
             {
+                SetStateText("It's my order");
                 photonView.RPC("SyncOrder_Double", RpcTarget.AllBuffered, itemNames.ToArray());
-                StartCoroutine(WaitForInteraction());
             }
             else 
             {
                 string name = itemNames[0];
+                SetStateText("It's my order");
                 photonView.RPC("SyncOrder_Single", RpcTarget.AllBuffered, name);
             }
 
@@ -362,6 +389,11 @@ public class CustomerScript : Interactable, IPunObservable
         {
             orderUI.SetOrderUI(orderItems);
         }
+
+        if (photonView.IsMine && PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(WaitForServe());
+        }
     }
 
     [PunRPC]
@@ -377,6 +409,11 @@ public class CustomerScript : Interactable, IPunObservable
         if (orderUI != null)
         {
             orderUI.SetOrderUI(orderItems);
+        }
+
+        if(photonView.IsMine && PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(WaitForServe());
         }
     }
 
@@ -400,9 +437,6 @@ public class CustomerScript : Interactable, IPunObservable
     public void RemoveOrder(int food)
     {
         ItemData target = orderItems.Find(item => item.itemID == food);
-
-        orderItems.RemoveAll(item => item.itemID == food);
-        orderUI.RemoveOrderUI(orderItems.Find(item => item.itemID == food));
         orderItems.Remove(target);
         orderUI.RemoveOrderUI(target);
     }

@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OrderCanvasScript_TestSSK : MonoBehaviour
 {
@@ -10,8 +11,8 @@ public class OrderCanvasScript_TestSSK : MonoBehaviour
     public ItemUI ItemUI_Prefab;
     private List<ItemUI> ItemUIList = new List<ItemUI>();
 
-    public TextMeshProUGUI stateText;
-    public UnityEngine.UI.Slider timerSlider;
+    [SerializeField] public TextMeshProUGUI customerStateText;
+    [SerializeField] public UnityEngine.UI.Slider waitingTimerSlider;
 
     private PlayerController TargetCon;
 
@@ -20,7 +21,8 @@ public class OrderCanvasScript_TestSSK : MonoBehaviour
     void Start()
     {
         TargetCon = TavernGameManager.Instance.CurrentLocalPlayer;
-
+        customerStateText = GetComponentInChildren<TextMeshProUGUI>();
+        waitingTimerSlider = GetComponentInChildren<Slider>();
        // InitRandMenu();
     }
 
@@ -79,7 +81,11 @@ public class OrderCanvasScript_TestSSK : MonoBehaviour
 
             ItemUI tempUI = Instantiate(ItemUI_Prefab);
             var tempItemBase = ItemBase.ItemBaseCreator.CreateItemBase(itemList[i]);
-
+            if (tempItemBase == null)
+            {
+                Debug.LogWarning($"[OrderCanvas] ItemBase 변환 실패: {itemList[i].itemName}");
+                continue;
+            }
             tempUI.InitData(tempItemBase, ContentTransform, i);
             tempUI.transform.localScale = new Vector3(ScaleValue, ScaleValue, ScaleValue);
             tempUI.transform.localPosition = new Vector3(tempUI.transform.localPosition.x, tempUI.transform.localPosition.y, 0);

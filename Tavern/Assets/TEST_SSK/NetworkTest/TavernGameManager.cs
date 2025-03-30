@@ -87,6 +87,13 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
 
         CustomerScript customer = customerObj.GetComponent<CustomerScript>();
         customer.startLoc = startLoc;
+
+        StartCoroutine(InitializeCustomerNextFrame(customer));
+    }
+    IEnumerator InitializeCustomerNextFrame(CustomerScript customer)
+    {
+        yield return null;
+        customer.Initialize();
     }
 
     [PunRPC]

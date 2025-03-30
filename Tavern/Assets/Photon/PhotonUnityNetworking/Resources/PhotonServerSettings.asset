@@ -107,6 +107,8 @@ MonoBehaviour:
   - OnInteractedRPC
   - OnServingFailed
   - OnServingSuccess
+  - ShowWatingUI
+  - ShowWaitingUI
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

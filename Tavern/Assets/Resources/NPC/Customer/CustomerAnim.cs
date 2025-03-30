@@ -1,4 +1,7 @@
 ﻿using Photon.Pun;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -106,9 +109,10 @@ public class CustomerAnim : MonoBehaviour
                 }
             }
 
-            if (photonView.IsMine)
+            customer.SetStateText("Waiting for Response");
+
+            if(photonView.IsMine && PhotonNetwork.IsMasterClient)
             {
-                customer.Initialize();
                 customer.StartCoroutine(customer.WaitForInteraction());
             }
         }
@@ -140,11 +144,14 @@ public class CustomerAnim : MonoBehaviour
                     break;
                 }
             }
-
-            customer.Initialize();
-            customer.StartCoroutine(customer.WaitForInteraction());
-            customer.SetStateText("Wating for Response");
         }
+    }
+    private IEnumerator DelayStartInteraction()
+    {
+        yield return null;
+
+        customer.SetStateText("Waiting for Response");
+        customer.StartCoroutine(customer.WaitForInteraction());
     }
 
     public void Leave()

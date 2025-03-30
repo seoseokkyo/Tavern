@@ -523,7 +523,7 @@ GameObject:
   - component: {fileID: 847169745052313945}
   - component: {fileID: 1217247844892004139}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: waitingTimerSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 6112988633752661452}
   - component: {fileID: 7003547715807454643}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: customerStateText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1052,7 +1052,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &1584132033887984339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1085,5 +1085,5 @@ MonoBehaviour:
   ContentTransform: {fileID: 444878468577572133}
   itemdatas: {fileID: 11400000, guid: 97dd72458fdd0f248b94ffe32fac6c82, type: 2}
   ItemUI_Prefab: {fileID: 6194750302899437499, guid: 551f4ef54778843439716c196bfad15f, type: 3}
-  stateText: {fileID: 7003547715807454643}
-  timerSlider: {fileID: 1217247844892004139}
+  customerStateText: {fileID: 7003547715807454643}
+  waitingTimerSlider: {fileID: 1217247844892004139}
