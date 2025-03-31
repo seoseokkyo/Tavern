@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MenuManager : MonoBehaviourPun
+public class MenuManager : Photon.Pun.Interactable
 {
     public static MenuManager Instance;
     public List<ItemData> menuList = new List<ItemData>();

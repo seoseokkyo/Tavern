@@ -18,8 +18,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [HideInInspector]
     public Canvas PlayerCanvas;
 
-
-
     public GameObject recipe;
     private SelectedRecipeUI selectedRecipeUI;
     private RecipeUI recipeUI;

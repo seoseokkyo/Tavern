@@ -109,6 +109,15 @@ MonoBehaviour:
   - OnServingSuccess
   - ShowWatingUI
   - ShowWaitingUI
+  - SyncMemoData
+  - CreateMemoNote_RPC
+  - RPC_CreateMemoItem
+  - ShowMemoUI
+  - HideMemoUI
+  - RPC_SetIsHolding
+  - RPC_PickUp
+  - RPC_AttachMemoItem
+  - RPC_PickupMemoItem
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -5,7 +5,7 @@ using Photon.Realtime;
 using Unity.Properties;
 
 [RequireComponent(typeof(PhotonView))]
-public abstract class Interactable : MonoBehaviourPun
+public abstract class Interactable : Photon.Pun.Interactable
 { 
     public enum InteractionType
     {

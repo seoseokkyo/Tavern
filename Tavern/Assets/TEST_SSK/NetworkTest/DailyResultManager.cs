@@ -29,7 +29,7 @@ public class DailyTotalResult
     public float UsedItemPrice = 0.0f;
 }
 
-public class DailyResultManager : MonoBehaviourPun
+public class DailyResultManager : Photon.Pun.Interactable
 {
     // 각 일자별 결산 데이터를 갖고있는 리스트
     private List<DailyTotalResult> DailyTotalResults = new();
