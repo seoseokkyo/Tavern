@@ -189,8 +189,6 @@ public class CustomerScript : Interactable, IPunObservable
 
     public IEnumerator WaitForServe()
     {
-        photonView.RPC("ShowWaitingUI", RpcTarget.AllBuffered);
-
         isOrdered = true;
         getOrdered = false;
 
@@ -313,7 +311,7 @@ public class CustomerScript : Interactable, IPunObservable
             {
                 waitingTimerSlider.maxValue = 1f;
                 waitingTimerSlider.value = 0f;
-                waitingTimerSlider.gameObject.SetActive(true);
+                waitingTimerSlider.gameObject.SetActive(false);
             }
             else
             {
@@ -392,6 +390,7 @@ public class CustomerScript : Interactable, IPunObservable
 
         if (photonView.IsMine && PhotonNetwork.IsMasterClient)
         {
+            photonView.RPC("ShowWaitingUI", RpcTarget.AllBuffered);
             StartCoroutine(WaitForServe());
         }
     }
@@ -413,6 +412,7 @@ public class CustomerScript : Interactable, IPunObservable
 
         if(photonView.IsMine && PhotonNetwork.IsMasterClient)
         {
+            photonView.RPC("ShowWaitingUI", RpcTarget.AllBuffered);
             StartCoroutine(WaitForServe());
         }
     }
