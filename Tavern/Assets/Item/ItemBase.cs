@@ -81,7 +81,6 @@ public class CreateRecipe
     public List<CreateResources> Resources;
 }
 
-
 [System.Serializable]
 public class ItemBase
 {
@@ -92,8 +91,6 @@ public class ItemBase
     public ItemData CurrentItemData;
 
     public InventoryComp OwnerInventory = null;
-
-    
 
     /// <summary>
     ///  아이템 사용시의 효과등을 갖고있는 구조체와 리스트

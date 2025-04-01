@@ -20,6 +20,9 @@ public class WorldItem : Interactable
     [HideInInspector]
     public Rigidbody ItemRigidbody;
 
+    [HideInInspector]
+    public GameObject MeshObj = null;
+
     void Start()
     {
         WorldItemMeshFilter = GetComponent<MeshFilter>();
@@ -30,7 +33,7 @@ public class WorldItem : Interactable
 
         if (bEditorSetted)
         {
-            SetItem(ItemBase.ItemBaseCreator.CreateItemBase(ItemManager.Instance.GetItemDataByName(InitItemName))); 
+            SetItem(ItemBase.ItemBaseCreator.CreateItemBase(ItemManager.Instance.GetItemDataByName(InitItemName)));
         }
         else if (!PhotonNetwork.IsMasterClient && string.IsNullOrEmpty(InitItemName))
         {
@@ -78,10 +81,10 @@ public class WorldItem : Interactable
 
         if (item.CurrentItemData.ItemPrefab)
         {
-            GameObject child = Instantiate(item.CurrentItemData.ItemPrefab);
-            child.transform.SetParent(transform, false);
+            MeshObj = Instantiate(item.CurrentItemData.ItemPrefab);
+            MeshObj.transform.SetParent(transform, false);
 
-            child.SetActive(true);
+            MeshObj.SetActive(true);
         }
         else
         {
@@ -143,6 +146,4 @@ public class WorldItem : Interactable
 
         //Debug.Log($"ClientToAllRequestItemDataSync_CurrentItemCount : {item.CurrentItemData.itemCount}");
     }
-
-
 }
