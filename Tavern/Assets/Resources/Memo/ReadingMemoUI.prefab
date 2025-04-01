@@ -116,6 +116,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reviewUIPanel: {fileID: 122205816929191461}
+  itemDatas: {fileID: 11400000, guid: 97dd72458fdd0f248b94ffe32fac6c82, type: 2}
+  foodIconPrefab: {fileID: 2677117454624466529, guid: b39b6fe6db632264ba090ec80a25de76, type: 3}
   foodsContentTransform: {fileID: 1138158063309255891}
   extraNoteText: {fileID: 3744095730764357545}
 --- !u!1 &1167602510857200984
@@ -289,7 +291,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 0
+  m_Spacing: 10
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0

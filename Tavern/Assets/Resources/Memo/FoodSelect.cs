@@ -15,6 +15,7 @@ public class FoodSelect : MonoBehaviour
 
     void Start()
     {
+        selectButton.enabled = true;
         selectButton.onClick.AddListener(OnClickSelectButton);
     }
     public void Initialize(ItemData data)

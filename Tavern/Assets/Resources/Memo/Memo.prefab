@@ -249,7 +249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactPlayer: {fileID: 0}
   interactionType: 0
-  icon: {fileID: 0}
+  icon: {fileID: 3031483935460943501}
   contentText: {fileID: 0}
   isHolding: 0
   isAttached: 0

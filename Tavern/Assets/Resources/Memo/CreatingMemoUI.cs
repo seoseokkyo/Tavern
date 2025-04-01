@@ -46,16 +46,19 @@ public class CreatingMemoUI : MonoBehaviourPunCallbacks
             {
                 string name = item.CreateItemData.ItemName;
                 GameObject prefab = Instantiate(food);
-                prefab.transform.SetParent(foodsContentTransform, false);
-                FoodSelect tempUI = prefab.GetComponent<FoodSelect>();
-                if(tempUI != null)
+                if (prefab != null)
                 {
-                    ItemData tempData = FindItemData(name);
-                    tempUI.Initialize(tempData);
-                    tempUI.isSelected = false;
+                    prefab.transform.SetParent(foodsContentTransform, false);
+                    FoodSelect tempUI = prefab.GetComponent<FoodSelect>();
+                    if (tempUI != null)
+                    {
+                        ItemData tempData = FindItemData(name);
+                        tempUI.Initialize(tempData);
+                        tempUI.isSelected = false;
+                    }
+                    prefab.SetActive(true);
+                    foods.Add(prefab);
                 }
-                prefab.SetActive(true);
-                foods.Add(prefab);
             }
         }
     }
@@ -79,7 +82,9 @@ public class CreatingMemoUI : MonoBehaviourPunCallbacks
 
     void OnSetButtonClicked()
     {
-        MemoData memoData = new MemoData();
+        Debug.Log("SetButtonClicked");
+
+        List<string> foodNames = new List<string>();
         foreach(GameObject cur in foods)
         {
             FoodSelect f = cur.GetComponent<FoodSelect>();
@@ -87,32 +92,49 @@ public class CreatingMemoUI : MonoBehaviourPunCallbacks
             {
                 if(f.isSelected)
                 {
-                    memoData.foods.Add(f);
+                    foodNames.Add(f.name);
+                    Debug.Log("SelectedFood is Set");
                 }
             }
         }
-        memoData.extraNote = extraNotesInput.text;
-
-        string json = JsonUtility.ToJson(memoData);
-        photonView.RPC("RPC_CreateMemoItem", RpcTarget.AllBuffered, json);
+        string extraNote = extraNotesInput.text;
+        Debug.Log("Call RPC");
+        photonView.RPC("RPC_CreateMemoItem", RpcTarget.AllBuffered, foodNames.ToArray(), extraNote);
 
         CloseUI();
     }
 
     [PunRPC]
-    void RPC_CreateMemoItem(string json)
+    void RPC_CreateMemoItem(string[] foods, string extra)
     {
-        MemoData data = JsonUtility.FromJson<MemoData>(json);
+        Debug.Log("Called CreateMemoItem RPC");
 
-        GameObject memoItem = Instantiate(Resources.Load<GameObject>("Memo"));
-        MenoScript memo = memoItem.GetComponent<MenoScript>();
-
-        if (memo != null)
+        List<FoodSelect> selected = new List<FoodSelect>();
+        foreach (string f in foods)
         {
-            memo.Initialize(data.foods, data.extraNote);
-            Vector3 loc = spawnLoc.transform.up * 5;
-            memo.transform.position = loc;
+            ItemData curData = FindItemData(f);
+            FoodSelect cur = new FoodSelect();
+            cur.Initialize(curData);
+            selected.Add(cur);
         }
+        
+        GameObject memoItem = Resources.Load<GameObject>("Memo/Memo");
+        if (memoItem == null)
+        {
+            Debug.LogError("Memo prefab is null");
+            return; 
+        }
+
+        GameObject instance = Instantiate(memoItem);
+        MenoScript memo = instance.GetComponent<MenoScript>();
+        if (memo == null)
+        {
+            Debug.LogError("MenoScript component is null");
+            return;
+        }
+        memo.Initialize(selected, extra);
+        Vector3 loc = spawnLoc.transform.up * 5;
+        memo.transform.position = loc;
     }
 
     void OnCancelButtonClicked()
@@ -125,6 +147,10 @@ public class CreatingMemoUI : MonoBehaviourPunCallbacks
         if (modeController != null)
         {
             modeController.SetMode(false);
+        }
+        else
+        {
+            Debug.Log("ModeController is null");
         }
 
         gameObject.SetActive(false);
