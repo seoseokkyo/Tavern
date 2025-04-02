@@ -69,6 +69,36 @@ MonoBehaviour:
   - ReqSyncResultData
   - ReceiveDailyTotalResults
   - SendToAllItemParentChange
+  - CheckRPC
+  - EatRPC
+  - HideWaitingUI
+  - InitializeRPC
+  - LeaveRPC
+  - MoveToLocationRPC
+  - MoveToSeat
+  - OnArriveRPC
+  - OnInteractedRPC
+  - OnInteractionFailed
+  - OnInteractionSuccess
+  - OnServingFailed
+  - OnServingSuccess
+  - ReleaseSeatRPC
+  - RemoveFoodRPC
+  - RemoveOrder
+  - RPC_AttachMemoItem
+  - RPC_CreateMemoItem
+  - RPC_PickupMemoItem
+  - RPC_SetIsHolding
+  - SetFoodRPC
+  - SetSeatOccupied
+  - ShowWaitingUI
+  - SyncMenuList_Multiple
+  - SyncMenuList_None
+  - SyncMenuList_Single
+  - SyncOrder_Double
+  - SyncOrder_Single
+  - UpdateCustomerText
+  - UpdateWaitingSlider
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
