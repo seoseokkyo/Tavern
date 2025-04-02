@@ -61,13 +61,11 @@ public class MemoDummyScript : Interactable
     {
         Debug.Log("Called CreateMemoItem RPC");
 
-        List<FoodSelect> selected = new List<FoodSelect>();
+        List<string> selected = new List<string>();
         foreach (string f in foods)
         {
             ItemData curData = FindItemData(f);
-            FoodSelect cur = gameObject.AddComponent<FoodSelect>();
-            cur.Initialize(curData);
-            selected.Add(cur);
+            selected.Add(f);
         }
 
         GameObject memoItem = Resources.Load<GameObject>("Memo/Memo");

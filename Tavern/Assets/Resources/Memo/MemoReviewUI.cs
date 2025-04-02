@@ -19,11 +19,10 @@ public class MemoReviewUI : MonoBehaviour
         reviewUIPanel.SetActive(false);
     }
     
-    public void Initialize(MemoData data)
+    public void Initialize(List<string> data, string extraNoteData)
     {
-        foreach(FoodSelect cur in data.foods)
+        foreach(string cur in data)
         {
-            string name = cur.name;
             GameObject prefab = Instantiate(foodIconPrefab);
             prefab.transform.SetParent(foodsContentTransform, false);
             FoodSelect tempUI = prefab.GetComponent<FoodSelect>();
@@ -37,7 +36,7 @@ public class MemoReviewUI : MonoBehaviour
             foods.Add(prefab);
         }
 
-        extraNoteText.text = data.extraNote;
+        extraNoteText.text = extraNoteData;
         extraNoteText.enabled = true;
     }
     private ItemData FindItemData(string name)

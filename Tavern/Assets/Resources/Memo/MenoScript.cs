@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class MenoScript : Interactable
 {
-    private MemoData memoData;
+    private List<string> foods = new List<string>();
+    private string extraNote;
+
     public UnityEngine.UI.Image icon;
     public TextMeshPro contentText;
 
@@ -91,14 +93,13 @@ public class MenoScript : Interactable
         }
     }
 
-    public void Initialize(List<FoodSelect> foods, string extras)
+    public void Initialize(List<string> _foods, string extras)
     {
-        memoData.foods = foods;
-        memoData.extraNote = extras;
+        foods = _foods;
+        extraNote = extras;
 
-        icon.sprite = foods[0].icon.sprite;
-
-        memoUI.Initialize(memoData);
+        icon.sprite = ItemManager.Instance.GetItemSpriteByName(foods[0]);
+        memoUI.Initialize(foods, extras);
     }
 
     public override string GetInteractingDescription()
