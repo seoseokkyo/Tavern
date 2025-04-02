@@ -99,6 +99,7 @@ MonoBehaviour:
   - SyncOrder_Single
   - UpdateCustomerText
   - UpdateWaitingSlider
+  - SetCustomerScale
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
