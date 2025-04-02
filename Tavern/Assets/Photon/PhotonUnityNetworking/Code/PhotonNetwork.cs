@@ -3280,6 +3280,11 @@ namespace Photon.Pun
             return "Assets/Photon/PhotonUnityNetworking/";
         }
 
+        public static void Instantiate()
+        {
+            throw new NotImplementedException();
+        }
+
 
         ///// <summary>
         ///// Internally used by Editor scripts, called on Hierarchy change (includes scene save) to remove surplus hidden PhotonHandlers.
@@ -3305,7 +3310,7 @@ namespace Photon.Pun
         //    }
         //}
 
-        #endif
+#endif
 
     }
 }

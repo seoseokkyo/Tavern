@@ -13,19 +13,19 @@ namespace Photon.Pun
     using UnityEditor;
     using UnityEngine;
 
-    [CustomEditor(typeof(MonoBehaviourPun))]
+    [CustomEditor(typeof(Interactable))]
     public abstract class MonoBehaviourPunEditor : Editor
     {
-        MonoBehaviourPun mbTarget;
+        Interactable mbTarget;
 
         private void OnEnable()
         {
-            mbTarget = target as MonoBehaviourPun;
+            mbTarget = target as Interactable;
         }
 
         public override void OnInspectorGUI()
         {
-            mbTarget = target as MonoBehaviourPun;
+            mbTarget = target as Interactable;
 
             base.OnInspectorGUI();
 
