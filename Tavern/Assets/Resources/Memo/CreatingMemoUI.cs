@@ -20,6 +20,10 @@ public class CreatingMemoUI : MonoBehaviourPunCallbacks
 
     public Transform spawnLoc;
 
+    // SSK
+    [HideInInspector]
+    public MemoDummyScript MemoDummy = null; 
+
     public void Init(PlayerController owner)
     {
         player = owner;
@@ -52,7 +56,7 @@ public class CreatingMemoUI : MonoBehaviourPunCallbacks
                     FoodSelect tempUI = prefab.GetComponent<FoodSelect>();
                     if (tempUI != null)
                     {
-                        ItemData tempData = FindItemData(name);
+                        ItemData tempData = MemoDummy.FindItemData(name);
                         tempUI.Initialize(tempData);
                         tempUI.isSelected = false;
                     }
@@ -63,17 +67,6 @@ public class CreatingMemoUI : MonoBehaviourPunCallbacks
         }
     }
 
-    private ItemData FindItemData(string name)
-    {
-        foreach (ItemData temp in itemDatas.items)
-        {
-            if (temp.itemName == name)
-            {
-                return temp;
-            }
-        }
-        return itemDatas.items[0];
-    }
 
     void Start()
     {
@@ -92,50 +85,19 @@ public class CreatingMemoUI : MonoBehaviourPunCallbacks
             {
                 if(f.isSelected)
                 {
-                    foodNames.Add(f.name);
+                    foodNames.Add(f.itemData.itemName);
                     Debug.Log("SelectedFood is Set");
                 }
             }
         }
         string extraNote = extraNotesInput.text;
-        Debug.Log("Call RPC");
-        photonView.RPC("RPC_CreateMemoItem", RpcTarget.AllBuffered, foodNames.ToArray(), extraNote);
+        Debug.Log("Call RPC");        
+
+        MemoDummy.CreateMemoItem(foodNames.ToArray(), extraNote);
 
         CloseUI();
     }
 
-    [PunRPC]
-    void RPC_CreateMemoItem(string[] foods, string extra)
-    {
-        Debug.Log("Called CreateMemoItem RPC");
-
-        List<FoodSelect> selected = new List<FoodSelect>();
-        foreach (string f in foods)
-        {
-            ItemData curData = FindItemData(f);
-            FoodSelect cur = new FoodSelect();
-            cur.Initialize(curData);
-            selected.Add(cur);
-        }
-        
-        GameObject memoItem = Resources.Load<GameObject>("Memo/Memo");
-        if (memoItem == null)
-        {
-            Debug.LogError("Memo prefab is null");
-            return; 
-        }
-
-        GameObject instance = Instantiate(memoItem);
-        MenoScript memo = instance.GetComponent<MenoScript>();
-        if (memo == null)
-        {
-            Debug.LogError("MenoScript component is null");
-            return;
-        }
-        memo.Initialize(selected, extra);
-        Vector3 loc = spawnLoc.transform.up * 5;
-        memo.transform.position = loc;
-    }
 
     void OnCancelButtonClicked()
     {

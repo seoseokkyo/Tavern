@@ -32,6 +32,7 @@ public class MemoDummyScript : Interactable
             //GameObject canvas = interactPlayer.PlayerCanvas.gameObject;
             spawnedUI = Instantiate(memoUI);
             CreatingMemoUI ui = spawnedUI.GetComponent<CreatingMemoUI>();
+            ui.MemoDummy = this;
             ui.Init(interactPlayer);
         }
         else
@@ -48,5 +49,52 @@ public class MemoDummyScript : Interactable
     void Update()
     {
         
+    }
+
+    public void CreateMemoItem(string[] foods, string extra)
+    {
+        photonView.RPC("RPC_CreateMemoItem", RpcTarget.AllBuffered, foods, extra);
+    }
+
+    [PunRPC]
+    void RPC_CreateMemoItem(string[] foods, string extra)
+    {
+        Debug.Log("Called CreateMemoItem RPC");
+
+        List<FoodSelect> selected = new List<FoodSelect>();
+        foreach (string f in foods)
+        {
+            ItemData curData = FindItemData(f);
+            FoodSelect cur = gameObject.AddComponent<FoodSelect>();
+            cur.Initialize(curData);
+            selected.Add(cur);
+        }
+
+        GameObject memoItem = Resources.Load<GameObject>("Memo/Memo");
+        if (memoItem == null)
+        {
+            Debug.LogError("Memo prefab is null");
+            return;
+        }
+
+        GameObject instance = Instantiate(memoItem);
+        MenoScript memo = instance.GetComponent<MenoScript>();
+        if (memo == null)
+        {
+            Debug.LogError("MenoScript component is null");
+            return;
+        }
+        memo.Initialize(selected, extra);
+        //Vector3 loc = spawnLoc.transform.up * 5;
+
+        Vector3 loc = transform.up * 5;
+
+        memo.transform.position = loc;
+    }
+
+
+    public ItemData FindItemData(string name)
+    {
+        return ItemManager.Instance.GetItemDataByName(name);
     }
 }
