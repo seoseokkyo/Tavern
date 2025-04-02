@@ -70,14 +70,14 @@ public class IngredientComp : MonoBehaviour
 
     public void Slice()
     {
-        CookingFlowString += "Slice,";
-        // 만약 SetData에서 FlowString에 이니셜이 된 직후 호출이 되었으면 "Potato,Slice,"가 들어가 있을 것
+        CookingFlowString += "Sliced,";
+        // 만약 SetData에서 FlowString에 이니셜이 된 직후 호출이 되었으면 "Potato,Sliced,"가 들어가 있을 것
 
         var ItemData = ItemManager.Instance.GetItemDataByName(IngredientData.SlicedIngredientName);
         var CreatedItemBase = ItemBase.ItemBaseCreator.CreateItemBase(ItemData);
 
         CurrentWorldItem.SetItem(CreatedItemBase);
-        // WorldItem은 IngredientData.SlicedIngredientName로 변경이 된 상태 (Potato -> Slice Potato)
+        // WorldItem은 IngredientData.SlicedIngredientName로 변경이 된 상태 (Potato -> Sliced Potato)
 
         // 여기서 아이템매니저에 파생 계층 데이터 갖고와서 엎어줘야 함
         // IngredientData = ItemManager.Instance.DoSomeThing();
@@ -95,8 +95,8 @@ public class IngredientComp : MonoBehaviour
         // 처음에 구웠다가 도중에 꺼내서 끓는솥 같은데에 들어왔다가 이런식으로 조리자체의 방법이 섞이는건 일단 무시....
         if (CookingStartedCheck())
         {
-            CookingFlowString += "Grill,";
-            // 만약 SetData에서 FlowString에 이니셜이 된 직후 호출이 되었으면 "Potato,Slice,"가 들어가 있을 것
+            CookingFlowString += "Grilled,";
+            // 만약 SetData에서 FlowString에 이니셜이 된 직후 호출이 되었으면 "Potato,Grilled,"가 들어가 있을 것
 
             var ItemData = ItemManager.Instance.GetItemDataByName(IngredientData.GrilledIngredientName);
             var CreatedItemBase = ItemBase.ItemBaseCreator.CreateItemBase(ItemData);
