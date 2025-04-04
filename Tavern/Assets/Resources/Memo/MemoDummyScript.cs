@@ -8,6 +8,9 @@ public class MemoDummyScript : Interactable
     public GameObject memoUI;
     private GameObject spawnedUI;
 
+    public GameObject memoPrefab;
+    WorldItem spawnedMemo;
+
     public override string GetInteractingDescription()
     {
         return "Press [E] to Write Memo";
@@ -53,14 +56,6 @@ public class MemoDummyScript : Interactable
 
     public void CreateMemoItem(string[] foods, string extra)
     {
-        photonView.RPC("RPC_CreateMemoItem", RpcTarget.AllBuffered, foods, extra);
-    }
-
-    [PunRPC]
-    void RPC_CreateMemoItem(string[] foods, string extra)
-    {
-        Debug.Log("Called CreateMemoItem RPC");
-
         List<string> selected = new List<string>();
         foreach (string f in foods)
         {
@@ -68,26 +63,48 @@ public class MemoDummyScript : Interactable
             selected.Add(f);
         }
 
-        GameObject memoItem = Resources.Load<GameObject>("Memo/Memo");
-        if (memoItem == null)
+        GameObject memoObj = PhotonNetwork.Instantiate("Memo/Memo", transform.position + transform.up * 2f, Quaternion.identity);
+        spawnedMemo = memoObj.GetComponent<WorldItem>(); 
+
+        var ItemData = ItemManager.Instance.GetItemDataByName("Memo");
+        var CreatedItemBase = ItemBase.ItemBaseCreator.CreateItemBase(ItemData);
+        if(CreatedItemBase != null)
         {
-            Debug.LogError("Memo prefab is null");
-            return;
+            spawnedMemo.SetItem(CreatedItemBase);
+            MenoScript memo = spawnedMemo.GetComponent<MenoScript>();
+            if (memo != null)
+            {
+                /*
+                ItemManager.Instance.GetItemDataByName("Memo");
+                GameObject memoItem = Resources.Load<GameObject>("Memo/Memo");
+                if (memoItem == null)
+                {
+                    Debug.LogError("Memo prefab is null");
+                    return;
+                }
+
+                GameObject instance = Instantiate(memoItem);
+                MenoScript memo = instance.GetComponent<MenoScript>();
+                if (memo == null)
+                {
+                    Debug.LogError("MenoScript component is null");
+                    return;
+                }
+                */
+                memo.Initialize(selected, extra);
+            }
         }
 
-        GameObject instance = Instantiate(memoItem);
-        MenoScript memo = instance.GetComponent<MenoScript>();
-        if (memo == null)
-        {
-            Debug.LogError("MenoScript component is null");
-            return;
-        }
-        memo.Initialize(selected, extra);
-        //Vector3 loc = spawnLoc.transform.up * 5;
+        Debug.Log("Calling RPC_CreateMemoItem");
+        photonView.RPC("RPC_CreateMemoItem", RpcTarget.AllBuffered);
+    }
 
+    [PunRPC]
+    void RPC_CreateMemoItem()
+    {
         Vector3 loc = transform.up * 5;
-
-        memo.transform.position = loc;
+        spawnedMemo.transform.position = loc;
+        spawnedMemo.transform.localScale = new Vector3(1,1,1);
     }
 
 

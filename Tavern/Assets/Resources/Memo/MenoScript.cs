@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class MenoScript : Interactable
+public class MenoScript : WorldItem
 {
     private List<string> foods = new List<string>();
     private string extraNote;
@@ -12,12 +12,12 @@ public class MenoScript : Interactable
     public UnityEngine.UI.Image icon;
     public TextMeshPro contentText;
 
+
     public bool isHolding = false;
+    public bool isAttaching = false;
     public bool isAttached = false;
 
     public Transform attachPoint;
-    private Transform playerHand;
-
     public MemoReviewUI memoUI;
 
     private void Update()
@@ -26,6 +26,7 @@ public class MenoScript : Interactable
         {
             if(Input.GetMouseButtonDown(0))
             {
+                isAttaching = true;
                 TryAttachMemoItem();
             }
 
@@ -56,7 +57,7 @@ public class MenoScript : Interactable
         }
     }
 
-    void AttachMemoItem(Vector3 attachPosition)
+    public void AttachMemoItem(Vector3 attachPosition)
     {
         transform.position = attachPosition;
         transform.rotation = Quaternion.identity; 
@@ -65,6 +66,7 @@ public class MenoScript : Interactable
         isHolding = false;  
 
         photonView.RPC("RPC_AttachMemoItem", RpcTarget.All, attachPosition);
+        interactPlayer.CurrentPlayer.ItemDetachFromRightHand();
     }
 
     [PunRPC]
@@ -73,9 +75,9 @@ public class MenoScript : Interactable
         transform.position = attachPosition;
         transform.rotation = Quaternion.identity;
         isAttached = true;
+        isAttaching = false;
         isHolding = false;
     }
-
 
     void ShowMemoUI()
     {
@@ -101,50 +103,4 @@ public class MenoScript : Interactable
         icon.sprite = ItemManager.Instance.GetItemSpriteByName(foods[0]);
         memoUI.Initialize(foods, extras);
     }
-
-    public override string GetInteractingDescription()
-    {
-        return "It's a memo";
-    }
-
-    public override void Interact()
-    {
-        if (interactPlayer != null)
-        {
-            // 오른손 부착.. 
-            isHolding = true;
-            photonView.RPC("RPC_SetIsHolding", RpcTarget.All, true);
-        }
-
-        if(isAttached && !isHolding)
-        {
-            PickupMemoItem();
-        }
-    }
-
-    [PunRPC]
-    void RPC_SetIsHolding(bool holdingStatus)
-    {
-        isHolding = holdingStatus;
-    }
-
-    void PickupMemoItem()
-    {
-        isAttached = false;
-        isHolding = true;
-
-        transform.SetParent(playerHand);
-        transform.position = playerHand.position;
-        transform.rotation = playerHand.rotation;
-
-        photonView.RPC("RPC_PickupMemoItem", RpcTarget.All);
-    }
-
-    [PunRPC]
-    void RPC_PickupMemoItem()
-    {
-        isAttached = false;
-        isHolding = true;
-    }
-
 }

@@ -147,3 +147,4 @@ MonoBehaviour:
   interactPlayer: {fileID: 0}
   interactionType: 0
   memoUI: {fileID: 4807104286120081864, guid: 3f9c22d85cc0a9d43919f75f2b8bfd97, type: 3}
+  memoPrefab: {fileID: 3867533850876836565, guid: 5d2ef457fd4e4e64b970d0fb89217a97, type: 3}
