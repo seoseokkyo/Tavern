@@ -31,11 +31,12 @@ public class WorldItem : Interactable
         ItemRigidbody = GetComponent<Rigidbody>();
         ItemRigidbody.isKinematic = false;
 
-        if (PhotonNetwork.IsMasterClient)
+        if (bEditorSetted || !string.IsNullOrEmpty(InitItemName))
         {
-
+            return;
         }
-        else if (string.IsNullOrEmpty(InitItemName))
+
+        if (!PhotonNetwork.IsMasterClient)
         {
             RequestServerData();
         }

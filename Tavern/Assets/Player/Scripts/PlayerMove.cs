@@ -52,17 +52,18 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     private void Move()
     {
-        horizontalInput = UnityEngine.Input.GetAxisRaw("Horizontal");
-        verticalInput = UnityEngine.Input.GetAxisRaw("Vertical");
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+
         moveDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        transform.position += moveDir.normalized * moveSpeed;
+        Vector3 targetPos = rb.position + moveDir.normalized * moveSpeed * Time.fixedDeltaTime;
+        rb.MovePosition(targetPos);
     }
 
-    private void Jump()
+    void Jump()
     {
         grounded = false;
-        rb.isKinematic = false;
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
@@ -71,7 +72,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         if (collision.gameObject.CompareTag("Floor"))
         {
             grounded = true;
-            rb.isKinematic = true;
         }
     }
 }

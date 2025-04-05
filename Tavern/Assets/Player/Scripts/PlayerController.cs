@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private SelectedRecipeUI selectedRecipeUI;
     private RecipeUI recipeUI;
 
+    public GameObject memoReviewUIPrefab;  
+    private MemoReviewUI memoReviewUIInstance;
+
     [HideInInspector]
     public ItemBase CurrentEquipmentItem
     {
@@ -160,68 +163,64 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 TryAttachMemoItem();
         }
 
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (CurrentPlayer.RightHandItem == null)
+                return;
+
+            if (CurrentPlayer.RightHandItem != null &&
+                CurrentPlayer.RightHandItem.item != null)
+            {
+                string name = CurrentPlayer.RightHandItem.item.CurrentItemData.itemName;
+                if (name == "Memo")
+                {
+                    TryOpenMemoUI();
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonUp(1))
         {
             if (CurrentPlayer.RightHandItem == null)
                 return;
 
             if (CurrentPlayer.RightHandItem.item.CurrentItemData.itemName == "Memo")
-                TryOpenMemoUI(); 
-
-
-        }
-
-        if (Input.GetMouseButtonUp(1))
-        {
-            if (CurrentPlayer.RightHandItem.item.CurrentItemData.itemName == "Memo")
             {
-                MemoReviewUI reviewUI = FindObjectOfType<MemoReviewUI>();
-                if (reviewUI != null)
+                if (memoReviewUIInstance != null)
                 {
-                    reviewUI.CloseUI();
+                    memoReviewUIInstance.CloseUI();
                 }
             }
-
-
         }
     }
 
     private void TryAttachMemoItem()
     {
-        if (CurrentPlayer.RightHandItem == null)
-            return;
+        var memoObject = CurrentPlayer.RightHandItem;
+        var menoScript = memoObject.GetComponent<MenoScript>();
 
-        if (CurrentPlayer.RightHandItem is MenoScript memo)
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 10f, ~LayerMask.GetMask("UI")))
         {
-            Vector3 attachPos = GetAttachPosition(); 
-            memo.TryAttachMemo(attachPos);
+            Vector3 attachPos = hit.point;
+            //Debug.Log($"[Raycast Hit] {hit.collider.gameObject.name}"); 
+            //Debug.DrawRay(ray.origin, ray.direction * 10f, Color.red, 1f);
+            menoScript.TryAttachMemo(attachPos);
         }
     }
-
-    private void TryOpenMemoUI()
+    void TryOpenMemoUI()
     {
-        if (CurrentPlayer.RightHandItem == null)
-            return;
-
-        if (CurrentPlayer.RightHandItem is MenoScript memo)
+        if (CurrentPlayer.RightHandItem.item is MemoItemBase memoItem)
         {
-            MemoReviewUI ui = FindObjectOfType<MemoReviewUI>();
-            if (ui != null && !ui.reviewUIPanel.activeSelf) 
+            if (memoReviewUIInstance == null)
             {
-                memo.OpenReviewUI();
+                GameObject uiObj = Instantiate(memoReviewUIPrefab);
+                memoReviewUIInstance = uiObj.GetComponent<MemoReviewUI>();
             }
-        }
-    }
 
-    private Vector3 GetAttachPosition()
-    {
-        Ray ray = PlayerCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, 5f))
-        {
-            return hit.point;
+            memoReviewUIInstance.Initialize(memoItem.orderedFoods, memoItem.extraNote);
+            memoReviewUIInstance.OpenUI();
         }
-
-        return CurrentPlayer.transform.position + CurrentPlayer.transform.forward * 2f;
     }
 
     private void OnDestroy()

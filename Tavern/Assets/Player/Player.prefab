@@ -554,7 +554,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 80
   m_CollisionDetection: 1
@@ -715,10 +715,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8dc655e916bacd4ab9eb48951427069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  moveSpeed: 35
   orientation: {fileID: 1669283233352587181}
   rb: {fileID: 4789187788882808879}
-  jumpForce: 10
+  jumpForce: 15
   animator: {fileID: 1480623829964838869}
 --- !u!114 &6797159655851215098
 MonoBehaviour:
@@ -764,6 +764,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerCanvas: {fileID: 0}
   recipe: {fileID: 1346495968770374396, guid: 98689606a9c1dd043b69ac9bdcf6735b, type: 3}
+  memoReviewUIPrefab: {fileID: 122205816929191461, guid: 8879ec9f7e0208b4b8836dbfac0a9037, type: 3}
   CurrentPlayer: {fileID: 0}
   PlayerCamera: {fileID: 6974980025354981918}
   CameraTransform: {fileID: 42470194907795370}

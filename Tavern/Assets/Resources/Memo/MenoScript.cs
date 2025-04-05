@@ -14,7 +14,7 @@ public class MenoScript : WorldItem
 
     public bool isAttached = false;
 
-    public Transform attachPoint;
+    public Transform attachPoint;    
     public MemoReviewUI memoUI;
 
     public void TryAttachMemo(Vector3 attachPosition)
@@ -36,16 +36,6 @@ public class MenoScript : WorldItem
         isAttached = true;
     }
 
-    public void OpenReviewUI()
-    {
-        MemoReviewUI ui = FindObjectOfType<MemoReviewUI>();
-        if (ui != null && item is MemoItemBase memoData)
-        {
-            ui.Initialize(memoData.orderedFoods, memoData.extraNote);
-            ui.OpenUI();
-        }
-    }
-
     public void Initialize(List<string> _foods, string extras)
     {
         foods = _foods;
@@ -53,6 +43,7 @@ public class MenoScript : WorldItem
 
         icon.sprite = ItemManager.Instance.GetItemSpriteByName(foods[0]);
         memoUI.Initialize(foods, extras);
+        memoUI.enabled = true;
     }
 
     [PunRPC]
