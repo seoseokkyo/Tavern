@@ -28,7 +28,7 @@ public class MemoReviewUI : MonoBehaviour
             FoodSelect tempUI = prefab.GetComponent<FoodSelect>();
             if (tempUI != null)
             {
-                ItemData tempData = FindItemData(name);
+                ItemData tempData = FindItemData(cur);
                 tempUI.Initialize(tempData);
                 tempUI.isSelected = false;
             }

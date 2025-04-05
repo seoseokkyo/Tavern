@@ -1,4 +1,5 @@
 using Photon.Pun;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -148,7 +149,75 @@ public class PlayerController : MonoBehaviourPunCallbacks
             }
         }
 
-        // Item Use
+        // Memo ฐüทร 
+
+        if (UnityEngine.Input.GetMouseButtonDown(0)) 
+        {
+            if(CurrentPlayer.RightHandItem.item.CurrentItemData.itemName == "Memo")
+                TryAttachMemoItem();
+
+
+        }
+
+        if (Input.GetMouseButton(1))
+        {
+            if (CurrentPlayer.RightHandItem.item.CurrentItemData.itemName == "Memo")
+                TryOpenMemoUI(); 
+
+
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            if (CurrentPlayer.RightHandItem.item.CurrentItemData.itemName == "Memo")
+            {
+                MemoReviewUI reviewUI = FindObjectOfType<MemoReviewUI>();
+                if (reviewUI != null)
+                {
+                    reviewUI.CloseUI();
+                }
+            }
+
+
+        }
+    }
+
+    private void TryAttachMemoItem()
+    {
+        if (CurrentPlayer.RightHandItem == null)
+            return;
+
+        if (CurrentPlayer.RightHandItem is MenoScript memo)
+        {
+            Vector3 attachPos = GetAttachPosition(); 
+            memo.TryAttachMemo(attachPos);
+        }
+    }
+
+    private void TryOpenMemoUI()
+    {
+        if (CurrentPlayer.RightHandItem == null)
+            return;
+
+        if (CurrentPlayer.RightHandItem is MenoScript memo)
+        {
+            MemoReviewUI ui = FindObjectOfType<MemoReviewUI>();
+            if (ui != null && !ui.reviewUIPanel.activeSelf) 
+            {
+                memo.OpenReviewUI();
+            }
+        }
+    }
+
+    private Vector3 GetAttachPosition()
+    {
+        Ray ray = PlayerCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 5f))
+        {
+            return hit.point;
+        }
+
+        return CurrentPlayer.transform.position + CurrentPlayer.transform.forward * 2f;
     }
 
     private void OnDestroy()

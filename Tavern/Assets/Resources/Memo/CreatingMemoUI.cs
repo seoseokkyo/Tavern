@@ -91,7 +91,6 @@ public class CreatingMemoUI : MonoBehaviourPunCallbacks
             }
         }
         string extraNote = extraNotesInput.text;
-        Debug.Log("Call RPC");        
 
         MemoDummy.CreateMemoItem(foodNames.ToArray(), extraNote);
 

@@ -114,15 +114,6 @@ public class TavernPlayer : MonoBehaviour
             RightHandItem.transform.localScale = new Vector3(1, 1, 1);
 
             RightHandItem.GetComponent<Collider>().enabled = false;
-
-            if (RightHandItem.item.CurrentItemData.itemName == "Memo")
-            {
-                MenoScript memo = RightHandItem.GetComponent<MenoScript>();
-                if(memo != null)
-                {
-                    memo.isHolding = true;
-                }
-            }
         }
         else
         {
@@ -138,23 +129,6 @@ public class TavernPlayer : MonoBehaviour
 
             Vector3 NewPosition = RightHandItem.transform.position;
             NewPosition.y = hit.point.y;
-
-            if (RightHandItem.item.CurrentItemData.itemName == "Memo")
-            {
-                MenoScript memo = RightHandItem.GetComponent<MenoScript>();
-                if (memo != null)
-                {
-                    memo.isHolding = false;
-                }
-
-                if (memo.isAttaching)
-                {
-                    RightHandItem = null;
-                    return; 
-
-                }
-            }
-
 
             RightHandItem.transform.SetPositionAndRotation(NewPosition, Quaternion.identity);
             RightHandItem = null;

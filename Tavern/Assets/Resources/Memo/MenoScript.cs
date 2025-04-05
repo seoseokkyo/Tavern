@@ -12,86 +12,39 @@ public class MenoScript : WorldItem
     public UnityEngine.UI.Image icon;
     public TextMeshPro contentText;
 
-
-    public bool isHolding = false;
     public bool isAttaching = false;
     public bool isAttached = false;
 
     public Transform attachPoint;
     public MemoReviewUI memoUI;
 
-    private void Update()
+    public void TryAttachMemo(Vector3 attachPosition)
     {
-        if(isHolding)
+        if (!isAttached && interactPlayer != null)
         {
-            if(Input.GetMouseButtonDown(0))
-            {
-                isAttaching = true;
-                TryAttachMemoItem();
-            }
+            isAttached = true;
+            interactPlayer.CurrentPlayer.ItemDetachFromRightHand();
 
-            if (Input.GetMouseButtonDown(1))
-            {
-                ShowMemoUI();
-            }
-
-            if (Input.GetMouseButtonUp(1))
-            {
-                HideMemoUI();
-            }
+            photonView.RPC("RPC_AttachMemoItem", RpcTarget.AllBuffered, attachPosition);
         }
-    }
-
-    void TryAttachMemoItem()
-    {
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            if (hit.collider != null)
-            {
-                // 부착할 지점이 충돌한 위치
-                AttachMemoItem(hit.point);
-            }
-        }
-    }
-
-    public void AttachMemoItem(Vector3 attachPosition)
-    {
-        transform.position = attachPosition;
-        transform.rotation = Quaternion.identity; 
-
-        isAttached = true;
-        isHolding = false;  
-
-        photonView.RPC("RPC_AttachMemoItem", RpcTarget.All, attachPosition);
-        interactPlayer.CurrentPlayer.ItemDetachFromRightHand();
     }
 
     [PunRPC]
-    void RPC_AttachMemoItem(Vector3 attachPosition)
+    void RPC_AttachMemoItem(Vector3 pos)
     {
-        transform.position = attachPosition;
+        transform.position = pos;
         transform.rotation = Quaternion.identity;
         isAttached = true;
         isAttaching = false;
-        isHolding = false;
     }
 
-    void ShowMemoUI()
+    public void OpenReviewUI()
     {
-        if (memoUI != null)
+        MemoReviewUI ui = FindObjectOfType<MemoReviewUI>();
+        if (ui != null && item is MemoItemBase memoData)
         {
-            memoUI.OpenUI();
-        }
-    }
-
-    void HideMemoUI()
-    {
-        if (memoUI != null)
-        {
-            memoUI.CloseUI();
+            ui.Initialize(memoData.orderedFoods, memoData.extraNote);
+            ui.OpenUI();
         }
     }
 
@@ -102,5 +55,19 @@ public class MenoScript : WorldItem
 
         icon.sprite = ItemManager.Instance.GetItemSpriteByName(foods[0]);
         memoUI.Initialize(foods, extras);
+    }
+
+    [PunRPC]
+    public void RPC_InitializeMemoData(string serializedFoods, string extraNote)
+    {
+        List<string> foods = new List<string>(serializedFoods.Split('|'));
+
+        var memoData = ItemManager.Instance.GetItemDataByName("Memo");
+        MemoItemBase memoItemBase = new MemoItemBase(memoData, foods, extraNote);
+
+        SetItem(memoItemBase);
+
+        // UI 
+        Initialize(foods, extraNote);
     }
 }
