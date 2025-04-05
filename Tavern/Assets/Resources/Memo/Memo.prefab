@@ -116,6 +116,7 @@ GameObject:
   - component: {fileID: 4144809021975453653}
   - component: {fileID: 5622258417991420699}
   - component: {fileID: 4165676865276151502}
+  - component: {fileID: 5303367579916344518}
   m_Layer: 0
   m_Name: Memo
   m_TagString: Memo
@@ -132,8 +133,8 @@ Transform:
   m_GameObject: {fileID: 3867533850876836565}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.0741547, y: 0.567378, z: -0.31315053}
-  m_LocalScale: {x: 10, y: 10, z: 0.05}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8528651417816021544}
@@ -249,12 +250,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactPlayer: {fileID: 0}
   interactionType: 0
+  item:
+    CurrentItemData:
+      itemName: 
+      itemDescription: 
+      itemIcon: {fileID: 0}
+      itemMeshFilter: {fileID: 0}
+      itemMesh: {fileID: 0}
+      itemID: 0
+      itemCount: 0
+      itemCountLimit: 0
+      ItemType: 0
+      requireToolType: 0
+      ItemPrefab: {fileID: 0}
+      recipe: {fileID: 0}
+      AttachLocation: {x: 0, y: 0, z: 0}
+      AttachRotation: {x: 0, y: 0, z: 0, w: 0}
+      ItemFunctionList: []
+      fOptionValue1: 0
+      fOptionValue2: 0
+    OwnerInventory: {fileID: 0}
+  WorldItemMeshFilter: {fileID: 0}
+  WorldItemMesh: {fileID: 0}
+  bEditorSetted: 0
+  InitItemName: 
+  ItemRigidbody: {fileID: 0}
+  MeshObj: {fileID: 0}
   icon: {fileID: 3031483935460943501}
   contentText: {fileID: 0}
-  isHolding: 0
   isAttached: 0
   attachPoint: {fileID: 0}
   memoUI: {fileID: 1853058643383316093, guid: 8879ec9f7e0208b4b8836dbfac0a9037, type: 3}
+--- !u!54 &5303367579916344518
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867533850876836565}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &4466309489395761293
 GameObject:
   m_ObjectHideFlags: 0

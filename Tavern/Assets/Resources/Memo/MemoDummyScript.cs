@@ -3,6 +3,7 @@ using Photon.Pun;
 using System.Collections.Generic;
 using System;
 using UnityEditor;
+using System.Collections;
 
 public class MemoDummyScript : Interactable
 {
@@ -19,11 +20,13 @@ public class MemoDummyScript : Interactable
 
     public override void Interact()
     {
+        /*
         // 누가 사용하고 있으면 다른 사용자가 사용하지 못하게 막음
         if (!photonView.IsMine && photonView.IsSceneView)
         {
             photonView.RequestOwnership();
         }
+        */
 
         ModeController modeController = interactPlayer.GetComponent<ModeController>();
         if (modeController != null)
@@ -57,15 +60,20 @@ public class MemoDummyScript : Interactable
 
     public void CreateMemoItem(string[] foods, string extra)
     {
-        List<string> selectedFoods = new List<string>(foods);
+        Vector3 spawnPos = transform.position + Vector3.up * 4f;
+        GameObject memoObj = PhotonNetwork.Instantiate("Memo", spawnPos, Quaternion.identity);
+        StartCoroutine(InitializeMemoAfterDelay(memoObj, foods, extra));
+    }
 
-        GameObject memoObj = PhotonNetwork.Instantiate("Memo/Memo", transform.position + Vector3.up * 2f, Quaternion.identity);
+    private IEnumerator InitializeMemoAfterDelay(GameObject memoObj, string[] foods, string extra)
+    {
+        yield return new WaitForSeconds(0.1f); 
 
         MenoScript memoItem = memoObj.GetComponent<MenoScript>();
         if (memoItem != null)
         {
-            string serializedFoods = string.Join("|", selectedFoods); 
-            memoItem.photonView.RPC("RPC_InitializeMemoData", RpcTarget.AllBuffered, serializedFoods, extra);
+            string serialized = string.Join("|", foods);
+            memoItem.photonView.RPC("RPC_InitializeMemoData", RpcTarget.AllBuffered, serialized, extra);
         }
     }
 

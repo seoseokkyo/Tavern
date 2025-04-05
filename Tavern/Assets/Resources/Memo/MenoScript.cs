@@ -12,7 +12,6 @@ public class MenoScript : WorldItem
     public UnityEngine.UI.Image icon;
     public TextMeshPro contentText;
 
-    public bool isAttaching = false;
     public bool isAttached = false;
 
     public Transform attachPoint;
@@ -35,7 +34,6 @@ public class MenoScript : WorldItem
         transform.position = pos;
         transform.rotation = Quaternion.identity;
         isAttached = true;
-        isAttaching = false;
     }
 
     public void OpenReviewUI()
@@ -60,14 +58,22 @@ public class MenoScript : WorldItem
     [PunRPC]
     public void RPC_InitializeMemoData(string serializedFoods, string extraNote)
     {
+         if (string.IsNullOrEmpty(serializedFoods)) return;
+
         List<string> foods = new List<string>(serializedFoods.Split('|'));
-
         var memoData = ItemManager.Instance.GetItemDataByName("Memo");
-        MemoItemBase memoItemBase = new MemoItemBase(memoData, foods, extraNote);
 
-        SetItem(memoItemBase);
+        MemoItemBase baseItem = new MemoItemBase(memoData, foods, extraNote);
+        SetItem(baseItem); 
+        
+        if (foods.Count > 0 && icon != null)
+        {
+            icon.sprite = ItemManager.Instance.GetItemSpriteByName(foods[0]);
+        }
 
-        // UI 
-        Initialize(foods, extraNote);
+        if (memoUI != null)
+        {
+            memoUI.Initialize(foods, extraNote);
+        }
     }
 }

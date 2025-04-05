@@ -31,6 +31,16 @@ public class WorldItem : Interactable
         ItemRigidbody = GetComponent<Rigidbody>();
         ItemRigidbody.isKinematic = false;
 
+        if (PhotonNetwork.IsMasterClient)
+        {
+
+        }
+        else if (string.IsNullOrEmpty(InitItemName))
+        {
+            RequestServerData();
+        }
+
+        /*
         if (bEditorSetted)
         {
             SetItem(ItemBase.ItemBaseCreator.CreateItemBase(ItemManager.Instance.GetItemDataByName(InitItemName)));
@@ -39,6 +49,7 @@ public class WorldItem : Interactable
         {
             RequestServerData();
         }
+         */
     }
 
     // Update is called once per frame

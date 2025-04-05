@@ -153,14 +153,18 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         if (UnityEngine.Input.GetMouseButtonDown(0)) 
         {
-            if(CurrentPlayer.RightHandItem.item.CurrentItemData.itemName == "Memo")
+            if (CurrentPlayer.RightHandItem == null)
+                return;
+
+            if (CurrentPlayer.RightHandItem.item.CurrentItemData.itemName == "Memo")
                 TryAttachMemoItem();
-
-
         }
 
         if (Input.GetMouseButton(1))
         {
+            if (CurrentPlayer.RightHandItem == null)
+                return;
+
             if (CurrentPlayer.RightHandItem.item.CurrentItemData.itemName == "Memo")
                 TryOpenMemoUI(); 
 
