@@ -200,12 +200,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
         var menoScript = memoObject.GetComponent<MenoScript>();
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, 10f, ~LayerMask.GetMask("UI")))
+        if (Physics.Raycast(ray, out RaycastHit hit, 30f, ~LayerMask.GetMask("UI")))
         {
             Vector3 attachPos = hit.point;
-            //Debug.Log($"[Raycast Hit] {hit.collider.gameObject.name}"); 
-            //Debug.DrawRay(ray.origin, ray.direction * 10f, Color.red, 1f);
-            menoScript.TryAttachMemo(attachPos);
+            Quaternion targetRotation = Quaternion.LookRotation(hit.normal);  
+
+            // 메모 아이템 붙이기 처리
+            menoScript.TryAttachMemo(attachPos, targetRotation);
         }
     }
     void TryOpenMemoUI()

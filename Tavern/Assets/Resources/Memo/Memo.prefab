@@ -27,7 +27,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1880933876037434622}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.052}
   m_LocalScale: {x: 1, y: 1, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 5622258417991420699}
   - component: {fileID: 4165676865276151502}
   - component: {fileID: 5303367579916344518}
+  - component: {fileID: 7650966331453916180}
   m_Layer: 0
   m_Name: Memo
   m_TagString: Memo
@@ -133,7 +134,7 @@ Transform:
   m_GameObject: {fileID: 3867533850876836565}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.041942}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -281,6 +282,7 @@ MonoBehaviour:
   isAttached: 0
   attachPoint: {fileID: 0}
   memoUI: {fileID: 1853058643383316093, guid: 8879ec9f7e0208b4b8836dbfac0a9037, type: 3}
+  obj: {fileID: 0}
 --- !u!54 &5303367579916344518
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -308,6 +310,21 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7650966331453916180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867533850876836565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9162d3a8f1089154aa3f45a836826379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  texture: {fileID: 0}
+  shaderName: Standard
+  memoThickness: 0.05
 --- !u!1 &4466309489395761293
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,8 +351,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4466309489395761293}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.03}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8528651417816021544}

@@ -17,27 +17,37 @@ public class MenoScript : WorldItem
     public Transform attachPoint;    
     public MemoReviewUI memoUI;
 
-    public void TryAttachMemo(Vector3 attachPosition)
+    public GameObject obj;
+
+    public void TryAttachMemo(Vector3 attachPosition, Quaternion attachRotation)
     {
         if (!isAttached && interactPlayer != null)
         {
             isAttached = true;
-            interactPlayer.CurrentPlayer.ItemDetachFromRightHand();
-
-            photonView.RPC("RPC_AttachMemoItem", RpcTarget.AllBuffered, attachPosition);
+            interactPlayer.CurrentPlayer.DetachMemoItemFromRightHand();  
+            photonView.RPC("RPC_AttachMemoItem", RpcTarget.AllBuffered, attachPosition, attachRotation);
         }
     }
 
     [PunRPC]
-    void RPC_AttachMemoItem(Vector3 pos)
+    void RPC_AttachMemoItem(Vector3 pos, Quaternion rotation)
     {
         transform.position = pos;
-        transform.rotation = Quaternion.identity;
+        transform.rotation = rotation;
         isAttached = true;
+
+        var rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+            rb.useGravity = false;
+        }
     }
 
     public void Initialize(List<string> _foods, string extras)
     {
+        if (foods.Count > 0) return;
+
         foods = _foods;
         extraNote = extras;
 
@@ -55,8 +65,23 @@ public class MenoScript : WorldItem
         var memoData = ItemManager.Instance.GetItemDataByName("Memo");
 
         MemoItemBase baseItem = new MemoItemBase(memoData, foods, extraNote);
-        SetItem(baseItem); 
-        
+
+        item = baseItem;
+        InitItemName = baseItem.CurrentItemData.itemName;
+
+        if (item.CurrentItemData.ItemPrefab)
+        {
+            MeshObj = Instantiate(item.CurrentItemData.ItemPrefab);
+            MeshObj.transform.SetParent(transform, false);
+
+            MeshObj.SetActive(false);
+        }
+        else
+        {
+            WorldItemMeshFilter.sharedMesh = item.CurrentItemData.itemMeshFilter.sharedMesh;
+            WorldItemMesh.sharedMaterials = item.CurrentItemData.itemMesh.sharedMaterials;
+        }
+
         if (foods.Count > 0 && icon != null)
         {
             icon.sprite = ItemManager.Instance.GetItemSpriteByName(foods[0]);

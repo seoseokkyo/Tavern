@@ -11,7 +11,7 @@ public class MemoDummyScript : Interactable
     private GameObject spawnedUI;
 
     public GameObject memoPrefab;
-    WorldItem spawnedMemo;
+    MenoScript spawnedMemo;
 
     public override string GetInteractingDescription()
     {
@@ -60,8 +60,13 @@ public class MemoDummyScript : Interactable
 
     public void CreateMemoItem(string[] foods, string extra)
     {
+        if (spawnedMemo != null) return;
+
         Vector3 spawnPos = transform.position + Vector3.up * 4f;
         GameObject memoObj = PhotonNetwork.Instantiate("Memo", spawnPos, Quaternion.identity);
+        spawnedMemo = memoObj.GetComponent<MenoScript>();
+        spawnedMemo.obj = memoObj;
+
         StartCoroutine(InitializeMemoAfterDelay(memoObj, foods, extra));
     }
 
@@ -74,6 +79,7 @@ public class MemoDummyScript : Interactable
         {
             string serialized = string.Join("|", foods);
             memoItem.photonView.RPC("RPC_InitializeMemoData", RpcTarget.AllBuffered, serialized, extra);
+            memoItem.memoUI.enabled = true;
         }
     }
 
