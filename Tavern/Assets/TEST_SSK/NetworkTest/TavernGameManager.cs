@@ -1,6 +1,10 @@
 using UnityEngine;
+using System.Collections.Generic;
 using Photon.Pun;
+using System;
 using UnityEngine.SceneManagement;
+using System.Collections;
+
 
 public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -38,11 +42,65 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
         get { return _TavernOpen; }
         set { photonView.RPC("SetTavernOpenFlag", RpcTarget.MasterClient, value); }
     }
-
     [PunRPC]
     public void SetTavernOpenFlag(bool bOpen)
     {
         _TavernOpen = bOpen;
+
+        if (bOpen && PhotonNetwork.IsMasterClient)
+        {
+            SpawnCustomer();
+        }
+    }
+    public override void OnJoinedRoom()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SpawnMenuManager();
+        }
+    }
+    void SpawnMenuManager()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+
+        if (GameObject.FindWithTag("MenuManager") == null)
+        {
+            GameObject menuManager = PhotonNetwork.Instantiate("MenuManager", Vector3.zero, Quaternion.identity);
+            menuManager.tag = "MenuManager";
+            DontDestroyOnLoad(menuManager);
+        }
+    }
+
+    void SpawnCustomer()
+    {
+        Transform startLoc = GameObject.Find("npcLoc").transform;
+        GameObject customerObj = PhotonNetwork.Instantiate("Customer1", startLoc.position, Quaternion.identity);
+        customerObj.transform.localScale = Vector3.one * 10;
+
+        photonView.RPC("SetCustomerScale", RpcTarget.AllBuffered, customerObj.GetComponent<PhotonView>().ViewID);
+
+        CustomerScript customer = customerObj.GetComponent<CustomerScript>();
+        customer.startLoc = startLoc;
+
+        StartCoroutine(InitializeCustomerNextFrame(customer));
+    }
+    IEnumerator InitializeCustomerNextFrame(CustomerScript customer)
+    {
+        yield return null;
+        customer.Initialize();
+    }
+
+    [PunRPC]
+    void SetCustomerScale(int viewID)
+    {
+        PhotonView view = PhotonView.Find(viewID);
+        if (view != null)
+        {
+            view.transform.localScale = Vector3.one * 10;
+        }
     }
 
     [SerializeField]
@@ -147,6 +205,18 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
             PassedTime = 0;
             CommonUseGold = 0;
         }
+
+
+        if (GameObject.Find("LogMarker") == null)
+        {
+            GameObject log = Resources.Load<GameObject>("LogMaker/LogMarker");
+            if (log != null)
+            {
+                GameObject logInstance = Instantiate(log);
+                DontDestroyOnLoad(logInstance);
+                log.active = true;
+            }
+        }
     }
 
     private void OnGUI()
@@ -241,11 +311,6 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
     void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
 
-    }
-
-    public override void OnJoinedRoom()
-    {
- 
     }
 
     void RequestDailyResultData()

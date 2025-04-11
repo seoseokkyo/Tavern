@@ -21,14 +21,19 @@ public class MemoReviewUI : MonoBehaviour
     
     public void Initialize(List<string> data, string extraNoteData)
     {
-        foreach(string cur in data)
+        foreach (GameObject go in foods)
+        {
+            Destroy(go);
+        }
+
+        foreach (string cur in data)
         {
             GameObject prefab = Instantiate(foodIconPrefab);
             prefab.transform.SetParent(foodsContentTransform, false);
             FoodSelect tempUI = prefab.GetComponent<FoodSelect>();
             if (tempUI != null)
             {
-                ItemData tempData = FindItemData(name);
+                ItemData tempData = FindItemData(cur);
                 tempUI.Initialize(tempData);
                 tempUI.isSelected = false;
             }

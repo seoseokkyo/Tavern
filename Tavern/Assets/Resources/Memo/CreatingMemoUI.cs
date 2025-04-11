@@ -29,7 +29,8 @@ public class CreatingMemoUI : MonoBehaviourPunCallbacks
         player = owner;
         modeController = owner.GetComponent<ModeController>();
 
-        SetFoodList();
+        if(foods.Count == 0)
+            SetFoodList();
 
         setButton.onClick.AddListener(OnSetButtonClicked);
         cancelButton.onClick.AddListener(OnCancelButtonClicked);
@@ -56,7 +57,7 @@ public class CreatingMemoUI : MonoBehaviourPunCallbacks
                     FoodSelect tempUI = prefab.GetComponent<FoodSelect>();
                     if (tempUI != null)
                     {
-                        ItemData tempData = MemoDummy.FindItemData(name);
+                        ItemData tempData = ItemManager.Instance.GetItemDataByName(name);
                         tempUI.Initialize(tempData);
                         tempUI.isSelected = false;
                     }
@@ -91,7 +92,6 @@ public class CreatingMemoUI : MonoBehaviourPunCallbacks
             }
         }
         string extraNote = extraNotesInput.text;
-        Debug.Log("Call RPC");        
 
         MemoDummy.CreateMemoItem(foodNames.ToArray(), extraNote);
 

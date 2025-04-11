@@ -1,4 +1,5 @@
 using Photon.Pun;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +11,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public GameObject recipe;
     private SelectedRecipeUI selectedRecipeUI;
     private RecipeUI recipeUI;
+
+    public GameObject memoReviewUIPrefab;  
+    private MemoReviewUI memoReviewUIInstance;
 
     [HideInInspector]
     public ItemBase CurrentEquipmentItem
@@ -146,7 +150,76 @@ public class PlayerController : MonoBehaviourPunCallbacks
             //}
         }
 
-        // Item Use
+        // Memo 관련 
+
+        if (UnityEngine.Input.GetMouseButtonDown(0)) 
+        {
+            if (CurrentPlayer.RightHandItem == null)
+                return;
+
+            if (CurrentPlayer.RightHandItem.item.CurrentItemData.itemName == "Memo")
+                TryAttachMemoItem();
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (CurrentPlayer.RightHandItem == null)
+                return;
+
+            if (CurrentPlayer.RightHandItem != null &&
+                CurrentPlayer.RightHandItem.item != null)
+            {
+                string name = CurrentPlayer.RightHandItem.item.CurrentItemData.itemName;
+                if (name == "Memo")
+                {
+                    TryOpenMemoUI();
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            if (CurrentPlayer.RightHandItem == null)
+                return;
+
+            if (CurrentPlayer.RightHandItem.item.CurrentItemData.itemName == "Memo")
+            {
+                if (memoReviewUIInstance != null)
+                {
+                    memoReviewUIInstance.CloseUI();
+                }
+            }
+        }
+    }
+
+    private void TryAttachMemoItem()
+    {
+        var memoObject = CurrentPlayer.RightHandItem;
+        var menoScript = memoObject.GetComponent<MenoScript>();
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 30f, ~LayerMask.GetMask("UI")))
+        {
+            Vector3 attachPos = hit.point;
+            Quaternion targetRotation = Quaternion.LookRotation(hit.normal);  
+
+            // 메모 아이템 붙이기 처리
+            menoScript.TryAttachMemo(attachPos, targetRotation);
+        }
+    }
+    void TryOpenMemoUI()
+    {
+        if (CurrentPlayer.RightHandItem.item is MemoItemBase memoItem)
+        {
+            if (memoReviewUIInstance == null)
+            {
+                GameObject uiObj = Instantiate(memoReviewUIPrefab);
+                memoReviewUIInstance = uiObj.GetComponent<MemoReviewUI>();
+            }
+
+            memoReviewUIInstance.Initialize(memoItem.orderedFoods, memoItem.extraNote);
+            memoReviewUIInstance.OpenUI();
+        }
     }
 
     private void OnDestroy()

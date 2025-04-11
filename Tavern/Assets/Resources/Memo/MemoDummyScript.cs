@@ -2,11 +2,16 @@ using UnityEngine;
 using Photon.Pun;
 using System.Collections.Generic;
 using System;
+using UnityEditor;
+using System.Collections;
 
 public class MemoDummyScript : Interactable
 {
     public GameObject memoUI;
     private GameObject spawnedUI;
+
+    public GameObject memoPrefab;
+    MenoScript spawnedMemo;
 
     public override string GetInteractingDescription()
     {
@@ -15,11 +20,13 @@ public class MemoDummyScript : Interactable
 
     public override void Interact()
     {
+        /*
         // 누가 사용하고 있으면 다른 사용자가 사용하지 못하게 막음
         if (!photonView.IsMine && photonView.IsSceneView)
         {
             photonView.RequestOwnership();
         }
+        */
 
         ModeController modeController = interactPlayer.GetComponent<ModeController>();
         if (modeController != null)
@@ -53,43 +60,28 @@ public class MemoDummyScript : Interactable
 
     public void CreateMemoItem(string[] foods, string extra)
     {
-        photonView.RPC("RPC_CreateMemoItem", RpcTarget.AllBuffered, foods, extra);
+        if (spawnedMemo != null) return;
+
+        Vector3 spawnPos = transform.position + Vector3.up * 4f;
+        GameObject memoObj = PhotonNetwork.Instantiate("Memo", spawnPos, Quaternion.identity);
+        spawnedMemo = memoObj.GetComponent<MenoScript>();
+        spawnedMemo.obj = memoObj;
+
+        StartCoroutine(InitializeMemoAfterDelay(memoObj, foods, extra));
     }
 
-    [PunRPC]
-    void RPC_CreateMemoItem(string[] foods, string extra)
+    private IEnumerator InitializeMemoAfterDelay(GameObject memoObj, string[] foods, string extra)
     {
-        Debug.Log("Called CreateMemoItem RPC");
+        yield return new WaitForSeconds(0.1f); 
 
-        List<string> selected = new List<string>();
-        foreach (string f in foods)
+        MenoScript memoItem = memoObj.GetComponent<MenoScript>();
+        if (memoItem != null)
         {
-            ItemData curData = FindItemData(f);
-            selected.Add(f);
+            string serialized = string.Join("|", foods);
+            memoItem.photonView.RPC("RPC_InitializeMemoData", RpcTarget.AllBuffered, serialized, extra);
+            memoItem.memoUI.enabled = true;
         }
-
-        GameObject memoItem = Resources.Load<GameObject>("Memo/Memo");
-        if (memoItem == null)
-        {
-            Debug.LogError("Memo prefab is null");
-            return;
-        }
-
-        GameObject instance = Instantiate(memoItem);
-        MenoScript memo = instance.GetComponent<MenoScript>();
-        if (memo == null)
-        {
-            Debug.LogError("MenoScript component is null");
-            return;
-        }
-        memo.Initialize(selected, extra);
-        //Vector3 loc = spawnLoc.transform.up * 5;
-
-        Vector3 loc = transform.up * 5;
-
-        memo.transform.position = loc;
     }
-
 
     public ItemData FindItemData(string name)
     {

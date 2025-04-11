@@ -111,8 +111,10 @@ public class TavernPlayer : MonoBehaviour
 
             RightHandItem.transform.localPosition = RightHandItem.item.CurrentItemData.AttachLocation;
             RightHandItem.transform.localRotation = RightHandItem.item.CurrentItemData.AttachRotation;
-            RightHandItem.transform.localScale = new Vector3(1, 1, 1);
 
+            if (NetItem.item.CurrentItemData.itemName != "Memo")
+                RightHandItem.transform.localScale = new Vector3(1, 1, 1);
+            
             RightHandItem.GetComponent<Collider>().enabled = false;
         }
         else
@@ -131,7 +133,6 @@ public class TavernPlayer : MonoBehaviour
             NewPosition.y = hit.point.y;
 
             RightHandItem.transform.SetPositionAndRotation(NewPosition, Quaternion.identity);
-
             RightHandItem = null;
         }
     }
@@ -142,5 +143,51 @@ public class TavernPlayer : MonoBehaviour
         {
             PV.RPC("SendToAllItemParentChange", RpcTarget.All, RightHandItem.photonView.ViewID, false);
         }
+    }
+
+    public void DetachMemoItemFromRightHand()
+    {
+        if (null != RightHandItem)
+        {
+            PV.RPC("RPC_DetachMemoItemFromRightHand", RpcTarget.All, RightHandItem.photonView.ViewID);
+        }
+    }
+
+    [PunRPC]
+    public void RPC_DetachMemoItemFromRightHand(int ItemViewID)
+    {
+        RightHandItem.transform.parent = null;
+
+        var ItemCollider = RightHandItem.GetComponent<Collider>();
+        if (ItemCollider != null)
+        {
+            ItemCollider.enabled = true;
+        }
+
+        var rb = RightHandItem.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false; 
+            rb.useGravity = true;   
+        }
+
+        Ray ray = new Ray(RightHandItem.transform.position, RightHandItem.transform.forward); 
+        if (Physics.Raycast(ray, out RaycastHit hit, 30f)) 
+        {
+            Vector3 NewPosition = hit.point; 
+            Quaternion targetRotation = Quaternion.LookRotation(hit.normal); 
+
+            RightHandItem.transform.SetPositionAndRotation(NewPosition, targetRotation);
+        }
+
+        RightHandItem.transform.localScale = Vector3.one;  
+
+        if (rb != null)
+        {
+            rb.isKinematic = true; 
+            rb.useGravity = false; 
+        }
+
+        RightHandItem = null;  
     }
 }

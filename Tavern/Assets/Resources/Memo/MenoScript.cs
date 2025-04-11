@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class MenoScript : Interactable
+public class MenoScript : WorldItem
 {
     private List<string> foods = new List<string>();
     private string extraNote;
@@ -12,139 +12,84 @@ public class MenoScript : Interactable
     public UnityEngine.UI.Image icon;
     public TextMeshPro contentText;
 
-    public bool isHolding = false;
     public bool isAttached = false;
 
-    public Transform attachPoint;
-    private Transform playerHand;
-
+    public Transform attachPoint;    
     public MemoReviewUI memoUI;
 
-    private void Update()
+    public GameObject obj;
+
+    public void TryAttachMemo(Vector3 attachPosition, Quaternion attachRotation)
     {
-        if(isHolding)
+        if (!isAttached && interactPlayer != null)
         {
-            if(Input.GetMouseButtonDown(0))
-            {
-                TryAttachMemoItem();
-            }
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                ShowMemoUI();
-            }
-
-            if (Input.GetMouseButtonUp(1))
-            {
-                HideMemoUI();
-            }
+            isAttached = true;
+            interactPlayer.CurrentPlayer.DetachMemoItemFromRightHand();  
+            photonView.RPC("RPC_AttachMemoItem", RpcTarget.AllBuffered, attachPosition, attachRotation);
         }
-    }
-
-    void TryAttachMemoItem()
-    {
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            if (hit.collider != null)
-            {
-                // 부착할 지점이 충돌한 위치
-                AttachMemoItem(hit.point);
-            }
-        }
-    }
-
-    void AttachMemoItem(Vector3 attachPosition)
-    {
-        transform.position = attachPosition;
-        transform.rotation = Quaternion.identity; 
-
-        isAttached = true;
-        isHolding = false;  
-
-        photonView.RPC("RPC_AttachMemoItem", RpcTarget.All, attachPosition);
     }
 
     [PunRPC]
-    void RPC_AttachMemoItem(Vector3 attachPosition)
+    void RPC_AttachMemoItem(Vector3 pos, Quaternion rotation)
     {
-        transform.position = attachPosition;
-        transform.rotation = Quaternion.identity;
+        transform.position = pos;
+        transform.rotation = rotation;
         isAttached = true;
-        isHolding = false;
-    }
 
-
-    void ShowMemoUI()
-    {
-        if (memoUI != null)
+        var rb = GetComponent<Rigidbody>();
+        if (rb != null)
         {
-            memoUI.OpenUI();
-        }
-    }
-
-    void HideMemoUI()
-    {
-        if (memoUI != null)
-        {
-            memoUI.CloseUI();
+            rb.isKinematic = true;
+            rb.useGravity = false;
         }
     }
 
     public void Initialize(List<string> _foods, string extras)
     {
+        if (foods.Count > 0) return;
+
         foods = _foods;
         extraNote = extras;
 
         icon.sprite = ItemManager.Instance.GetItemSpriteByName(foods[0]);
         memoUI.Initialize(foods, extras);
-    }
-
-    public override string GetInteractingDescription()
-    {
-        return "It's a memo";
-    }
-
-    public override void Interact()
-    {
-        if (interactPlayer != null)
-        {
-            // 오른손 부착.. 
-            isHolding = true;
-            photonView.RPC("RPC_SetIsHolding", RpcTarget.All, true);
-        }
-
-        if(isAttached && !isHolding)
-        {
-            PickupMemoItem();
-        }
+        memoUI.enabled = true;
     }
 
     [PunRPC]
-    void RPC_SetIsHolding(bool holdingStatus)
+    public void RPC_InitializeMemoData(string serializedFoods, string extraNote)
     {
-        isHolding = holdingStatus;
+         if (string.IsNullOrEmpty(serializedFoods)) return;
+
+        List<string> foods = new List<string>(serializedFoods.Split('|'));
+        var memoData = ItemManager.Instance.GetItemDataByName("Memo");
+
+        MemoItemBase baseItem = new MemoItemBase(memoData, foods, extraNote);
+
+        item = baseItem;
+        InitItemName = baseItem.CurrentItemData.itemName;
+
+        if (item.CurrentItemData.ItemPrefab)
+        {
+            MeshObj = Instantiate(item.CurrentItemData.ItemPrefab);
+            MeshObj.transform.SetParent(transform, false);
+
+            MeshObj.SetActive(false);
+        }
+        else
+        {
+            WorldItemMeshFilter.sharedMesh = item.CurrentItemData.itemMeshFilter.sharedMesh;
+            WorldItemMesh.sharedMaterials = item.CurrentItemData.itemMesh.sharedMaterials;
+        }
+
+        if (foods.Count > 0 && icon != null)
+        {
+            icon.sprite = ItemManager.Instance.GetItemSpriteByName(foods[0]);
+        }
+
+        if (memoUI != null)
+        {
+            memoUI.Initialize(foods, extraNote);
+        }
     }
-
-    void PickupMemoItem()
-    {
-        isAttached = false;
-        isHolding = true;
-
-        transform.SetParent(playerHand);
-        transform.position = playerHand.position;
-        transform.rotation = playerHand.rotation;
-
-        photonView.RPC("RPC_PickupMemoItem", RpcTarget.All);
-    }
-
-    [PunRPC]
-    void RPC_PickupMemoItem()
-    {
-        isAttached = false;
-        isHolding = true;
-    }
-
 }

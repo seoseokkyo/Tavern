@@ -99,6 +99,10 @@ MonoBehaviour:
   - SyncOrder_Single
   - UpdateCustomerText
   - UpdateWaitingSlider
+  - SetCustomerScale
+  - RPC_InitializeMemoData
+  - AttachMemoItemFromRightHand
+  - RPC_DetachMemoItemFromRightHand
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
