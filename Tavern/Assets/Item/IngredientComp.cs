@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using WebSocketSharp;
-using static UnityEditor.Progress;
 
 [Serializable]
 public class IngredientData

@@ -9,7 +9,7 @@ public class FirePitAndPot : CookInterationObj
         
     }
 
-    void Start()
+    private new void Start()
     {
         base.Start();
     }
