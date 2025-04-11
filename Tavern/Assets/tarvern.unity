@@ -661,6 +661,67 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &904677325
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1096538775202059944, guid: e68c0aa157274214caac5d98ac430adf, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7337498531774020941, guid: e68c0aa157274214caac5d98ac430adf, type: 3}
+      propertyPath: m_Name
+      value: Fireplace
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971328070477375479, guid: e68c0aa157274214caac5d98ac430adf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -104.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971328070477375479, guid: e68c0aa157274214caac5d98ac430adf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971328070477375479, guid: e68c0aa157274214caac5d98ac430adf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 133.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971328070477375479, guid: e68c0aa157274214caac5d98ac430adf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971328070477375479, guid: e68c0aa157274214caac5d98ac430adf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971328070477375479, guid: e68c0aa157274214caac5d98ac430adf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971328070477375479, guid: e68c0aa157274214caac5d98ac430adf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971328070477375479, guid: e68c0aa157274214caac5d98ac430adf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971328070477375479, guid: e68c0aa157274214caac5d98ac430adf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7971328070477375479, guid: e68c0aa157274214caac5d98ac430adf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e68c0aa157274214caac5d98ac430adf, type: 3}
 --- !u!1001 &1020622931
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -753,6 +814,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items: []
   createRecipes: []
+  ingredientDatas: []
   itemPrefab: {fileID: 8800059771866093615, guid: 6ec0c99469ac4624b9fe866978b5f080, type: 3}
   bReady: 0
   EmptyImage: {fileID: 2800000, guid: f06a7fc3811d09e40820e60a5ed4dc73, type: 3}
@@ -1721,11 +1783,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6735475584912939272, guid: fe7958d7b9554a34bafedbdabcc85131, type: 3}
       propertyPath: 'SpawnTargetItemsName.Array.data[0]'
-      value: Chickens
+      value: Potato
       objectReference: {fileID: 0}
     - target: {fileID: 6735475584912939272, guid: fe7958d7b9554a34bafedbdabcc85131, type: 3}
       propertyPath: 'SpawnTargetItemsName.Array.data[1]'
-      value: Chickens
+      value: Potato
       objectReference: {fileID: 0}
     - target: {fileID: 6735475584912939272, guid: fe7958d7b9554a34bafedbdabcc85131, type: 3}
       propertyPath: 'SpawnTargetItemsName.Array.data[2]'
@@ -1733,7 +1795,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6735475584912939272, guid: fe7958d7b9554a34bafedbdabcc85131, type: 3}
       propertyPath: 'SpawnTargetItemsName.Array.data[3]'
-      value: Rock
+      value: Potato
       objectReference: {fileID: 0}
     - target: {fileID: 6735475584912939272, guid: fe7958d7b9554a34bafedbdabcc85131, type: 3}
       propertyPath: 'SpawnTargetItemsName.Array.data[4]'
@@ -1776,3 +1838,4 @@ SceneRoots:
   - {fileID: 1945174033}
   - {fileID: 1020622931}
   - {fileID: 2024563921}
+  - {fileID: 904677325}
