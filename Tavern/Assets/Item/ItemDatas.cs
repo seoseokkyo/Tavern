@@ -7,4 +7,5 @@ public class ItemDatas : ScriptableObject
 {
     public List<ItemData> items;
     public List<CreateRecipe> createRecipes;
+    public List<IngredientData> ingredientDatas;
 }

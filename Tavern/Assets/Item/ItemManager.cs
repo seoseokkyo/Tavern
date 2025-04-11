@@ -10,8 +10,13 @@ public class ItemManager : MonoBehaviour
 
     [SerializeField] public List<ItemData> items; // 아이템 리스트
     [SerializeField] public List<CreateRecipe> createRecipes; // 제작 아이템 레시피
+    [SerializeField] public List<IngredientData> ingredientDatas; // 식재료 분화 데이터
+    
+
     Dictionary<string, ItemData> ItemsDictionary = new Dictionary<string, ItemData>();
     Dictionary<string, Tuple<CreateTargetRecipeData, List<CreateResources>>> CreateRecipesDictionary = new Dictionary<string, Tuple<CreateTargetRecipeData, List<CreateResources>>>();
+
+    Dictionary<string, IngredientData> IngredientsDictionary = new Dictionary<string, IngredientData>();
 
     public WorldItem itemPrefab;
 
@@ -42,6 +47,9 @@ public class ItemManager : MonoBehaviour
         InitCreateRecipeDictionary();
 
         itemFunctions = gameObject.AddComponent<ItemFunctions>();
+
+        ingredientDatas = Resources.Load<ItemDatas>("ItemDatas").ingredientDatas;
+        InitIngredientDictionary();
 
         if (items != null)
         {
@@ -94,6 +102,21 @@ public class ItemManager : MonoBehaviour
             else
             {
                 Debug.LogWarning($"중복 키 발견: {item}, 기존 값이 유지됩니다.");
+            }
+        }
+    }
+
+    private void InitIngredientDictionary()
+    {
+        foreach (var ingredient in ingredientDatas)
+        {
+            if (!IngredientsDictionary.ContainsKey(ingredient.IngredientName))
+            {
+                IngredientsDictionary[ingredient.IngredientName] = ingredient;
+            }
+            else
+            {
+                Debug.LogWarning($"중복 키 발견: {ingredient}, 기존 값이 유지됩니다.");
             }
         }
     }
@@ -188,5 +211,17 @@ public class ItemManager : MonoBehaviour
     public Action<ItemFunctionArgs> GetItemFunctionFromDictionary(string FunctionName)
     {
         return itemFunctions.GetItemFunctionFromDictionary(FunctionName);
+    }
+
+    public IngredientData GetIngredientData(string IngredientName)
+    {
+        if (IngredientsDictionary.ContainsKey(IngredientName))
+        {
+            return IngredientsDictionary[IngredientName];
+        }
+        else
+        {
+            return null;
+        }
     }
 }

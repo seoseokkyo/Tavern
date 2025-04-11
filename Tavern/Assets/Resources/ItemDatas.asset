@@ -538,6 +538,57 @@ MonoBehaviour:
     ItemFunctionList: []
     fOptionValue1: 0
     fOptionValue2: 0
+  - itemName: Potato
+    itemDescription: Potato
+    itemIcon: {fileID: 2800000, guid: 17057864515491e49a5db9408b4ccfd6, type: 3}
+    itemMeshFilter: {fileID: -5754084199372789682, guid: c25ba9435b1d2ed469219383b43373a0, type: 3}
+    itemMesh: {fileID: -7511558181221131132, guid: c25ba9435b1d2ed469219383b43373a0, type: 3}
+    itemID: 28
+    itemCount: 1
+    itemCountLimit: 1
+    ItemType: 2
+    requireToolType: 0
+    ItemPrefab: {fileID: 0}
+    recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
+  - itemName: Boiled Potato
+    itemDescription: Boiled Potato
+    itemIcon: {fileID: 2800000, guid: 17057864515491e49a5db9408b4ccfd6, type: 3}
+    itemMeshFilter: {fileID: -5754084199372789682, guid: c25ba9435b1d2ed469219383b43373a0, type: 3}
+    itemMesh: {fileID: -7511558181221131132, guid: c25ba9435b1d2ed469219383b43373a0, type: 3}
+    itemID: 29
+    itemCount: 1
+    itemCountLimit: 1
+    ItemType: 2
+    requireToolType: 0
+    ItemPrefab: {fileID: 0}
+    recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
+  - itemName: Fried Potato
+    itemDescription: Fried Potato
+    itemIcon: {fileID: 2800000, guid: 17057864515491e49a5db9408b4ccfd6, type: 3}
+    itemMeshFilter: {fileID: -5754084199372789682, guid: c25ba9435b1d2ed469219383b43373a0, type: 3}
+    itemMesh: {fileID: -7511558181221131132, guid: c25ba9435b1d2ed469219383b43373a0, type: 3}
+    itemID: 30
+    itemCount: 1
+    itemCountLimit: 1
+    ItemType: 2
+    requireToolType: 0
+    ItemPrefab: {fileID: 0}
+    recipe: {fileID: 0}
+    AttachLocation: {x: 0, y: 0, z: 0}
+    AttachRotation: {x: 0, y: 0, z: 0, w: 0}
+    ItemFunctionList: []
+    fOptionValue1: 0
+    fOptionValue2: 0
   createRecipes:
   - CreateItemData:
       ItemName: RockHammer
@@ -601,3 +652,22 @@ MonoBehaviour:
       NeedNumber: 1
     - ItemName: WaterBucket
       NeedNumber: 1
+  ingredientDatas:
+  - IngredientName: Potato
+    GrilledIngredientName: Grilled Potato
+    SlicedIngredientName: Sliced Potato
+    BoiledIngredientName: Boiled Potato
+    FriedIngredientName: Fried Potato
+    PerfectFlow: Potato
+  - IngredientName: Boiled Potato
+    GrilledIngredientName: 
+    SlicedIngredientName: 
+    BoiledIngredientName: 
+    FriedIngredientName: 
+    PerfectFlow: Potato,Boiling
+  - IngredientName: Fried Potato
+    GrilledIngredientName: 
+    SlicedIngredientName: 
+    BoiledIngredientName: 
+    FriedIngredientName: 
+    PerfectFlow: Potato,Fry

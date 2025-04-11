@@ -25,8 +25,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 return null;
             }
         }
-
-
     }
 
     [HideInInspector]
@@ -142,10 +140,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         if (UnityEngine.Input.GetKeyDown(KeyCode.Escape))
         {
-            if(photonView.IsMine)
-            {
-                PhotonNetwork.LeaveRoom();                
-            }
+            //if(photonView.IsMine)
+            //{
+            //    PhotonNetwork.LeaveRoom();                
+            //}
         }
 
         // Item Use

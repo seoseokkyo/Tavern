@@ -23,6 +23,9 @@ public class WorldItem : Interactable
     [HideInInspector]
     public GameObject MeshObj = null;
 
+    [HideInInspector]
+    public IngredientComp IngredientComponent = null;
+
     void Start()
     {
         WorldItemMeshFilter = GetComponent<MeshFilter>();
@@ -38,6 +41,25 @@ public class WorldItem : Interactable
         else if (!PhotonNetwork.IsMasterClient && string.IsNullOrEmpty(InitItemName))
         {
             RequestServerData();
+        }
+
+        if (item.CurrentItemData.ItemType == EItemType.Equipment)
+        {
+            IngredientComponent = gameObject.AddComponent<IngredientComp>();
+
+            if (IngredientComponent)
+            {
+                IngredientComponent.CurrentWorldItem = this;
+
+                var data = ItemManager.Instance.GetIngredientData(item.CurrentItemData.itemName);
+
+                if (null != data)
+                {
+                    IngredientComponent.SetData(data);
+                }
+            }
+
+            Debug.Log($"IngredientComponent : {IngredientComponent.name}");
         }
     }
 
@@ -57,20 +79,7 @@ public class WorldItem : Interactable
     {
         if (interactPlayer)
         {
-            //Debug.Log($"itemCount : {item.CurrentItemData.itemCount}");
-
-            //if (interactPlayer.PlayerInventory.AddItem(ref item))
-            //{
-            //    item = null;
-            //
-            //    RequestDestroy();
-            //}
-
             interactPlayer.CurrentPlayer.ItemAttachToRightHand(this);
-
-            //item = null;
-
-            //RequestDestroy();
         }
     }
 

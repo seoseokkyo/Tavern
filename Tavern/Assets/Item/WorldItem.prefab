@@ -77,6 +77,8 @@ MonoBehaviour:
   bEditorSetted: 0
   InitItemName: 
   ItemRigidbody: {fileID: 0}
+  MeshObj: {fileID: 0}
+  IngredientComponent: {fileID: 0}
 --- !u!33 &7265264429631978663
 MeshFilter:
   m_ObjectHideFlags: 0
