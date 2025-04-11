@@ -26,6 +26,8 @@ public class MemoReviewUI : MonoBehaviour
             Destroy(go);
         }
 
+        foods.Clear();
+
         foreach (string cur in data)
         {
             GameObject prefab = Instantiate(foodIconPrefab);
@@ -38,11 +40,21 @@ public class MemoReviewUI : MonoBehaviour
                 tempUI.isSelected = false;
             }
             prefab.SetActive(true);
+
+            RectTransform rectTransform = prefab.GetComponent<RectTransform>();
+            if (rectTransform != null)
+            {
+                rectTransform.sizeDelta = new Vector2(500f, 500f); 
+            }
+
             foods.Add(prefab);
+            Debug.Log($"Added Food Item: {cur}"); 
         }
 
         extraNoteText.text = extraNoteData;
         extraNoteText.enabled = true;
+
+        Debug.Log($"Total Food Items: {foods.Count}");
     }
     private ItemData FindItemData(string name)
     {

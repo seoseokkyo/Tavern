@@ -76,8 +76,6 @@ public class CreatingMemoUI : MonoBehaviourPunCallbacks
 
     void OnSetButtonClicked()
     {
-        Debug.Log("SetButtonClicked");
-
         List<string> foodNames = new List<string>();
         foreach(GameObject cur in foods)
         {
@@ -87,14 +85,13 @@ public class CreatingMemoUI : MonoBehaviourPunCallbacks
                 if(f.isSelected)
                 {
                     foodNames.Add(f.itemData.itemName);
-                    Debug.Log("SelectedFood is Set");
                 }
             }
         }
+
         string extraNote = extraNotesInput.text;
 
         MemoDummy.CreateMemoItem(foodNames.ToArray(), extraNote);
-
         CloseUI();
     }
 

@@ -103,6 +103,9 @@ MonoBehaviour:
   - RPC_InitializeMemoData
   - AttachMemoItemFromRightHand
   - RPC_DetachMemoItemFromRightHand
+  - RPC_SyncMemoPosition
+  - RPC_SyncMemoItemPosition
+  - SetMemoItemDetachedFromRightHand
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

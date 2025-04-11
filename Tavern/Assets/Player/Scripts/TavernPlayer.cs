@@ -107,33 +107,36 @@ public class TavernPlayer : MonoBehaviour
         if (bGrab)
         {
             RightHandItem = NetItem;
-            RightHandItem.transform.SetParent(RightHandSlot, false);
+            RightHandItem.transform.SetParent(RightHandSlot, true);
 
             RightHandItem.transform.localPosition = RightHandItem.item.CurrentItemData.AttachLocation;
             RightHandItem.transform.localRotation = RightHandItem.item.CurrentItemData.AttachRotation;
-
-            if (NetItem.item.CurrentItemData.itemName != "Memo")
-                RightHandItem.transform.localScale = new Vector3(1, 1, 1);
+            //RightHandItem.transform.localScale = new Vector3(1, 1, 1);
             
             RightHandItem.GetComponent<Collider>().enabled = false;
         }
         else
         {
-            RightHandItem.transform.parent = null;
+            if(RightHandItem != null)
+            {
+                RightHandItem.transform.parent = null;
 
-            var ItemCollider = RightHandItem.GetComponent<Collider>().enabled = true;
+                var ItemCollider = RightHandItem.GetComponent<Collider>().enabled = true;
 
-            RightHandItem.ItemRigidbody.isKinematic = false;
-            RightHandItem.ItemRigidbody.useGravity = false;
+                RightHandItem.ItemRigidbody.isKinematic = false;
+                RightHandItem.ItemRigidbody.useGravity = false;
 
-            Ray ray = new Ray(RightHandItem.transform.position, new Vector3(0, -1, 0));
-            Physics.Raycast(ray, out RaycastHit hit, 10);
+                Ray ray = new Ray(RightHandItem.transform.position, new Vector3(0, -1, 0));
+                Physics.Raycast(ray, out RaycastHit hit, 10);
 
-            Vector3 NewPosition = RightHandItem.transform.position;
-            NewPosition.y = hit.point.y;
+                Vector3 NewPosition = RightHandItem.transform.position;
+                NewPosition.y = hit.point.y;
 
-            RightHandItem.transform.SetPositionAndRotation(NewPosition, Quaternion.identity);
-            RightHandItem = null;
+                RightHandItem.transform.SetPositionAndRotation(NewPosition, Quaternion.identity);
+                RightHandItem.transform.localScale = Vector3.one;
+
+                RightHandItem = null;
+            }
         }
     }
 
@@ -147,47 +150,42 @@ public class TavernPlayer : MonoBehaviour
 
     public void DetachMemoItemFromRightHand()
     {
-        if (null != RightHandItem)
+        if (RightHandItem != null && RightHandItem.item.CurrentItemData.itemName == "Memo")
         {
-            PV.RPC("RPC_DetachMemoItemFromRightHand", RpcTarget.All, RightHandItem.photonView.ViewID);
+            if (!PhotonView.Get(RightHandItem).IsMine)
+            {
+                PhotonView.Get(RightHandItem).RequestOwnership();
+            }
+
+            RightHandItem.GetComponent<MenoScript>().TryDetachMemoItem();
+            PV.RPC("SetMemoItemDetachedFromRightHand", RpcTarget.AllBuffered);
+            RightHandItem = null;
         }
     }
 
     [PunRPC]
-    public void RPC_DetachMemoItemFromRightHand(int ItemViewID)
+    void SetMemoItemDetachedFromRightHand()
     {
-        RightHandItem.transform.parent = null;
-
-        var ItemCollider = RightHandItem.GetComponent<Collider>();
-        if (ItemCollider != null)
+        if (RightHandItem != null && RightHandItem.item.CurrentItemData.itemName == "Memo")
         {
-            ItemCollider.enabled = true;
+            RightHandItem.transform.parent = null;
+            var ItemCollider = RightHandItem.GetComponent<Collider>();
+            if (ItemCollider != null)
+            {
+                ItemCollider.enabled = true;
+            }
+
+            var rb = RightHandItem.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = true;
+                rb.useGravity = false;
+            }
+
+            RightHandItem.ItemRigidbody.isKinematic = true;
+            RightHandItem.ItemRigidbody.useGravity = false;
+
+            RightHandItem = null;
         }
-
-        var rb = RightHandItem.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.isKinematic = false; 
-            rb.useGravity = true;   
-        }
-
-        Ray ray = new Ray(RightHandItem.transform.position, RightHandItem.transform.forward); 
-        if (Physics.Raycast(ray, out RaycastHit hit, 30f)) 
-        {
-            Vector3 NewPosition = hit.point; 
-            Quaternion targetRotation = Quaternion.LookRotation(hit.normal); 
-
-            RightHandItem.transform.SetPositionAndRotation(NewPosition, targetRotation);
-        }
-
-        RightHandItem.transform.localScale = Vector3.one;  
-
-        if (rb != null)
-        {
-            rb.isKinematic = true; 
-            rb.useGravity = false; 
-        }
-
-        RightHandItem = null;  
     }
 }

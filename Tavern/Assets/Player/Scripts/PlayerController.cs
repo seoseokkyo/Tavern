@@ -203,8 +203,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
             Vector3 attachPos = hit.point;
             Quaternion targetRotation = Quaternion.LookRotation(hit.normal);  
 
-            // 메모 아이템 붙이기 처리
             menoScript.TryAttachMemo(attachPos, targetRotation);
+            memoReviewUIInstance = null;
         }
     }
     void TryOpenMemoUI()
@@ -217,7 +217,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 memoReviewUIInstance = uiObj.GetComponent<MemoReviewUI>();
             }
 
-            memoReviewUIInstance.Initialize(memoItem.orderedFoods, memoItem.extraNote);
             memoReviewUIInstance.OpenUI();
         }
     }

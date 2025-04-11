@@ -47,17 +47,6 @@ public class MemoDummyScript : Interactable
             spawnedUI.SetActive(true);
         }
     }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     public void CreateMemoItem(string[] foods, string extra)
     {
         if (spawnedMemo != null) return;
