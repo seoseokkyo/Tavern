@@ -343,7 +343,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents: []
   sceneViewId: 0
@@ -363,6 +363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactPlayer: {fileID: 0}
   interactionType: 0
+  InteractDescription: 
   CookingPerSecond: 1
   type: 2
   ItemSockets:
@@ -371,6 +372,7 @@ MonoBehaviour:
   - {fileID: 1288980306250990627}
   - {fileID: 2230841097276173843}
   - {fileID: 1938987558315022988}
+  TransformAndUseState: []
   UI_Prefab: {fileID: -8359520196973802968, guid: 1bb1da4a32aa27a4fa169ad9e34cecc7, type: 3}
   FireParticle: {fileID: 2860027462494592125}
 --- !u!64 &4375141756425726450

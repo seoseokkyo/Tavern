@@ -1,3 +1,5 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +13,7 @@ public enum ECookType
     ECookTypeMax
 }
 
+[Serializable]
 public class PairTransformWorldItem
 {
     public Transform Item1;
@@ -52,7 +55,7 @@ public class CookInterationObj : Interactable
         if (null == PlayerHandleWorldItem)
         {
             // 안에 들어있는 애들 상태랑 꺼내기 버튼등이 있는 UI출력
-            if(null != UI_Instantiate)
+            if (null != UI_Instantiate)
             {
                 Destroy(UI_Instantiate);
             }
@@ -74,27 +77,78 @@ public class CookInterationObj : Interactable
                 return;
             }
 
-            foreach (var Pos in TransformAndUseState)
-            {
-                if (null == Pos.Item2)
-                {
-                    Pos.Item2 = PlayerHandleWorldItem;
+            photonView.RPC("ClientToAll_ItemInputSend", RpcTarget.All, PlayerHandleWorldItem.photonView.ViewID);
 
-                    PlayerHandleWorldItem.GetComponent<Collider>().enabled = false;
-                    PlayerHandleWorldItem.transform.SetParent(gameObject.transform, false);
-                    PlayerHandleWorldItem.transform.localPosition = Pos.Item1.localPosition;
-                    PlayerHandleWorldItem.transform.localRotation = Pos.Item1.localRotation;
-                    PlayerHandleWorldItem.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-
-                    CookingItem.Add(PlayerHandleWorldItem);
-
-                    interactPlayer.CurrentPlayer.RightHandItem = null;
-
-                    break;
-                }
-            }
+            interactPlayer.CurrentPlayer.RightHandItem = null;
 
             //interactPlayer.CurrentPlayer.ItemDetachFromRightHand();
+        }
+    }
+
+    [PunRPC]
+    public void ClientToAll_ItemInputSend(int ItemViewID)
+    {
+        PhotonView view = PhotonView.Find(ItemViewID);
+        var FindItem = view.GetComponentInParent<WorldItem>();
+
+        foreach (var Pos in TransformAndUseState)
+        {
+            if (null == Pos.Item2)
+            {
+                Pos.Item2 = FindItem;
+
+                FindItem.GetComponent<Collider>().enabled = false;
+                FindItem.transform.SetParent(gameObject.transform, false);
+                FindItem.transform.localPosition = Pos.Item1.localPosition;
+                FindItem.transform.localRotation = Pos.Item1.localRotation;
+                FindItem.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+
+                CookingItem.Add(FindItem);
+
+                break;
+            }
+        }
+    }
+
+    [PunRPC]
+    public void ClientToServer_RequestState()
+    {
+        photonView.RPC("ServerToClient_ResponseState", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer);
+    }
+
+    [PunRPC]
+    public void ServerToClient_ResponseState(Player TargetPlayer)
+    {
+        List<int> ViewList = new();
+
+        foreach(var temp in TransformAndUseState)
+        {
+            ViewList.Add(null != temp.Item2 ? temp.Item2.photonView.ViewID : 0);
+        }
+
+        photonView.RPC("ReceiveState", TargetPlayer, ViewList.ToArray());
+    }
+
+    [PunRPC]
+    public void ReceiveState(int[] ViewList)
+    {
+        for(int i = 0; i < TransformAndUseState.Count; i++)
+        {
+            if (ViewList[i] != 0)
+            {
+                PhotonView view = PhotonView.Find(ViewList[i]);
+                var FindItem = view.GetComponentInParent<WorldItem>();
+
+                FindItem.GetComponent<Collider>().enabled = false;
+                FindItem.transform.SetParent(gameObject.transform, false);
+                FindItem.transform.localPosition = TransformAndUseState[i].Item1.localPosition;
+                FindItem.transform.localRotation = TransformAndUseState[i].Item1.localRotation;
+                FindItem.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+
+                CookingItem.Add(FindItem);
+
+                TransformAndUseState[i].Item2 = FindItem;
+            }
         }
     }
 
@@ -110,7 +164,7 @@ public class CookInterationObj : Interactable
 
                 foreach (var Pos in TransformAndUseState)
                 {
-                    if(Pos.Item2 == CookingItem[i])
+                    if (Pos.Item2 == CookingItem[i])
                     {
                         Pos.Item2 = null;
                         break;
@@ -142,13 +196,19 @@ public class CookInterationObj : Interactable
 
             TransformAndUseState.Add(temp);
         }
+
+        if(!PhotonNetwork.IsMasterClient)
+        {
+            PhotonManager.Instance.OnJoinedRoomEndDelegate -= ClientToServer_RequestState;
+            PhotonManager.Instance.OnJoinedRoomEndDelegate += ClientToServer_RequestState;
+        }
     }
 
     void FixedUpdate()
     {
         foreach (var item in CookingItem)
         {
-            if(item == null)
+            if (item == null)
             {
                 continue;
             }

@@ -103,6 +103,11 @@ MonoBehaviour:
   - RPC_InitializeMemoData
   - AttachMemoItemFromRightHand
   - RPC_DetachMemoItemFromRightHand
+  - ClientToServerItemInputSend
+  - ClientToAll_ItemInputSend
+  - ClientToServer_RequestState
+  - ServerToClient_ResponseState
+  - ReceiveState
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

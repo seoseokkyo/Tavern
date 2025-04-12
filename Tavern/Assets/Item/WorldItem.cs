@@ -58,8 +58,6 @@ public class WorldItem : Interactable
                     IngredientComponent.SetData(data);
                 }
             }
-
-            Debug.Log($"IngredientComponent : {IngredientComponent.name}");
         }
     }
 
@@ -114,7 +112,21 @@ public class WorldItem : Interactable
 
         item.CurrentItemData.itemCount = CurrentItemCount;
 
-        //Debug.Log($"ServerToClientReceiveItemData_CurrentItemCount : {CurrentItemCount}");
+        if (item.CurrentItemData.ItemType == EItemType.Equipment)
+        {
+            IngredientComponent = gameObject.AddComponent<IngredientComp>();
+            if (IngredientComponent)
+            {
+                IngredientComponent.CurrentWorldItem = this;
+
+                var data = ItemManager.Instance.GetIngredientData(item.CurrentItemData.itemName);
+
+                if (null != data)
+                {
+                    IngredientComponent.SetData(data);
+                }
+            }
+        }
     }
 
     [PunRPC]

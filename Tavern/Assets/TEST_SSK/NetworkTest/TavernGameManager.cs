@@ -187,6 +187,7 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             RequestDailyResultData();
             RequestInstantiatePlayer();
+            RequestInstantiateFirePlace_Temp();
         }
         else
         {
@@ -196,6 +197,10 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
             PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestInstantiatePlayer;
             PhotonManager.Instance.OnJoinedRoomEndDelegate -= RequestInstantiateResultManager;
             PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestInstantiateResultManager;
+
+            // 이후 빌드시스템에서 스폰(이미 스폰된 애들을 난입자에게도 스폰시켜 줄 경우 여기서 하게 방법 찾기
+            //PhotonManager.Instance.OnJoinedRoomEndDelegate -= RequestInstantiateFirePlace_Temp;
+            //PhotonManager.Instance.OnJoinedRoomEndDelegate += RequestInstantiateFirePlace_Temp;
         }
         // 호스트의 공통데이터 받아올것(GameDataInitialize)
 
@@ -339,6 +344,11 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
         var PlayerObj = PhotonNetwork.Instantiate("Player", StartPoint.transform.position, Quaternion.identity);
 
         CurrentLocalPlayer = PlayerObj.GetComponent<PlayerController>();
+    }
+
+    void RequestInstantiateFirePlace_Temp()
+    {
+        PhotonNetwork.Instantiate("Fireplace", new Vector3(-104.5f, 0, 133.2f), Quaternion.Euler(-89.98f, 0f, 0f));
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
