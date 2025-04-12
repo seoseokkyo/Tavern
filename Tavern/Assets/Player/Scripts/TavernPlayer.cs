@@ -152,29 +152,56 @@ public class TavernPlayer : MonoBehaviour
     {
         if (RightHandItem != null && RightHandItem.item.CurrentItemData.itemName == "Memo")
         {
-            if (!PhotonView.Get(RightHandItem).IsMine)
-            {
-                PhotonView.Get(RightHandItem).RequestOwnership();
-            }
-
             RightHandItem.GetComponent<MenoScript>().TryDetachMemoItem();
+            var rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = true;
+                rb.useGravity = false;
+            }
             PV.RPC("SetMemoItemDetachedFromRightHand", RpcTarget.AllBuffered);
-            RightHandItem = null;
         }
     }
 
     [PunRPC]
     void SetMemoItemDetachedFromRightHand()
     {
-        if (RightHandItem != null && RightHandItem.item.CurrentItemData.itemName == "Memo")
+        RightHandItem.transform.parent = null;
+        MenoScript memo = RightHandItem.GetComponent<MenoScript>();
+        if(memo != null)
         {
-            RightHandItem.transform.parent = null;
-            var ItemCollider = RightHandItem.GetComponent<Collider>().enabled = true;
+            RightHandItem.transform.localScale = memo.originScale;
+        }
+        var ItemCollider = RightHandItem.GetComponent<Collider>();
+        if (ItemCollider != null)
+        {
+            ItemCollider.enabled = true;
+        }
+        var rb = RightHandItem.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+            rb.useGravity = false;
+        }
+
+        Vector3 newPosition = RightHandItem.transform.position;
+        Quaternion newRotation = RightHandItem.transform.rotation;
+        PV.RPC("RPC_SyncMemoItemPosition", RpcTarget.AllBuffered, newPosition, newRotation);
+    }
+
+    [PunRPC]
+    public void RPC_SyncMemoItemPosition(Vector3 position, Quaternion rotation)
+    {
+        if (RightHandItem != null)
+        {
+            RightHandItem.transform.SetPositionAndRotation(position, rotation);
+            RightHandItem.transform.localScale = Vector3.one;
+
             var rb = RightHandItem.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.isKinematic = true;
-                rb.useGravity = false;
+                rb.isKinematic = true;  
+                rb.useGravity = false; 
             }
 
             RightHandItem = null;

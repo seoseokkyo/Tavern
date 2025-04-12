@@ -19,6 +19,8 @@ public class MenoScript : WorldItem
 
     public GameObject obj;
 
+    public Vector3 originScale;
+
     public void TryAttachMemo(Vector3 attachPosition, Quaternion attachRotation)
     {
         if (!isAttached && interactPlayer != null)
@@ -53,7 +55,7 @@ public class MenoScript : WorldItem
     {
         transform.position = position;
         transform.rotation = rotation;
-        transform.localScale = Vector3.one;
+        transform.localScale = originScale;
 
         var rb = GetComponent<Rigidbody>();
         if (rb != null)
