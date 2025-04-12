@@ -1,7 +1,9 @@
 using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         PlayerCanvas = PlayerCanvasObj.AddComponent<Canvas>();
 
         PlayerCanvasObj.transform.SetParent(transform);
+        PlayerCanvas.AddComponent<GraphicRaycaster>();
         PlayerCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
         PlayerCamera.gameObject.transform.SetParent(this.gameObject.transform);

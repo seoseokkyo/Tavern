@@ -19,7 +19,7 @@ public class PairTransformWorldItem
 
 public class CookInterationObj : Interactable
 {
-    private string InteractDescription;
+    public string InteractDescription;
 
     private WorldItem PlayerHandleWorldItem = null;
 
@@ -38,6 +38,8 @@ public class CookInterationObj : Interactable
 
     public CurrentCookingIngredientsUI UI_Prefab;
 
+    private CurrentCookingIngredientsUI UI_Instantiate = null;
+
     public override string GetInteractingDescription()
     {
         return InteractDescription;
@@ -50,10 +52,18 @@ public class CookInterationObj : Interactable
         if (null == PlayerHandleWorldItem)
         {
             // 안에 들어있는 애들 상태랑 꺼내기 버튼등이 있는 UI출력
-            var temp = Instantiate(UI_Prefab);
-            temp.transform.SetParent(interactPlayer.PlayerCanvas.transform, false);
+            if(null != UI_Instantiate)
+            {
+                Destroy(UI_Instantiate);
+            }
 
-            temp.SetData(type, CookingItem);
+            UI_Instantiate = Instantiate(UI_Prefab);
+            UI_Instantiate.transform.SetParent(interactPlayer.PlayerCanvas.transform, false);
+
+            UI_Instantiate.InteractPlayer = interactPlayer;
+            UI_Instantiate.CookObj = this;
+
+            UI_Instantiate.SetData(type, CookingItem);
         }
         else
         {
@@ -103,12 +113,16 @@ public class CookInterationObj : Interactable
                     if(Pos.Item2 == CookingItem[i])
                     {
                         Pos.Item2 = null;
+                        break;
                     }
                 }
 
-                CookingItem[i] = null;
+                CookingItem.RemoveAt(i);
+                break;
             }
         }
+
+        UI_Instantiate.SetData(type, CookingItem);
     }
 
     private void Awake()
@@ -134,6 +148,11 @@ public class CookInterationObj : Interactable
     {
         foreach (var item in CookingItem)
         {
+            if(item == null)
+            {
+                continue;
+            }
+
             var Ingredient = item.GetComponent<IngredientComp>();
 
             float Value = CookingPerSecond * Time.fixedDeltaTime;

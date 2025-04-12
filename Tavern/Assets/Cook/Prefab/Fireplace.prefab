@@ -233,6 +233,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 728576751314082672, guid: c2f6a8962aac3814aa56cb9647c93470, type: 3}
   m_PrefabInstance: {fileID: 2921054908383718987}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &2860027462494592125 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1097031286348149302, guid: c2f6a8962aac3814aa56cb9647c93470, type: 3}
+  m_PrefabInstance: {fileID: 2921054908383718987}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7572065929142075420
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -367,6 +372,7 @@ MonoBehaviour:
   - {fileID: 2230841097276173843}
   - {fileID: 1938987558315022988}
   UI_Prefab: {fileID: -8359520196973802968, guid: 1bb1da4a32aa27a4fa169ad9e34cecc7, type: 3}
+  FireParticle: {fileID: 2860027462494592125}
 --- !u!64 &4375141756425726450
 MeshCollider:
   m_ObjectHideFlags: 0

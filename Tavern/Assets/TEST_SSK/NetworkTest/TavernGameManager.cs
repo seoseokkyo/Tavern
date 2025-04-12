@@ -207,16 +207,16 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
         }
 
 
-        if (GameObject.Find("LogMarker") == null)
-        {
-            GameObject log = Resources.Load<GameObject>("LogMaker/LogMarker");
-            if (log != null)
-            {
-                GameObject logInstance = Instantiate(log);
-                DontDestroyOnLoad(logInstance);
-                log.active = true;
-            }
-        }
+        //if (GameObject.Find("LogMarker") == null)
+        //{
+        //    GameObject log = Resources.Load<GameObject>("LogMaker/LogMarker");
+        //    if (log != null)
+        //    {
+        //        GameObject logInstance = Instantiate(log);
+        //        DontDestroyOnLoad(logInstance);
+        //        log.active = true;
+        //    }
+        //}
     }
 
     private void OnGUI()

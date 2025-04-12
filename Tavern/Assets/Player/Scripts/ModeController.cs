@@ -53,7 +53,7 @@ public class ModeController : MonoBehaviourPunCallbacks
         playerMoveScript.enabled = !uiMode;
         cameraRotateScript.enabled = !uiMode;
         playerinteractionScript.SetActive(uiMode);
-        playerinteractionScript.enabled = !uiMode;
+        //playerinteractionScript.enabled = !uiMode;
 
         if(uiMode)
         {

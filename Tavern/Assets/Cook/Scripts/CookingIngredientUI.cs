@@ -57,7 +57,7 @@ public class CookingIngredientUI : MonoBehaviour
         IngredientImage.sprite = ItemSprite;
     }
 
-    void OnClickTakeOutButton()
+    public void OnClickTakeOutButton()
     {
         CurrentCookObj.IngredientTakeOut(CurrentIngredient.CurrentWorldItem);
     }

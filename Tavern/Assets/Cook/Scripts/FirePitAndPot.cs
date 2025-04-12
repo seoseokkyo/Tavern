@@ -2,16 +2,18 @@ using UnityEngine;
 
 public class FirePitAndPot : CookInterationObj
 {
-    private ParticleSystem FireParticle;
+    public ParticleSystem FireParticle;
 
     private void Awake()
     {
-        
+        InteractDescription = "Fry";
     }
 
     private new void Start()
     {
         base.Start();
+
+        //FireParticle.Stop();
     }
 
     void Update()
