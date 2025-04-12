@@ -11,7 +11,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
     Vector3 moveDir;
 
-    public Rigidbody rb;
+    private Rigidbody rb;
 
     public float jumpForce = 3;
     bool grounded = true;
@@ -23,12 +23,17 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
-        rb.isKinematic = true;
+        if(rb != null)
+        {
+            rb.freezeRotation = true;
+            rb.useGravity = true;
+            rb.isKinematic = false;
+        }
+
         animator = GetComponent<Animator>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (PhotonNetwork.IsConnected)
         {
@@ -44,7 +49,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         Move();
         animator.SetBool("isMove", moveDir != Vector3.zero);
 
-        if (grounded == true && UnityEngine.Input.GetButtonDown("Jump"))
+        if (grounded && UnityEngine.Input.GetButtonDown("Jump"))
         {
             Jump();
         }
@@ -72,6 +77,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
         if (collision.gameObject.CompareTag("Floor"))
         {
             grounded = true;
+            Debug.Log("Floor!");
         }
     }
 }

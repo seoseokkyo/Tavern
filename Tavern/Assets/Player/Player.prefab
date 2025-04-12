@@ -717,8 +717,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 45
   orientation: {fileID: 1669283233352587181}
-  rb: {fileID: 4789187788882808879}
-  jumpForce: 30
+  jumpForce: 15
   animator: {fileID: 1480623829964838869}
 --- !u!114 &6797159655851215098
 MonoBehaviour:
