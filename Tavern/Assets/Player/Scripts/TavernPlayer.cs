@@ -111,8 +111,8 @@ public class TavernPlayer : MonoBehaviour
 
             RightHandItem.transform.localPosition = RightHandItem.item.CurrentItemData.AttachLocation;
             RightHandItem.transform.localRotation = RightHandItem.item.CurrentItemData.AttachRotation;
-            //RightHandItem.transform.localScale = new Vector3(1, 1, 1);
-            
+            RightHandItem.transform.localScale = Vector3.one;
+
             RightHandItem.GetComponent<Collider>().enabled = false;
         }
         else
@@ -169,21 +169,13 @@ public class TavernPlayer : MonoBehaviour
         if (RightHandItem != null && RightHandItem.item.CurrentItemData.itemName == "Memo")
         {
             RightHandItem.transform.parent = null;
-            var ItemCollider = RightHandItem.GetComponent<Collider>();
-            if (ItemCollider != null)
-            {
-                ItemCollider.enabled = true;
-            }
-
+            var ItemCollider = RightHandItem.GetComponent<Collider>().enabled = true;
             var rb = RightHandItem.GetComponent<Rigidbody>();
             if (rb != null)
             {
                 rb.isKinematic = true;
                 rb.useGravity = false;
             }
-
-            RightHandItem.ItemRigidbody.isKinematic = true;
-            RightHandItem.ItemRigidbody.useGravity = false;
 
             RightHandItem = null;
         }

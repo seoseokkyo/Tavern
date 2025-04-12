@@ -24,13 +24,25 @@ public class CreatingMemoUI : MonoBehaviourPunCallbacks
     [HideInInspector]
     public MemoDummyScript MemoDummy = null; 
 
+    public void Initialize()
+    {
+        foreach (GameObject go in foods)
+        {
+            Destroy(go);
+        }
+
+        SetFoodList();
+
+        extraNotesInput.text = "";
+        extraNotesInput.enabled = true;
+    }
+
     public void Init(PlayerController owner)
     {
         player = owner;
         modeController = owner.GetComponent<ModeController>();
 
-        if(foods.Count == 0)
-            SetFoodList();
+        Initialize();
 
         setButton.onClick.AddListener(OnSetButtonClicked);
         cancelButton.onClick.AddListener(OnCancelButtonClicked);
@@ -92,6 +104,8 @@ public class CreatingMemoUI : MonoBehaviourPunCallbacks
         string extraNote = extraNotesInput.text;
 
         MemoDummy.CreateMemoItem(foodNames.ToArray(), extraNote);
+
+        Initialize();
         CloseUI();
     }
 

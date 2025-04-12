@@ -69,6 +69,8 @@ public class MemoDummyScript : Interactable
             string serialized = string.Join("|", foods);
             memoItem.photonView.RPC("RPC_InitializeMemoData", RpcTarget.AllBuffered, serialized, extra);
             memoItem.memoUI.enabled = true;
+
+            spawnedMemo = null;
         }
     }
 

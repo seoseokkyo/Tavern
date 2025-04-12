@@ -25,27 +25,6 @@ public class MenoScript : WorldItem
         {
             isAttached = true;
             interactPlayer.CurrentPlayer.DetachMemoItemFromRightHand();
-
-            if (PhotonNetwork.IsMasterClient)
-            {
-                photonView.RPC("RPC_AttachMemoItem", RpcTarget.AllBuffered, attachPosition, attachRotation);
-            }
-        }
-    }
-
-
-    [PunRPC]
-    void RPC_AttachMemoItem(Vector3 pos, Quaternion rotation)
-    {
-        transform.position = pos;
-        transform.rotation = rotation;
-        isAttached = true;
-
-        var rb = GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.isKinematic = true;
-            rb.useGravity = false;
         }
     }
 
@@ -58,7 +37,12 @@ public class MenoScript : WorldItem
             {
                 Vector3 newPosition = hit.point;
                 Quaternion targetRotation = Quaternion.LookRotation(hit.normal);
-
+                var rb = GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.isKinematic = true;
+                    rb.useGravity = false;
+                }
                 photonView.RPC("RPC_SyncMemoItemPosition", RpcTarget.AllBuffered, newPosition, targetRotation);
             }
         }
@@ -69,13 +53,13 @@ public class MenoScript : WorldItem
     {
         transform.position = position;
         transform.rotation = rotation;
-        transform.localScale = Vector3.one; 
+        transform.localScale = Vector3.one;
 
         var rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.isKinematic = true;
-            rb.useGravity = false;
+            rb.isKinematic = true; 
+            rb.useGravity = false; 
         }
 
         isAttached = false; 

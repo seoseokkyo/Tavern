@@ -715,10 +715,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8dc655e916bacd4ab9eb48951427069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 35
+  moveSpeed: 45
   orientation: {fileID: 1669283233352587181}
   rb: {fileID: 4789187788882808879}
-  jumpForce: 15
+  jumpForce: 30
   animator: {fileID: 1480623829964838869}
 --- !u!114 &6797159655851215098
 MonoBehaviour:
