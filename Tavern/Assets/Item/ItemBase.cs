@@ -8,6 +8,7 @@ public enum EItemType
     NoUseAble,
     UseAble,
     Equipment, // 일단 퀵슬롯에서 사용하는 형태로
+    Buildable, // 가구
     EItemTypeMax
 }
 
@@ -19,6 +20,13 @@ public enum ERequiredTool
     Cup,
 }
 
+public enum EBuildableType
+{ 
+    None,
+    Floor,
+    Wall,
+    Ceiling,
+}
 
 [System.Serializable]
 public struct ItemData
@@ -33,6 +41,7 @@ public struct ItemData
     public int itemCountLimit;
     public EItemType ItemType;
     public ERequiredTool requireToolType;
+    public EBuildableType buildableType;
     public GameObject ItemPrefab;
 
     public CookingRecipe recipe;

@@ -164,6 +164,13 @@ public class PlayerInteraction : MonoBehaviourPunCallbacks
                         interactable.Interact();
                     }
                     break;
+                case Interactable.InteractionType.Build:
+                    KeyCode buildKey = KeyCode.B;
+                    if (UnityEngine.Input.GetKeyDown(buildKey))
+                    {
+                        interactable.Interact();
+                    }
+                    break;
             }
         }
     }

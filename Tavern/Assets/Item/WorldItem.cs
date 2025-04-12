@@ -63,24 +63,36 @@ public class WorldItem : Interactable
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (ItemRigidbody.isKinematic && ItemRigidbody.linearVelocity.magnitude < 0.1f)
+        if(item.CurrentItemData.ItemType != EItemType.Buildable)
         {
-            ItemRigidbody.useGravity = false;
-            ItemRigidbody.isKinematic = false;
+            if (ItemRigidbody.isKinematic && ItemRigidbody.linearVelocity.magnitude < 0.1f)
+            {
+                ItemRigidbody.useGravity = false;
+                ItemRigidbody.isKinematic = true;
+            }
         }
     }
 
-    public override string GetInteractingDescription() { return item.CurrentItemData.itemDescription; }
+    public override string GetInteractingDescription() {
+        if (item.CurrentItemData.ItemType != EItemType.Buildable)
+            return item.CurrentItemData.itemDescription;
+        else
+            return "Press [B] to Replace";
+    }
 
     public override void Interact()
     {
-        if (interactPlayer)
+        if(item.CurrentItemData.ItemType != EItemType.Buildable)
         {
-            interactPlayer.CurrentPlayer.ItemAttachToRightHand(this);
+            if (interactPlayer)
+            {
+                interactPlayer.CurrentPlayer.ItemAttachToRightHand(this);
+            }
         }
+
+        // Buildable 은 E 키 상호작용 일단 막아둠. 
     }
 
     public void SetItem(ItemBase inputItem)

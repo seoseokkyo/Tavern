@@ -4,17 +4,38 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine.XR;
 
-public class TableScript : MonoBehaviourPunCallbacks
+public class TableScript : WorldItem
 {
+    private BuildableComponent buildableComponent;
+
     public int tableID;
 
     public List<SeatData> seats = new List<SeatData>();
     public GameObject foodPrefab;
 
     public ItemDatas itemDatas;
+    private PhotonView photonView;
+
+    private Rigidbody rb;
 
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
+        if(rb != null)
+        {
+            rb.isKinematic = true;
+            rb.useGravity = false;
+        }
+
+        photonView = GetComponent<PhotonView>();
+        buildableComponent = GetComponent<BuildableComponent>();
+        if (buildableComponent != null)
+        {
+            buildableComponent.StopBuilding();
+            buildableComponent.photonView = photonView;
+            buildableComponent.furniturePrefab = this.gameObject;
+        }
+
         for (int i = 0; i < seats.Count; i++)
         {
             seats[i].seatID = i;
@@ -30,6 +51,30 @@ public class TableScript : MonoBehaviourPunCallbacks
         usedTool = GetUsedToolItem(ERequiredTool.Cup);
         Debug.Log($"usedTool : {usedTool.itemName}");
     }
+
+    public override void Interact()
+    {
+        if (buildableComponent != null)
+        {
+            if (!buildableComponent.IsBuilding())
+            {
+                buildableComponent.StartBuilding(); 
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if (buildableComponent != null && buildableComponent.IsBuilding())
+        {
+            buildableComponent.UpdatePreviewMeshPosition();
+            if (Input.GetKeyDown(KeyCode.E) && buildableComponent.IsPlacementValid())
+            {
+                buildableComponent.PlaceFurniture(buildableComponent.previewMesh.transform.position, buildableComponent.previewMesh.transform.rotation);
+            }
+        }
+    }
+
     public bool HasAvailableSeat()
     {
         foreach (SeatData seat in seats)
@@ -236,7 +281,6 @@ public class TableScript : MonoBehaviourPunCallbacks
 
     private ItemData GetUsedToolItem(ERequiredTool type)
     {
-        // 요렇게 쓰시면 됩니다 ^^7
         return ItemManager.Instance.GetItemDataByName(type.ToString());
     }
 }

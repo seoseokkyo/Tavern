@@ -12,6 +12,7 @@ public abstract class Interactable : Photon.Pun.Interactable
         Press,
         Hold,
         UIPop,
+        Build,
     }
 
     [HideInInspector]

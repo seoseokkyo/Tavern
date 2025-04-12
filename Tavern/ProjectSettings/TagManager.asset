@@ -9,6 +9,8 @@ TagManager:
   - MenuManager
   - Store
   - Memo
+  - Wall
+  - Ceiling
   layers:
   - Default
   - TransparentFX

@@ -106,6 +106,7 @@ MonoBehaviour:
   - RPC_SyncMemoPosition
   - RPC_SyncMemoItemPosition
   - SetMemoItemDetachedFromRightHand
+  - PlaceFurnitureRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

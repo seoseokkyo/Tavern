@@ -64,6 +64,7 @@ MonoBehaviour:
       itemCountLimit: 0
       ItemType: 0
       requireToolType: 0
+      buildableType: 0
       ItemPrefab: {fileID: 0}
       recipe: {fileID: 0}
       AttachLocation: {x: 0, y: 0, z: 0}
