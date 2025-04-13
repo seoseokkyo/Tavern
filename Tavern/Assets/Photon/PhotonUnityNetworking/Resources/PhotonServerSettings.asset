@@ -108,6 +108,7 @@ MonoBehaviour:
   - ClientToServer_RequestState
   - ServerToClient_ResponseState
   - ReceiveState
+  - ClientToAll_RemoveIngredient
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

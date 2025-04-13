@@ -23,8 +23,7 @@ public class WorldItem : Interactable
     [HideInInspector]
     public GameObject MeshObj = null;
 
-    [HideInInspector]
-    public IngredientComp IngredientComponent = null;
+    public IngredientComp IngredientComponent;
 
     void Start()
     {
@@ -45,19 +44,20 @@ public class WorldItem : Interactable
 
         if (item.CurrentItemData.ItemType == EItemType.Equipment)
         {
-            IngredientComponent = gameObject.AddComponent<IngredientComp>();
+            IngredientComponent.enabled = true;
 
-            if (IngredientComponent)
+            IngredientComponent.CurrentWorldItem = this;
+
+            var data = ItemManager.Instance.GetIngredientData(item.CurrentItemData.itemName);
+
+            if (null != data)
             {
-                IngredientComponent.CurrentWorldItem = this;
-
-                var data = ItemManager.Instance.GetIngredientData(item.CurrentItemData.itemName);
-
-                if (null != data)
-                {
-                    IngredientComponent.SetData(data);
-                }
+                IngredientComponent.SetData(data);
             }
+        }
+        else
+        {
+            IngredientComponent.enabled = false;
         }
     }
 
@@ -114,18 +114,20 @@ public class WorldItem : Interactable
 
         if (item.CurrentItemData.ItemType == EItemType.Equipment)
         {
-            IngredientComponent = gameObject.AddComponent<IngredientComp>();
-            if (IngredientComponent)
+            IngredientComponent.enabled = true;
+
+            IngredientComponent.CurrentWorldItem = this;
+
+            var data = ItemManager.Instance.GetIngredientData(item.CurrentItemData.itemName);
+
+            if (null != data)
             {
-                IngredientComponent.CurrentWorldItem = this;
-
-                var data = ItemManager.Instance.GetIngredientData(item.CurrentItemData.itemName);
-
-                if (null != data)
-                {
-                    IngredientComponent.SetData(data);
-                }
+                IngredientComponent.SetData(data);
             }
+        }
+        else
+        {
+            IngredientComponent.enabled = false;
         }
     }
 

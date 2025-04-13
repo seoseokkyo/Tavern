@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1089131710718548611}
   - component: {fileID: 7186261325312223488}
   - component: {fileID: 2467924450271758892}
+  - component: {fileID: 6137155611285668879}
   - component: {fileID: -2505534004076757439}
   m_Layer: 0
   m_Name: WorldItem
@@ -78,7 +79,7 @@ MonoBehaviour:
   InitItemName: 
   ItemRigidbody: {fileID: 0}
   MeshObj: {fileID: 0}
-  IngredientComponent: {fileID: 0}
+  IngredientComponent: {fileID: 6137155611285668879}
 --- !u!33 &7265264429631978663
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -172,6 +173,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 2467924450271758892}
+  - {fileID: 6137155611285668879}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -191,6 +193,37 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 1
   m_UseLocal: 1
+--- !u!114 &6137155611285668879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8602148699992709797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f050de6361fb45b4db0d9da1737d84de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentWorldItem: {fileID: 0}
+  IngredientData:
+    IngredientName: 
+    GrilledIngredientName: 
+    SlicedIngredientName: 
+    BoiledIngredientName: 
+    FriedIngredientName: 
+    PerfectFlow: 
+  GrilledValue: 0
+  BoiledValue: 0
+  FriedValue: 0
+  CookingFlowString: 
+  WellGrilledStart: 40
+  HardGrilledStart: 60
+  WellBoiledStart: 40
+  HardBoiledStart: 60
+  WellFriedStart: 40
+  HardFriedStart: 60
+  TrashLimit: 100
 --- !u!54 &-2505534004076757439
 Rigidbody:
   m_ObjectHideFlags: 0

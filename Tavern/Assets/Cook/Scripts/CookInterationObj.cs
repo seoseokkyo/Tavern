@@ -108,6 +108,11 @@ public class CookInterationObj : Interactable
                 break;
             }
         }
+
+        if (null != UI_Instantiate)
+        {
+            UI_Instantiate.SetData(type, CookingItem);
+        }
     }
 
     [PunRPC]
@@ -121,7 +126,7 @@ public class CookInterationObj : Interactable
     {
         List<int> ViewList = new();
 
-        foreach(var temp in TransformAndUseState)
+        foreach (var temp in TransformAndUseState)
         {
             ViewList.Add(null != temp.Item2 ? temp.Item2.photonView.ViewID : 0);
         }
@@ -132,7 +137,7 @@ public class CookInterationObj : Interactable
     [PunRPC]
     public void ReceiveState(int[] ViewList)
     {
-        for(int i = 0; i < TransformAndUseState.Count; i++)
+        for (int i = 0; i < TransformAndUseState.Count; i++)
         {
             if (ViewList[i] != 0)
             {
@@ -154,14 +159,23 @@ public class CookInterationObj : Interactable
 
     public void IngredientTakeOut(WorldItem TargetItem)
     {
+        interactPlayer.CurrentPlayer.ItemAttachToRightHand(TargetItem);
+
+        photonView.RPC("ClientToAll_RemoveIngredient", RpcTarget.All, TargetItem.photonView.ViewID);
+    }
+
+    [PunRPC]
+    public void ClientToAll_RemoveIngredient(int ItemViewID)
+    {
+        PhotonView view = PhotonView.Find(ItemViewID);
+        var FindItem = view.GetComponentInParent<WorldItem>();
+
         int Count = CookingItem.Count;
 
         for (int i = 0; i < Count; i++)
         {
-            if (CookingItem[i] == TargetItem)
+            if (CookingItem[i] == FindItem)
             {
-                interactPlayer.CurrentPlayer.ItemAttachToRightHand(TargetItem);
-
                 foreach (var Pos in TransformAndUseState)
                 {
                     if (Pos.Item2 == CookingItem[i])
@@ -176,7 +190,10 @@ public class CookInterationObj : Interactable
             }
         }
 
-        UI_Instantiate.SetData(type, CookingItem);
+        if (null != UI_Instantiate)
+        {
+            UI_Instantiate.SetData(type, CookingItem);
+        }
     }
 
     private void Awake()
@@ -197,7 +214,7 @@ public class CookInterationObj : Interactable
             TransformAndUseState.Add(temp);
         }
 
-        if(!PhotonNetwork.IsMasterClient)
+        if (!PhotonNetwork.IsMasterClient)
         {
             PhotonManager.Instance.OnJoinedRoomEndDelegate -= ClientToServer_RequestState;
             PhotonManager.Instance.OnJoinedRoomEndDelegate += ClientToServer_RequestState;
@@ -206,6 +223,13 @@ public class CookInterationObj : Interactable
 
     void FixedUpdate()
     {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            // 서버에서만 누적시킴
+            // IngredientComp 내에서 값 변경 시 Stream하게 되어있음
+            return;
+        }
+
         foreach (var item in CookingItem)
         {
             if (item == null)

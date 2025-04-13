@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using UnityEngine;
 using WebSocketSharp;
@@ -36,7 +37,7 @@ public class IngredientData
 }
 
 
-public class IngredientComp : MonoBehaviour
+public class IngredientComp : MonoBehaviour, IPunObservable
 {
     // 원본객체 접근용
     [HideInInspector]
@@ -277,6 +278,26 @@ public class IngredientComp : MonoBehaviour
             SetData(ItemManager.Instance.GetIngredientData(IngredientData.FriedIngredientName));
 
             CurrentWorldItem.ClientToAllItemDataSync();
+        }
+    }
+
+    private void Awake()
+    {
+        GetComponent<PhotonView>().ObservedComponents.Add(this);
+    }
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(GrilledValue);
+            stream.SendNext(BoiledValue);
+            stream.SendNext(FriedValue);
+        }
+        else
+        {
+            GrilledValue = (float)stream.ReceiveNext();
+            BoiledValue = (float)stream.ReceiveNext();
+            FriedValue = (float)stream.ReceiveNext();
         }
     }
 }
