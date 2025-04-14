@@ -11,6 +11,9 @@ TagManager:
   - Memo
   - Wall
   - Ceiling
+  - TableManager
+  - TestLocation
+  - Preview
   layers:
   - Default
   - TransparentFX

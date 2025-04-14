@@ -93,6 +93,20 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
         customer.Initialize();
     }
 
+    public void SpawnTable(Vector3 spawnPosition)
+    {
+        GameObject testTable = GameObject.FindWithTag("Table");
+        if(testTable != null)
+        {
+            PhotonNetwork.Destroy(testTable);
+        }
+
+        GameObject newTable = PhotonNetwork.Instantiate("Table", spawnPosition, Quaternion.identity);
+        newTable.transform.localScale = new Vector3(20, 20, 23.2f);
+
+        newTable.GetComponent<TableScript>().AddSelfToManager();
+    }
+
     [PunRPC]
     void SetCustomerScale(int viewID)
     {
@@ -216,6 +230,20 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
                 DontDestroyOnLoad(logInstance);
                 log.active = true;
             }
+        }
+
+        StartCoroutine(WaitAndSpawnTable());
+    }
+
+    IEnumerator WaitAndSpawnTable()
+    {
+        yield return new WaitForSeconds(1.5f); 
+
+        GameObject testLocObj = GameObject.FindWithTag("TestLocation");
+        if (testLocObj != null)
+        {
+            Vector3 loc = testLocObj.transform.position;
+            SpawnTable(loc);
         }
     }
 

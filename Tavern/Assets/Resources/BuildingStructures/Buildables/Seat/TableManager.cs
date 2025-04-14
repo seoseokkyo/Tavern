@@ -17,6 +17,13 @@ public class TableManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        tables.Clear();
+    }
+
+    public void Initialize()
+    {
+        tables.Clear();
+
         tables.AddRange(FindObjectsOfType<TableScript>());
         for (int i = 0; i < tables.Count; i++)
         {
@@ -24,6 +31,7 @@ public class TableManager : MonoBehaviourPunCallbacks
             tables[i].tableID = i;
         }
     }
+
 
     public int GetTableID(TableScript table)
     {

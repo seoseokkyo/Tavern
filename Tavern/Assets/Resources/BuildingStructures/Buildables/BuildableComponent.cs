@@ -6,7 +6,9 @@ public class BuildableComponent : MonoBehaviour
     public Material validMaterial;
     public Material invalidMaterial;
     public GameObject previewMesh; 
-    public GameObject furniturePrefab; 
+    public GameObject furniturePrefab;
+
+    public GameObject originFurniture;
 
     public float placementRadius = 2f; 
     public Collider placementAreaCollider; 
@@ -27,8 +29,29 @@ public class BuildableComponent : MonoBehaviour
         isBuilding = true;
 
         previewMesh = Instantiate(furniturePrefab, transform.position, transform.rotation);
-        previewMesh.GetComponent<Renderer>().material = IsPlacementValid() ? validMaterial : invalidMaterial;
-        previewMesh.SetActive(true); 
+
+        Renderer previewMeshRenderer = previewMesh.GetComponent<Renderer>();
+        if (previewMeshRenderer != null)
+        {
+            previewMeshRenderer.material = IsPlacementValid() ? validMaterial : invalidMaterial;
+        }
+        else
+        {
+            Debug.LogError("Preview Mesh Renderer is null!");
+        }
+
+        BoxCollider collider = previewMesh.GetComponent<BoxCollider>();
+        if (collider != null)
+        {
+            collider.enabled = true;
+            placementAreaCollider = collider;
+        }
+        else
+        {
+            Debug.LogError("Preview Mesh does not have a BoxCollider!");
+        }
+
+        previewMesh.SetActive(true);
     }
 
     public void StopBuilding()
@@ -37,19 +60,25 @@ public class BuildableComponent : MonoBehaviour
         if (previewMesh != null)
         {
             Destroy(previewMesh);
+            previewMesh = null;
         }
     }
 
     public bool IsPlacementValid()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, placementRadius);
+        Collider[] colliders = Physics.OverlapBox(placementAreaCollider.bounds.center,
+        placementAreaCollider.bounds.extents, Quaternion.identity);
+
         foreach (Collider col in colliders)
         {
-            if(col.CompareTag("Floor"))
-            {
+            if (col.gameObject == previewMesh)
                 continue;
-            }
-            else
+            if (col.CompareTag("Untagged"))
+                continue;
+            if (col.CompareTag("Floor"))
+                continue;
+
+            if (!col.CompareTag("Floor"))
             {
                 return false;
             }
@@ -70,36 +99,36 @@ public class BuildableComponent : MonoBehaviour
                 previewMesh.transform.position = hit.point; 
                 previewMesh.transform.up = hit.normal;
 
-                if (IsPlacementValid())
-                {
-                    previewMesh.GetComponent<Renderer>().material = validMaterial; 
-                }
-                else
-                {
-                    previewMesh.GetComponent<Renderer>().material = invalidMaterial;
-                }
+                UpdatePreviewMeshMaterials(IsPlacementValid() ? validMaterial : invalidMaterial);
             }
         }
     }
 
-    public void PlaceFurniture(Vector3 position, Quaternion rotation)
+    public void UpdatePreviewMeshMaterials(Material m)
     {
-        if (IsPlacementValid())
+        Renderer[] renderers = previewMesh.GetComponentsInChildren<Renderer>();
+        foreach(var renderer in renderers)
         {
-            furniturePrefab.transform.position = position;
-            furniturePrefab.transform.rotation = rotation;
-//            placementAreaCollider.enabled = false;
-
-            StopBuilding();
-            photonView.RPC("PlaceFurnitureRPC", RpcTarget.All, position, rotation);
+            renderer.material = m;
         }
+    }
+
+    public void PlaceFurniture(Vector3 position, Quaternion rotation)
+    {       
+        originFurniture.transform.position = position;
+        originFurniture.transform.rotation = rotation;
+        placementAreaCollider.enabled = false;
+        photonView.RPC("PlaceFurnitureRPC", RpcTarget.AllBuffered, position, rotation);
+        
+
+        StopBuilding();
     }
 
     [PunRPC]
     void PlaceFurnitureRPC(Vector3 position, Quaternion rotation)
     {
-        furniturePrefab.transform.position = position;
-        furniturePrefab.transform.rotation = rotation;
+        originFurniture.transform.position = position;
+        originFurniture.transform.rotation = rotation;
     }
 
     public bool IsBuilding()

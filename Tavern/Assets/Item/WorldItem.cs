@@ -59,7 +59,7 @@ public class WorldItem : Interactable
                 }
             }
 
-            Debug.Log($"IngredientComponent : {IngredientComponent.name}");
+           // Debug.Log($"IngredientComponent : {IngredientComponent.name}");
         }
     }
 
