@@ -95,6 +95,8 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void SpawnTable(Vector3 spawnPosition)
     {
+        Debug.Log("Spawning Table");
+
         GameObject testTable = GameObject.FindWithTag("Table");
         if(testTable != null)
         {
@@ -105,6 +107,21 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
         newTable.transform.localScale = new Vector3(20, 20, 23.2f);
 
         newTable.GetComponent<TableScript>().AddSelfToManager();
+        photonView.RPC("SyncTablePosition", RpcTarget.AllBuffered, spawnPosition);
+    }
+
+    [PunRPC]
+    void SyncTablePosition(Vector3 position)
+    {
+        GameObject table = GameObject.FindWithTag("Table");
+        if (table != null)
+        {
+            table.transform.position = position;
+        }
+        else
+        {
+            Debug.Log("Table is null");
+        }
     }
 
     [PunRPC]
@@ -232,7 +249,8 @@ public class TavernGameManager : MonoBehaviourPunCallbacks, IPunObservable
             }
         }
 
-        StartCoroutine(WaitAndSpawnTable());
+        if(PhotonNetwork.LocalPlayer.IsMasterClient)
+            StartCoroutine(WaitAndSpawnTable());
     }
 
     IEnumerator WaitAndSpawnTable()

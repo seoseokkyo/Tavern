@@ -107,6 +107,11 @@ MonoBehaviour:
   - RPC_SyncMemoItemPosition
   - SetMemoItemDetachedFromRightHand
   - PlaceFurnitureRPC
+  - HideFurniture
+  - HideOrigiFurniture
+  - StopBuilding
+  - StopBuildingRPC
+  - SyncTablePosition
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

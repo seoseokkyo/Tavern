@@ -59,21 +59,24 @@ public class TableScript : WorldItem
         {
             if (!buildableComponent.IsBuilding())
             {
-                buildableComponent.StartBuilding(); 
+                if (buildableComponent.photonView == null)
+                {
+                    buildableComponent.photonView = photonView;
+                }
+
+                if(buildableComponent.originFurniture == null)
+                {
+                    buildableComponent.originFurniture = this.gameObject;
+                }
+
+                buildableComponent.StartBuilding();
             }
         }
     }
 
     private void Update()
     {
-        if (buildableComponent != null && buildableComponent.IsBuilding())
-        {
-            buildableComponent.UpdatePreviewMeshPosition();
-            if (UnityEngine.Input.GetKey(KeyCode.C) && buildableComponent.IsPlacementValid())
-            {
-                buildableComponent.PlaceFurniture(buildableComponent.previewMesh.transform.position, buildableComponent.previewMesh.transform.rotation);
-            }
-        }
+
     }
 
     public void AddSelfToManager()

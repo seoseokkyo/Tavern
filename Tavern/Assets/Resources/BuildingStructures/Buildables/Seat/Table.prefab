@@ -387,6 +387,7 @@ MonoBehaviour:
   invalidMaterial: {fileID: 2100000, guid: 2783782310853bd4b9e502ad4459d79a, type: 2}
   previewMesh: {fileID: 0}
   furniturePrefab: {fileID: 4451428746462609742, guid: 51ce07727b6f0fb4189ea416432a4dd7, type: 3}
+  originFurniture: {fileID: 0}
   placementRadius: 2
   placementAreaCollider: {fileID: 5918071082036686620}
   photonView: {fileID: -1235816052967742888}
